@@ -204,12 +204,12 @@ class Events_model extends CI_Model
         foreach (json_decode($data) as $item){
             $price=$price+50000;
             $data = array(
-                'userid' => $insert_id,
                 'start' => $item->date_fromSET,
-            'end' => $item->date_toSET,
+                'end' => $item->date_toSET,
                 'service_id' => $item->service_id,
                 'service_name' => $item->service_name,
-            'cus_name' => $name,
+                'customerid' => $insert_id,
+                'cus_name' => $name,
                 'cus_mobile' => $mobile,
                 'description' => $factor_code,
                 'title' => $name,
