@@ -151,12 +151,11 @@
                                         <?php
                                         $i=0;
 
-                                        foreach ($result as $itemx){
-                                        if(count($itemx)==count($services)) {
-
-                                        ?>
-                                            <div class="form-group col-md-4 boxed">
-
+                                        foreach ($result as $itemx)
+                                        {
+                                            if(count($itemx)==count($services)) {
+                                                ?>
+                                                <div class="form-group col-md-4 boxed">
                                                     <input type="radio" id="data<?php echo $i; ?>"  name="data" value=" <?php echo htmlspecialchars(json_encode($itemx)); ?>">
                                                     <label for="data<?php echo $i; ?>">
                                                         <?php
@@ -182,10 +181,11 @@
 
                                                         ?>
                                                     </label>
-                                            </div>
-                                            <?php
+                                                </div>
+                                                <?php
 
-                                                        } $i++; }
+                                            } $i++; 
+                                        }
                                         ?>
 
                                         <div class="form-group col-md-12 align-self-center" align="center">

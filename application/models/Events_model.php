@@ -27,8 +27,12 @@ class Events_model extends CI_Model
     public function getEventsByEmployeeId($start, $end,$em_id)
     {
         $e2=date('Y-m-d', strtotime($end. ' - 60 days'));
-        $sql = "SELECT  * FROM geopos_events WHERE (geopos_events.userid = ?) AND ((geopos_events.start BETWEEN ? AND ?) OR (geopos_events.end > ? )) ORDER BY id DESC LIMIT 1";
-        return $this->db->query($sql, array($em_id,$start, $end,$e2))->result();
+        // MO in query moshkel dare, age ye time vasate roz por shode bashe, time haye ghably ro barnemigardone
+        // MO query paying ke comment shode be khatere geopos_events.end > ? comment shode chon nemidonim in chiye
+        // $sql = "SELECT  * FROM geopos_events WHERE (geopos_events.userid = ?) AND ((geopos_events.start BETWEEN ? AND ?) OR (geopos_events.end > ? )) ORDER BY id DESC LIMIT 1";
+        // return $this->db->query($sql, array($em_id,$start, $end,$e2))->result();
+        $sql = "SELECT  * FROM geopos_events WHERE (geopos_events.userid = ?) AND (geopos_events.start BETWEEN ? AND ?) ORDER BY id DESC";
+        return $this->db->query($sql, array($em_id,$start, $end))->result();
 
     }
     public function getEvents($start, $end)
@@ -208,6 +212,7 @@ class Events_model extends CI_Model
                 'end' => $item->date_toSET,
                 'service_id' => $item->service_id,
                 'service_name' => $item->service_name,
+                'userid' => $item->id,
                 'customerid' => $insert_id,
                 'cus_name' => $name,
                 'cus_mobile' => $mobile,

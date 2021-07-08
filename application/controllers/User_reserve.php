@@ -65,7 +65,9 @@ class User_reserve extends CI_Controller
 
         $day_from=10;$day_to=20;
         $date = date('Y-m-d H:i:s', substr($setdateU, 0, -3));
+        // MO set date_from hour to ten oclock (starting hour of working day)
         $date_from=date('Y-m-d H:i:s', strtotime($date. ' + '.$day_from.' hours'));
+        // MO set date_to hour to 20 oclock (ending hour of working day)
         $date_to=date('Y-m-d H:i:s', strtotime($date. ' + '.$day_to.' hours'));
 
 
@@ -79,10 +81,13 @@ class User_reserve extends CI_Controller
                 //گرفتن آخرین تایم رزرو شده هر کاربر
                 //فقط یک بار.و افزودن آن به زمان شروع رزرو برای دیگر تایم ها
                 $events  = $this->events-> getEventsByEmployeeId($date_from,$date_to,$ems[$ii]["id"]);
-                $getEvent=null;$em_date_from=$date_from;$em_date_to=$date_to;
+                $getEvent = null;
+                $em_date_from = $date_from;
+                $em_date_to = $date_to;
                 if($events && !in_array($ems[$ii]["id"], $chkEmployeeInArr)){
                     $getEvent=$events[0];
                     $em_date_from=$events[0]->end;
+                    // MO inja moshkel darad zaheran
                     $em_date_to=$events[0]->end;
                     array_push($chkEmployeeInArr,$ems[$ii]["id"]);
                 }
@@ -92,15 +97,15 @@ class User_reserve extends CI_Controller
                 $ems[$ii]['price']=$service_details['price'];
                 $ems[$ii]['start']=$em_date_from;
                 $ems[$ii]['end']=$em_date_to;
-                $ems[$ii]['events']=$getEvent;
+                $ems[$ii]['events']=$events;
                 //لیست تمام افرادی که در هر یک از سرویس های خواسته شده مشتری کار میکنه
+                // MO $firstArr arrayeyi az hame karmandani hast ke service haye darkhasty moshtary ra anjam midahand, har khane araye shamele etelaate karmand, etelaate service va tarikhe shoro va payane service mibashad
                 array_push($firstArr,$ems[$ii]);
             }
           //  print_r($ems);echo "<br/>"."<br/>"."<br/>";
             //print_r($chkEmployeeInArr);echo "<br/>"."<br/>"."<br/>";
 
         }
-
         for ($x=0;$x<count($firstArr);$x++) {
             //لیست تمام افرادی که در هر یک از سرویس های خواسته شده مشتری کار میکنه
             //print_r($firstArr[$x]);echo "<br/>"."<br/>"."<br/>";
@@ -116,11 +121,11 @@ class User_reserve extends CI_Controller
                 if($firstArr[$z]['service_id']==$services[$n] && !in_array($services[$n], $chkServiceTimeArr)){
                     //لیست همه امپلویی هایی که این سرویس رو ارائه میدن و آلان تایم خالی دارن
                   //  print_r($firstArr[$z]);echo "<br/>"."<br/>"."<br/>";
+                    // MO $result arayeyi az karmandani hast ke baraye har service entekhab shodan, dar asl bargozidegane araye $firstArr mibashand
                     array_push($result,$firstArr[$z]);
                     array_push($chkServiceTimeArr,$services[$n]);
                 }
             }
-
         }
         $mainTime=$date_from;//$date_toSET=$date_from;
         $finalManyResult=[];
@@ -129,27 +134,51 @@ class User_reserve extends CI_Controller
         do {
 
             $finalArrx=[];
-             for ($m=0;$m<count($result);$m++) {
-         /*  if($result[0]['start']>$date_from){
-                $mainTime=$result[0]['start'];
-            }
-            else{
-                $mainTime=$date_from;
-            }*/
-            //افزودن زمان این سرویس به زمان شروع رزرو
-           // $mainTime=date('Y-m-d H:i:s', strtotime($mainTime. ' + '.$result[$m]['service_settime'].' minutes'));
-            $date_fromSET=date('Y-m-d H:i:s', strtotime($mainTime));
-            $date_toSET=date('Y-m-d H:i:s', strtotime($mainTime. ' + '.$result[$m]['service_settime'].' minutes'));
-            $mainTime=date('Y-m-d H:i:s', strtotime($date_toSET));
-            $result[$m]['date_fromSET']=$date_fromSET;
-            $result[$m]['date_toSET']=$date_toSET;
-                 $CHKdate_toSET=$date_toSET;
-            array_push($finalArr,$result[$m]);
-
-                 array_push($finalArrx,$result[$m]);
-            array_push($finalManyResult,$finalArrx);
-           // print_r($date_to>$date_toSET);echo "<br/>"."<br/>"."<br/>";
-            //print_r($finalArr);echo "<br/>"."<br/>"."<br/>";
+            for ($m=0;$m<count($result);$m++) {
+                /*  if($result[0]['start']>$date_from){
+                    $mainTime=$result[0]['start'];
+                }
+                else{
+                    $mainTime=$date_from;
+                }*/
+                //افزودن زمان این سرویس به زمان شروع رزرو
+                // $mainTime=date('Y-m-d H:i:s', strtotime($mainTime. ' + '.$result[$m]['service_settime'].' minutes'));
+                $date_fromSET=date('Y-m-d H:i:s', strtotime($mainTime));
+                $date_toSET=date('Y-m-d H:i:s', strtotime($mainTime. ' + '.$result[$m]['service_settime'].' minutes'));
+                $mainTime=date('Y-m-d H:i:s', strtotime($date_toSET));
+                $result[$m]['date_fromSET']=$date_fromSET;
+                $result[$m]['date_toSET']=$date_toSET;
+                    $CHKdate_toSET=$date_toSET;
+                if ($CHKdate_toSET > $date_to)
+                    break;
+                array_push($finalArr,$result[$m]);
+                if (isset($result[$m]['events']))
+                {
+                    $timeIsReserved = false;
+                    foreach($result[$m]['events'] as $event)
+                    {
+                        // MO Check if start or end time of the service is between start and end time of the event
+                        if  ((
+                            (($result[$m]['date_fromSET'] >= $event->start) && ($result[$m]['date_fromSET'] < $event->end))
+                            ||
+                            (($result[$m]['date_toSET'] > $event->start) && ($result[$m]['date_toSET'] <= $event->end))
+                        ) )
+                            $timeIsReserved = true;
+                    }
+                    if ($timeIsReserved == false)
+                    {
+                        array_push($finalArrx,$result[$m]);
+                        array_push($finalManyResult,$finalArrx);
+                    }
+                }
+                else
+                {
+                    array_push($finalArrx,$result[$m]);
+                    array_push($finalManyResult,$finalArrx);
+                }
+                
+                // print_r($date_to>$date_toSET);echo "<br/>"."<br/>"."<br/>";
+                //print_r($finalArr);echo "<br/>"."<br/>"."<br/>";
             }
 
         }while ($CHKdate_toSET < $date_to);//befor 20
@@ -419,7 +448,7 @@ class User_reserve extends CI_Controller
         $data['data']=$dataX;
         $data['name']=$name;
         $data['mobile']=$mobile;
-
+        // var_dump($dataX);die;
         $res= $this->events->addReserve($dataX,$name,$mobile);
         //log_message('error',"------------------------------------ghjghacascsascj3:".json_encode($res));
 

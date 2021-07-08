@@ -22,17 +22,25 @@ class Employee_model extends CI_Model
 {
     protected $DBname_roles="application_roles";
 
+    /**
+     * get employees that do a certain service
+     * @param $id id of the service
+     * @return array of employees
+     */
     public function list_employee_by_service($id)
     {
         $this->db->select('geopos_employees.*');
         $this->db->from('geopos_employees');
         $this->db->like('service', $id, 'both');
         $query = $this->db->get();
-
-        return $query->result_array();
-      /*  if ($query->num_rows() > 0) {
-            return $query->first_row();
-        }*/
+        $selectedEmployees = [];
+        foreach ($query->result_array() as $employee)
+        {
+            $employeeServices = explode(",",$employee['service']);
+            if (in_array($id, $employeeServices))
+                array_push($selectedEmployees, $employee);
+        }
+        return $selectedEmployees;
     }
 
     public function list_employee()
