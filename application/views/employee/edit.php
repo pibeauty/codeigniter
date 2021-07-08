@@ -162,7 +162,6 @@
 
                             <div class="col-sm-5">
                                 <select name="service[]" class="select-box form-control margin-bottom"  multiple="multiple">
-
                                     <?php
                                     foreach ($services as $row) {
                                         $cid = $row->id;
@@ -172,7 +171,8 @@
                                             $cidx = $rowx->id;
                                             $titlex = $rowx->name;
                                             $service_pieces = explode(",", $user['service']);
-                                            if( array_search($cidx,$service_pieces )){
+                                            // if( array_search($cidx,$service_pieces )){
+                                            if( array_search($cidx, $service_pieces) !== false){
                                                 echo ' <option selected value="' . $cidx . '"> ' . $titlex . '</option>';
                                             }
                                             else{
