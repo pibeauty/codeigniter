@@ -136,6 +136,27 @@
                         <div class="form-group row">
 
                             <label class="col-sm-2 col-form-label"
+                                   for="Referral"><?php echo $this->lang->line('Referral') ?></label>
+
+                            <div class="col-sm-6">
+                                <select name="moaaref" class="form-control">
+                                    <?php
+                                    echo '<option value="0">--انتخاب کنید--</option>';
+                                    foreach ($customers as $value) {
+                                        $selected = null;
+                                        if ($customer['moaaref'] == $value->id)
+                                            $selected = "selected";
+                                        $cid = $value->id;
+                                        $title = $value->title;
+                                        echo ' <option value="' . $value->id . '" '.$selected.'> ' . $value->name . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label"
                                    for="postbox"><?php echo $this->lang->line('Tax') ?> ID</label>
 
                             <div class="col-sm-10">

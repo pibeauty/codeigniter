@@ -55,6 +55,7 @@ class Customers extends CI_Controller
         $data['customergrouplist'] = $this->customers->group_list();
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['custom_fields'] = $this->custom->add_fields(1);
+        $data['customers'] = $this->customers->get_datatables();
         $head['title'] = 'Create Customer';
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/create', $data);
@@ -76,6 +77,7 @@ class Customers extends CI_Controller
         $data['custom_fields'] = $this->custom->view_fields_data($custid, 1);
         $head['title'] = 'View Customer';
         $data['events'] = $this->events->eventListByuser($custid);
+        $data['referral'] = $this->customers->details($data['details']['moaaref']);
 
 
         $this->load->view('fixed/header', $head);
@@ -143,6 +145,7 @@ class Customers extends CI_Controller
         $data['custom_fields'] = $this->custom->view_edit_fields($pid, 1);
         $head['title'] = 'Edit Customer';
         $data['langs'] = $this->common->languages();
+        $data['customers'] = $this->customers->get_datatables();
         $this->load->view('fixed/header', $head);
         $this->load->view('customers/edit', $data);
         $this->load->view('fixed/footer');
@@ -175,9 +178,15 @@ class Customers extends CI_Controller
         $docid = $this->input->post('docid', true);
         $custom = $this->input->post('c_field', true);
         $discount = $this->input->post('discount', true);
+
         $tavalodX = $this->input->post('tavalodX', true);
-        $tavalod = date('Y-m-d', substr($tavalodX, 0, -3));
-        $this->customers->add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language, $create_login, $password, $docid, $custom, $discount, $tavalod);
+        if ($tavalodX)
+            $tavalod = date('Y-m-d', substr($tavalodX, 0, -3));
+        else
+            $tavalod = null;
+        
+        $moaaref = $this->input->post('moaaref', true) ? $this->input->post('moaaref', true) : null;
+        $this->customers->add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language, $create_login, $password, $docid, $custom, $discount, $tavalod, $moaaref);
 
 
     }
@@ -211,10 +220,17 @@ class Customers extends CI_Controller
         $custom = $this->input->post('c_field', true);
         $language = $this->input->post('language', true);
         $discount = $this->input->post('discount', true);
+
         $tavalodX = $this->input->post('tavalodX', true);
-        $tavalod = date('Y-m-d', substr($tavalodX, 0, -3));
+        if ($tavalodX)
+            $tavalod = date('Y-m-d', substr($tavalodX, 0, -3));
+        else
+            $tavalod = null;
+
+        $moaaref = $this->input->post('moaaref', true) ? $this->input->post('moaaref', true) : null;
+
         if ($id) {
-            $this->customers->edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $docid, $custom, $language, $discount, $tavalod);
+            $this->customers->edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $docid, $custom, $language, $discount, $tavalod, $moaaref);
         }
     }
 

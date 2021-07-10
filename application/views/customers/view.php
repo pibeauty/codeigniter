@@ -168,7 +168,7 @@
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
-                                    <strong>birthdate</strong>
+                                    <strong><?php echo $this->lang->line('Birthdate') ?></strong>
                                 </div>
                                 <div class="col-md-10">
                                     <?php if($details['tavalod']) {
@@ -176,6 +176,16 @@
                                         echo $this->jdf->jdate('l, j F Y',$time);
 
                                     } ?>
+                                </div>
+
+                            </div>
+                            <hr>
+                            <div class="row m-t-lg">
+                                <div class="col-md-2">
+                                    <strong><?php echo $this->lang->line('Referral') ?></strong>
+                                </div>
+                                <div class="col-md-10">
+                                    <?php echo $referral['name'] ?>
                                 </div>
 
                             </div>

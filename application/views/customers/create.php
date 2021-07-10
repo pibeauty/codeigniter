@@ -142,11 +142,25 @@
                                         <label class="col-sm-2 col-form-label"
                                                for="tavalod"><?php echo $this->lang->line('Birthdate') ?></label>
 
-                                        <div class="col-sm-6">
+                                        <div class="col-sm-8">
                                             <input type="hidden" id="tavalodX" name="tavalodX">
                                             <input type="text" placeholder="Birthdate"
                                                    class="setdate form-control margin-bottom b_input" name="tavalod" id="tavalod" 
                                                    style="background-color: white;" autocomplete="off" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"
+                                            for="referral"><?php echo $this->lang->line('Referral') ?></label>
+                                        <div class="col-sm-8">
+                                            <select name="moaaref" class="form-control margin-bottom">
+                                                <option value="0">--انتخاب کنید--</option>
+                                                <?php
+                                                foreach ($customers as $customer) {
+                                                    echo ' <option value="' . $customer->id . '"> ' . $customer->name . '</option>';
+                                                }
+                                                ?>
+                                            </select>
                                         </div>
                                     </div>
                                 </div>

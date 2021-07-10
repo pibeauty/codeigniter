@@ -178,7 +178,7 @@ class Customers_model extends CI_Model
     }
 
 
-    public function add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language = '', $create_login = true, $password = '', $docid = '', $custom = '', $discount = 0, $tavalod)
+    public function add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language = '', $create_login = true, $password = '', $docid = '', $custom = '', $discount = 0, $tavalod, $moaaref)
     {
         $this->db->select('email');
         $this->db->from('geopos_customers');
@@ -221,7 +221,8 @@ class Customers_model extends CI_Model
                 'docid' => $docid,
                 'custom1' => $custom,
                 'discount_c' => $discount,
-                'tavalod' => $tavalod
+                'tavalod' => $tavalod,
+                'moaaref' => $moaaref
             );
 
 
@@ -302,7 +303,7 @@ class Customers_model extends CI_Model
         $this->db->update('geopos_customers');
     }
 
-    public function edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $docid = '', $custom = '', $language = '', $discount = 0, $tavalod)
+    public function edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $docid = '', $custom = '', $language = '', $discount = 0, $tavalod, $moaaref)
     {
         $data = array(
             'name' => $name,
@@ -327,7 +328,8 @@ class Customers_model extends CI_Model
             'docid' => $docid,
             'custom1' => $custom,
             'discount_c' => $discount,
-            'tavalod' => $tavalod
+            'tavalod' => $tavalod,
+            'moaaref' => $moaaref,
         );
 
 
