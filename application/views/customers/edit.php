@@ -123,7 +123,7 @@
                         <div class="form-group row">
 
                             <label class="col-sm-2 col-form-label"
-                                    for="tavalod"><?php echo $this->lang->line('Birthday') ?></label>
+                                    for="tavalod"><?php echo $this->lang->line('Birthdate') ?></label>
 
                             <div class="col-sm-10">
                                 <input type="hidden" id="tavalodX" name="tavalodX">

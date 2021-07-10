@@ -168,7 +168,7 @@
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
-                                    <strong>birthday</strong>
+                                    <strong>birthdate</strong>
                                 </div>
                                 <div class="col-md-10">
                                     <?php if($details['tavalod']) {
