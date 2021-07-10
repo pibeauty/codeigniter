@@ -178,7 +178,7 @@ class Customers_model extends CI_Model
     }
 
 
-    public function add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language = '', $create_login = true, $password = '', $docid = '', $custom = '', $discount = 0)
+    public function add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language = '', $create_login = true, $password = '', $docid = '', $custom = '', $discount = 0, $tavalod)
     {
         $this->db->select('email');
         $this->db->from('geopos_customers');
@@ -220,7 +220,8 @@ class Customers_model extends CI_Model
                 'postbox_s' => $postbox_s,
                 'docid' => $docid,
                 'custom1' => $custom,
-                'discount_c' => $discount
+                'discount_c' => $discount,
+                'tavalod' => $tavalod
             );
 
 

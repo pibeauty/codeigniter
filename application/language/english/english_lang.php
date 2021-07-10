@@ -812,3 +812,4 @@ $lang['List'] = "List";
 $lang['Low'] = "Low";
 $lang['Medium'] = "Medium";
 $lang['High'] = "High";
+$lang['Birthday'] = "Birthday";

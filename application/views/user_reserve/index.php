@@ -349,9 +349,10 @@
 -->
 <script src="<?= assets_url() ?>app-assets/front2/js/script.js"></script>
 
-<script type='text/javascript' src='https://unpkg.com/persian-date@1.1.0/dist/persian-date.min.js'></script>
-<script type='text/javascript' src='https://unpkg.com/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js'></script>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script type="text/javascript" src="<?= assets_url() ?>app-assets/vendors/js/persian-datepicker/persian-date.min.js"></script>
+<script type="text/javascript" src="<?= assets_url() ?>app-assets/vendors/js/persian-datepicker/persian-datepicker.min.js"></script>
+<script type="text/javascript" src="<?= assets_url() ?>app-assets/vendors/js/persian-datepicker/select2.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script> -->
 <script>
     $(function () {
         $('.select-box').select2({

@@ -175,7 +175,9 @@ class Customers extends CI_Controller
         $docid = $this->input->post('docid', true);
         $custom = $this->input->post('c_field', true);
         $discount = $this->input->post('discount', true);
-        $this->customers->add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language, $create_login, $password, $docid, $custom, $discount);
+        $tavalodX = $this->input->post('tavalodX', true);
+        $tavalod = date('Y-m-d', substr($tavalodX, 0, -3));
+        $this->customers->add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language, $create_login, $password, $docid, $custom, $discount, $tavalod);
 
 
     }

@@ -82,7 +82,7 @@
                                                    id="mcustomer_email">
                                         </div>
                                     </div>
-                                    <div class="form-group row">
+                                    <!--<div class="form-group row">
 
                                         <label class="col-sm-2 col-form-label"
                                                for="address"><?php echo $this->lang->line('Address') ?></label>
@@ -135,6 +135,24 @@
                                             <input type="text" placeholder="PostBox"
                                                    class="form-control margin-bottom b_input" name="postbox"
                                                    id="postbox">
+                                        </div>
+                                    </div>-->
+                                    <style>
+                                        .datepicker-container {
+                                            z-index: 10;
+                                            position: absolute;
+                                        }
+                                    </style>
+                                    <div class="form-group row">
+
+                                        <label class="col-sm-2 col-form-label"
+                                               for="tavalod"><?php echo $this->lang->line('Birthday') ?></label>
+
+                                        <div class="col-sm-6">
+                                            <input type="hidden" id="tavalodX" name="tavalodX">
+                                            <input type="text" placeholder="Birthdate"
+                                                   class="setdate form-control margin-bottom b_input" name="tavalod" id="tavalod" 
+                                                   style="background-color: white;" autocomplete="off" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -385,3 +403,17 @@
     </div>
 </div>
 
+<script type="text/javascript" src="<?= assets_url() ?>app-assets/vendors/js/persian-datepicker/persian-date.min.js"></script>
+<script type="text/javascript" src="<?= assets_url() ?>app-assets/vendors/js/persian-datepicker/persian-datepicker.min.js"></script>
+<script>
+    $('#tavalod').persianDatepicker({
+        minDate: new persianDate().unix(),
+        format: 'YYYY-MM-DD',
+        autoClose: true,
+        initialValue: false,
+        onSelect: function(unix){
+            var date = new Date(unix);
+            document.getElementById("tavalodX").value=date.getTime();
+        }
+    });
+</script>
