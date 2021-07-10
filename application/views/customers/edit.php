@@ -65,7 +65,7 @@
                                        value="<?php echo $customer['email'] ?>" id="mcustomer_email">
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <!-- <div class="form-group row">
 
                             <label class="col-sm-2 col-form-label"
                                    for="product_name"><?php echo $this->lang->line('Address') ?></label>
@@ -118,6 +118,19 @@
                                 <input type="text" placeholder="region"
                                        class="form-control margin-bottom" name="postbox"
                                        value="<?php echo $customer['postbox'] ?>" id="postbox">
+                            </div>
+                        </div> -->
+                        <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label"
+                                    for="tavalod"><?php echo $this->lang->line('Birthday') ?></label>
+
+                            <div class="col-sm-10">
+                                <input type="hidden" id="tavalodX" name="tavalodX">
+                                <input type="text" placeholder="Birthdate"
+                                        class="setdate form-control margin-bottom b_input" name="tavalod" id="tavalod" 
+                                        style="background-color: white;" autocomplete="off" readonly
+                                        value="<?php echo $customer['tavalod'] ?>">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -344,3 +357,18 @@
     </div>
 </div>
 
+<script type="text/javascript" src="<?= assets_url() ?>app-assets/vendors/js/persian-datepicker/persian-date.min.js"></script>
+<script type="text/javascript" src="<?= assets_url() ?>app-assets/vendors/js/persian-datepicker/persian-datepicker.min.js"></script>
+<script>
+    document.getElementById("tavalodX").value = new Date(document.getElementById("tavalod").value).getTime();
+    $('#tavalod').persianDatepicker({
+        minDate: new persianDate().unix(),
+        format: 'YYYY-MM-DD',
+        autoClose: true,
+        initialValue: false,
+        onSelect: function(unix){
+            var date = new Date(unix);
+            document.getElementById("tavalodX").value=date.getTime();
+        }
+    });
+</script>

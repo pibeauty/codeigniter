@@ -211,8 +211,10 @@ class Customers extends CI_Controller
         $custom = $this->input->post('c_field', true);
         $language = $this->input->post('language', true);
         $discount = $this->input->post('discount', true);
+        $tavalodX = $this->input->post('tavalodX', true);
+        $tavalod = date('Y-m-d', substr($tavalodX, 0, -3));
         if ($id) {
-            $this->customers->edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $docid, $custom, $language, $discount);
+            $this->customers->edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $docid, $custom, $language, $discount, $tavalod);
         }
     }
 

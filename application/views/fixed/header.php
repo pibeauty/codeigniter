@@ -43,6 +43,7 @@
     <!-- END Page Level CSS-->
     <!-- BEGIN Custom CSS-->
     <link rel="stylesheet" type="text/css" href="<?= assets_url() ?>assets/css/style.css<?= APPVER ?>">
+    <link rel="stylesheet" type="text/css" href="<?= assets_url() ?>assets/css/custom.css<?= APPVER ?>">
     <?php if(LTR=='rtl') echo '<link rel="stylesheet" type="text/css" href="'.assets_url().'assets/css/style-rtl.css'.APPVER.'">'; ?>
     <!-- END Custom CSS-->
     <script src="<?= assets_url() ?>app-assets/vendors/js/vendors.min.js"></script>

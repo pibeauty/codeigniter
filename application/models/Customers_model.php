@@ -302,7 +302,7 @@ class Customers_model extends CI_Model
         $this->db->update('geopos_customers');
     }
 
-    public function edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $docid = '', $custom = '', $language = '', $discount = 0)
+    public function edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $docid = '', $custom = '', $language = '', $discount = 0, $tavalod)
     {
         $data = array(
             'name' => $name,
@@ -326,7 +326,8 @@ class Customers_model extends CI_Model
             'postbox_s' => $postbox_s,
             'docid' => $docid,
             'custom1' => $custom,
-            'discount_c' => $discount
+            'discount_c' => $discount,
+            'tavalod' => $tavalod
         );
 
 

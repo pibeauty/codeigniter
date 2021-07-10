@@ -137,12 +137,6 @@
                                                    id="postbox">
                                         </div>
                                     </div>-->
-                                    <style>
-                                        .datepicker-container {
-                                            z-index: 10;
-                                            position: absolute;
-                                        }
-                                    </style>
                                     <div class="form-group row">
 
                                         <label class="col-sm-2 col-form-label"
