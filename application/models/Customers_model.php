@@ -231,6 +231,9 @@ class Customers_model extends CI_Model
 
             if ($this->db->insert('geopos_customers', $data)) {
                 $cid = $this->db->insert_id();
+
+                // MO generate picode and save it
+                $this->picodeGenerator($cid, $tavalod);
                 $p_string = '';
                 $temp_password = '';
                 if ($create_login) {
@@ -287,6 +290,17 @@ class Customers_model extends CI_Model
 
     }
 
+    // MO generate picode and save it
+    private function picodeGenerator ($id, $tavalod)
+    {
+        $picode = $id.str_replace("-","",$tavalod);
+        $data = array(
+            'picode' => $picode
+        );
+        $this->db->set($data);
+        $this->db->where('id', $id);
+        $this->db->update('geopos_customers');
+    }
 
     public function edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $docid = '', $custom = '', $language = '', $discount = 0)
     {
