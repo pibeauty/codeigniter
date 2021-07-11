@@ -146,7 +146,7 @@
                                         <div class="form-group col-md-6">
                                             <input type="hidden" id="WeekNum" name="WeekNum"> <input type="hidden" id="setdateU" name="setdateU">
                                             <label for="setdate"></label>
-                                            <input style="margin-top: -2px!important; background-color: white;" autocomplete="off" readonly required type="text" name="setdate" id="setdate"   class="setdate form-control my-2 my-lg-1"  required placeholder=" تاریخ"/>
+                                            <input style="margin-top: -2px!important; background-color: white;" autocomplete="off" readonly required type="text" name="setdate" id="setdate" class="setdate form-control my-2 my-lg-1" required placeholder=" تاریخ"/>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="inputtext4"></label>
@@ -359,9 +359,10 @@
             placeholder: "خدمات"
         });
     });
-
+    
     $('.setdate').persianDatepicker({
-        minDate: new persianDate().unix(),
+        // minDate: new persianDate().unix(),
+        minDate: Date.now(),
         format: 'dddd, DD MMMM ',
         autoClose: true,
         initialValue: false,
@@ -371,7 +372,6 @@
             date.setHours(0,0,0,0);
             document.getElementById("WeekNum").value=new persianDate(unix).day();
             document.getElementById("setdateU").value=date.getTime();
-            console.log('datepicker select : ' + date.getTime());
         }
     });
 </script>
