@@ -131,45 +131,38 @@
                     <div class="container">
                         <div class="row justify-content-center">
                             <div class="col-lg-12 col-md-12 align-content-center">
-                                <form action="<?php echo base_url().'user_reserve/employees'?>" method="post" >
+                                <form action="<?php echo base_url().'user_reserve/reserve'?>" method="post" >
                                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
-
                                     <div class="form-row" dir="rtl">
-                                        <div class="form-group col-md-6">
-                                            <label for="name"></label>
-                                            <input type="text"  class="form-control my-2 my-lg-1" id="name" name="name" placeholder="نام و نام خانودگی" required>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="mobile"></label>
-                                            <input type="text"  class="form-control my-2 my-lg-1" id="mobile" name="mobile" placeholder="موبایل" required>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <input type="hidden" id="WeekNum" name="WeekNum"> <input type="hidden" id="setdateU" name="setdateU">
-                                            <label for="setdate"></label>
-                                            <input style="margin-top: -2px!important; background-color: white;" autocomplete="off" readonly required type="text" name="setdate" id="setdate" class="setdate form-control my-2 my-lg-1" required placeholder=" تاریخ"/>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="inputtext4"></label>
-                                            <select  name="services[]" class="select-box form-control my-2 my-lg-1"  multiple="multiple" required>
-
-                                                <?php
-
-                                                foreach ($services as $row) {
-                                                    $cid = $row->id;
-                                                    $title = $row->name;
-                                                    echo '<optgroup label="' . $title . '">';
-                                                    foreach ($row->sub as $rowx) {
-                                                        $cidx = $rowx->id;
-                                                        $titlex = $rowx->name;
-                                                        echo ' <option value="' . $cidx. '"> ' . $titlex . '</option>';
+                                        <p dir="rtl">لطفا برای هر سرویس سالن کار مورد نظر خود را انتخاب نمایید.</p>
+                                    </div>
+                                    <div class="form-row" dir="rtl">
+                                        
+                                        <?php
+                                        $count = 0;
+                                        foreach ($servicesWithEmployees as $service)
+                                        {
+                                            $count+=1;
+                                            ?>
+                                            <div class="form-group col-md-3">
+                                                <span><?php echo $count." - ".$service['name']; ?></span>
+                                            </div>
+                                            <div class="form-group col-md-9">
+                                                <select  name = "selectedEmployees[]" class="form-control" required>
+                                                    <?php
+                                                    foreach ($service['employees'] as $employee) {
+                                                        echo ' <option value="' . $employee['id']. '"> ' . $employee['name'] . '</option>';
                                                     }
-                                                    echo '</optgroup>';
-
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <?php
+                                        }
+                                        ?>
+                                        <input type="hidden" name="name" value="<?php echo $name; ?>">
+                                        <input type="hidden" name="mobile" value="<?php echo $mobile; ?>">
+                                        <input type="hidden" name="setdateU" value="<?php echo $setdateU; ?>">
+                                        <input type="hidden" name="servicesWithEmployees" value="<?php echo htmlspecialchars(serialize($servicesWithEmployees)); ?>">
                                         <div class="form-group col-md-12 align-self-center" align="center">
                                             <button type="submit" class="btn btn-primary" style="background: #c29e76;border:solid 1px #c29e76;">بررسی تایم ها</button>
                                         </div>

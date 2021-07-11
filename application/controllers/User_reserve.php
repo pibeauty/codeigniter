@@ -55,9 +55,41 @@ class User_reserve extends CI_Controller
         print_r($services);
         log_message('error',"------------------------------------ghjghacascsascj:". $services);
     }
-    public function reserve(){
-        date_default_timezone_set('Asia/Tehran');
+
+    public function employees()
+    {
         $services= $this->input->post('services');
+        $name= $this->input->post('name');
+        $mobile= $this->input->post('mobile');
+        $setdateU= $this->input->post('setdateU');
+
+        $servicesWithEmployees = $this->getServiceEmployees($services);
+        
+        $data['servicesWithEmployees'] = $servicesWithEmployees;
+        $data['name'] = $name;
+        $data['mobile'] = $mobile;
+        $data['setdateU'] = $setdateU;
+        $this->load->view('user_reserve/employees',$data);
+    }
+
+    public function getServiceEmployees ($services)
+    {
+        $servicesWithEmployees = [];
+        foreach ($services as $serviceId)
+        {
+            $serviceDetails = $this->services->details($serviceId);
+            $employees = $this->employee->list_employee_by_service($serviceId);
+            $serviceDetails['employees'] = $employees;
+            array_push($servicesWithEmployees, $serviceDetails);
+        }
+        return $servicesWithEmployees;
+    }
+
+    public function reserve()
+    {
+        date_default_timezone_set('Asia/Tehran');
+        $selectedEmployees= $this->input->post('selectedEmployees');
+        $services= unserialize($this->input->post('servicesWithEmployees'));
         $name= $this->input->post('name');
         $mobile= $this->input->post('mobile');
         $setdateU= $this->input->post('setdateU');
@@ -69,64 +101,127 @@ class User_reserve extends CI_Controller
         $date_from=date('Y-m-d H:i:s', strtotime($date. ' + '.$day_from.' hours'));
         // MO set date_to hour to 20 oclock (ending hour of working day)
         $date_to=date('Y-m-d H:i:s', strtotime($date. ' + '.$day_to.' hours'));
-
-
-        $firstArr=[];
+        // var_dump($services);die;
+        // var_dump($selectedEmployees);die;
+        $i = 0;
+        $result = [];
+        $resultCounter = 0;
         $chkEmployeeInArr=[];
-        for ($i=0;$i<count($services);$i++) {
-            //برای همه سرویس های انتخابی تمام افرادی که اون سرویس رو ارائه میدن میده
-            $ems = $this->employee->list_employee_by_service($services[$i]);
-            $service_details = $this->services->details($services[$i]);
-            for ($ii=0;$ii<count($ems);$ii++) {
-                //گرفتن آخرین تایم رزرو شده هر کاربر
-                //فقط یک بار.و افزودن آن به زمان شروع رزرو برای دیگر تایم ها
-                $events  = $this->events-> getEventsByEmployeeId($date_from,$date_to,$ems[$ii]["id"]);
-                $getEvent = null;
-                $em_date_from = $date_from;
-                $em_date_to = $date_to;
-                if($events && !in_array($ems[$ii]["id"], $chkEmployeeInArr)){
-                    $getEvent=$events[0];
-                    $em_date_from=$events[0]->end;
-                    // MO inja moshkel darad zaheran
-                    $em_date_to=$events[0]->end;
-                    array_push($chkEmployeeInArr,$ems[$ii]["id"]);
-                }
-                $ems[$ii]['service_name']=$service_details['name'];
-                $ems[$ii]['service_id']=$service_details['id'];
-                $ems[$ii]['service_settime']=$service_details['settime'];
-                $ems[$ii]['price']=$service_details['price'];
-                $ems[$ii]['start']=$em_date_from;
-                $ems[$ii]['end']=$em_date_to;
-                $ems[$ii]['events']=$events;
-                //لیست تمام افرادی که در هر یک از سرویس های خواسته شده مشتری کار میکنه
-                // MO $firstArr arrayeyi az hame karmandani hast ke service haye darkhasty moshtary ra anjam midahand, har khane araye shamele etelaate karmand, etelaate service va tarikhe shoro va payane service mibashad
-                array_push($firstArr,$ems[$ii]);
-            }
-          //  print_r($ems);echo "<br/>"."<br/>"."<br/>";
-            //print_r($chkEmployeeInArr);echo "<br/>"."<br/>"."<br/>";
+        foreach ($services as $service)
+        {
+            foreach ($service['employees'] as $employee)
+            {
+                // var_dump($employee);die;
+                if ($employee['id'] == $selectedEmployees[$i])
+                {
+                    // unset ($service['employees']);
+                    array_push( $result, $employee );
 
-        }
-        for ($x=0;$x<count($firstArr);$x++) {
-            //لیست تمام افرادی که در هر یک از سرویس های خواسته شده مشتری کار میکنه
-            //print_r($firstArr[$x]);echo "<br/>"."<br/>"."<br/>";
-        }
+                    $events  = $this->events-> getEventsByEmployeeId($date_from,$date_to,$employee["id"]);
+                    $getEvent = null;
+                    $em_date_from = $date_from;
+                    $em_date_to = $date_to;
+                    if($events && !in_array($ems[$ii]["id"], $chkEmployeeInArr)){
+                        $getEvent=$events[0];
+                        $em_date_from=$events[0]->end;
+                        // MO inja moshkel darad zaheran
+                        $em_date_to=$events[0]->end;
+                        array_push($chkEmployeeInArr,$ems[$ii]["id"]);
+                    }
 
-       // echo "---------------------------------------------------------------------------------------";
-      //  echo "<br/>"."<br/>"."<br/>";
-        $chkServiceTimeArr=[];
-        $result=[];
-        for ($n=0;$n<count($services);$n++) {
-          //  print_r( $services[$n]);echo "<br/>"."<br/>"."<br/>";
-            for ($z=0;$z<count($firstArr);$z++) {
-                if($firstArr[$z]['service_id']==$services[$n] && !in_array($services[$n], $chkServiceTimeArr)){
-                    //لیست همه امپلویی هایی که این سرویس رو ارائه میدن و آلان تایم خالی دارن
-                  //  print_r($firstArr[$z]);echo "<br/>"."<br/>"."<br/>";
-                    // MO $result arayeyi az karmandani hast ke baraye har service entekhab shodan, dar asl bargozidegane araye $firstArr mibashand
-                    array_push($result,$firstArr[$z]);
-                    array_push($chkServiceTimeArr,$services[$n]);
+                    $result[$resultCounter]['service_name']=$service['name'];
+                    $result[$resultCounter]['service_id']=$service['id'];
+                    $result[$resultCounter]['service_settime']=$service['settime'];
+                    $result[$resultCounter]['price']=$service['price'];
+                    $result[$resultCounter]['start']=$date_from;
+                    $result[$resultCounter]['end']=$em_date_to;
+                    $result[$resultCounter]['events']=$events;
+
+                    $resultCounter+=1;
                 }
             }
+            $i+=1;
         }
+        // var_dump($result);die;
+
+        // for ($i=0; $i<count($services); $i++)
+        // {
+        //     // foreach ($services as $service)
+        //     // {
+        //     for ($j=0; $j<count($services[$i]['employees']); $j++)
+        //     {
+        //         // foreach ($service['employees'] as $employee)
+        //         // {
+        //         // var_dump($employee);die;
+        //         if ($services[$i]['employees'][$j]['id'] == $selectedEmployees[$s])
+        //         {
+        //             // unset ($service['employees']);
+        //             $ems[$ii]['service_name']=$service_details['name'];
+        //             $ems[$ii]['service_id']=$service_details['id'];
+        //             $ems[$ii]['service_settime']=$service_details['settime'];
+        //             $ems[$ii]['price']=$service_details['price'];
+        //             $ems[$ii]['start']=$em_date_from;
+        //             $ems[$ii]['end']=$em_date_to;
+        //             $ems[$ii]['events']=$events;
+        //             array_push( $result, array_merge($service, $employee) );
+        //         }
+        //     }
+
+        //     $s+=1;
+        // }
+        
+
+        // $firstArr=[];
+        // $chkEmployeeInArr=[];
+        // for ($i=0;$i<count($services);$i++) {
+        //     //برای همه سرویس های انتخابی تمام افرادی که اون سرویس رو ارائه میدن میده
+        //     $ems = $this->employee->list_employee_by_service($services[$i]);
+        //     $service_details = $this->services->details($services[$i]);
+        //     for ($ii=0;$ii<count($ems);$ii++) {
+        //         //گرفتن آخرین تایم رزرو شده هر کاربر
+        //         //فقط یک بار.و افزودن آن به زمان شروع رزرو برای دیگر تایم ها
+        //         $events  = $this->events-> getEventsByEmployeeId($date_from,$date_to,$ems[$ii]["id"]);
+        //         $getEvent = null;
+        //         $em_date_from = $date_from;
+        //         $em_date_to = $date_to;
+        //         if($events && !in_array($ems[$ii]["id"], $chkEmployeeInArr)){
+        //             $getEvent=$events[0];
+        //             $em_date_from=$events[0]->end;
+        //             // MO inja moshkel darad zaheran
+        //             $em_date_to=$events[0]->end;
+        //             array_push($chkEmployeeInArr,$ems[$ii]["id"]);
+        //         }
+        //         $ems[$ii]['service_name']=$service_details['name'];
+        //         $ems[$ii]['service_id']=$service_details['id'];
+        //         $ems[$ii]['service_settime']=$service_details['settime'];
+        //         $ems[$ii]['price']=$service_details['price'];
+        //         $ems[$ii]['start']=$em_date_from;
+        //         $ems[$ii]['end']=$em_date_to;
+        //         $ems[$ii]['events']=$events;
+        //         //لیست تمام افرادی که در هر یک از سرویس های خواسته شده مشتری کار میکنه
+        //         // MO $firstArr arrayeyi az hame karmandani hast ke service haye darkhasty moshtary ra anjam midahand, har khane araye shamele etelaate karmand, etelaate service va tarikhe shoro va payane service mibashad
+        //         array_push($firstArr,$ems[$ii]);
+        //     }
+        //   //  print_r($ems);echo "<br/>"."<br/>"."<br/>";
+        //     //print_r($chkEmployeeInArr);echo "<br/>"."<br/>"."<br/>";
+
+        // }
+
+        // $chkServiceTimeArr=[];
+        // $result=[];
+        // for ($n=0;$n<count($services);$n++) {
+        //   //  print_r( $services[$n]);echo "<br/>"."<br/>"."<br/>";
+        //     for ($z=0;$z<count($firstArr);$z++) {
+        //         if($firstArr[$z]['service_id']==$services[$n] && !in_array($services[$n], $chkServiceTimeArr)){
+        //             //لیست همه امپلویی هایی که این سرویس رو ارائه میدن و آلان تایم خالی دارن
+        //           //  print_r($firstArr[$z]);echo "<br/>"."<br/>"."<br/>";
+        //             // MO $result arayeyi az karmandani hast ke baraye har service entekhab shodan, dar asl bargozidegane araye $firstArr mibashand
+        //             array_push($result,$firstArr[$z]);
+        //             array_push($chkServiceTimeArr,$services[$n]);
+        //         }
+        //     }
+        // }
+        // var_dump($result);die;
         $mainTime=$date_from;//$date_toSET=$date_from;
         $finalManyResult=[];
         $finalArr=[];$finalArr2=[];$CHKdate_toSET=$date_to;
