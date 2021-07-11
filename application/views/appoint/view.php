@@ -24,18 +24,18 @@
                 <div class="form-group row" style="display: none">
                     <label>نحوه پرداخت</label>
                     <?php
-                    $how_pay=1;
+                    $payment_type=1;
                     $factor_code="";
-                    foreach($event as $item){ $how_pay=$item['how_pay'];$factor_code=$item['description']; } ?>
+                    foreach($event as $item){ $payment_type=$item['payment_type'];$factor_code=$item['description']; } ?>
 
-<input type="hidden" value="<?php echo $factor_code; ?>" name="factor_code">
+                    <input type="hidden" value="<?php echo $factor_code; ?>" name="factor_code">
 
-                    <select name="how_pay" class="form-control col-md-12">
+                    <select name="payment_type" class="form-control col-md-12">
 
-                        <option value="1" <?php  if($how_pay==1) {echo "selected"; } ?> >حساب 1</option>
-                        <option value="2" <?php  if($how_pay==2) {echo "selected"; } ?> >حساب 2</option>
-                        <option value="3" <?php  if($how_pay==3) {echo "selected"; } ?> >نقدی</option>
-                        <option value="4" <?php  if($how_pay==4) {echo "selected"; } ?> >کارت به کارت</option>
+                        <option value="1" <?php  if($payment_type==1) {echo "selected"; } ?> >حساب 1</option>
+                        <option value="2" <?php  if($payment_type==2) {echo "selected"; } ?> >حساب 2</option>
+                        <option value="3" <?php  if($payment_type==3) {echo "selected"; } ?> >نقدی</option>
+                        <option value="4" <?php  if($payment_type==4) {echo "selected"; } ?> >کارت به کارت</option>
                     </select>
                 </div>
 

@@ -201,18 +201,37 @@
                         <?php echo '<p><span class="text-muted">' . $this->lang->line('Invoice Date') . '  :</span> ' . dateformat($invoice['invoicedate']) . '</p> <p><span class="text-muted">' . $this->lang->line('Due Date') . ' :</span> ' . dateformat($invoice['invoiceduedate']) . '</p>  <p><span class="text-muted">' . $this->lang->line('Terms') . ' :</span> ' . $invoice['termtit'] . '</p>';
                         ?>
                     </div>
+                    <div class="col-md-12 col-sm-12 text-xs-center text-md-left">
+                        <ul class="px-0 list-unstyled">
+                            <li>
+                                Payment Type: 
+                                <?php 
+                                    if ($invoice['payment_type'] == 1){ echo "حساب 1";}
+                                    else if ($invoice['payment_type'] == 2){ echo "حساب2 ";}
+                                    else if ($invoice['payment_type'] == 3){ echo " نقدی";}
+                                    else if ($invoice['payment_type'] == 4){ echo " کارت به کارت";}
+                                ?>
+                            </li>
+                            <li>Payment Amount: <?php echo $invoice['payment_amount'] ?></li>
+                            <li>
+                                Payment Type 2: 
+                                <?php 
+                                    if ($invoice['payment_type2'] == 1){ echo "حساب 1";}
+                                    else if ($invoice['payment_type2'] == 2){ echo "حساب2 ";}
+                                    else if ($invoice['payment_type2'] == 3){ echo " نقدی";}
+                                    else if ($invoice['payment_type2'] == 4){ echo " کارت به کارت";}
+                                ?>
+                            </li>
+                            <li>Payment Amount 2: <?php echo $invoice['payment_amount2'] ?></li>
+                        </ul>
+                    </div>
                 </div>
                 <!--/ Invoice Customer Details -->
 
                 <!-- Invoice Items Details -->
                 <div id="invoice-items-details" class="pt-2">
                     <div class="row">
-                        <p>how pay:
-                        <?php if ($invoice['how_pay'] == 1){ echo "حساب 1";}
-                            else if ($invoice['how_pay'] == 2){ echo "حساب2 ";}
-                            else if ($invoice['how_pay'] == 3){ echo " نقدی";}
-                            else if ($invoice['how_pay'] == 4){ echo " کارت به کارت";}
-                        ?></p>
+
                         <div class="table-responsive col-sm-12">
                             <table class="table table-striped">
                                 <thead>

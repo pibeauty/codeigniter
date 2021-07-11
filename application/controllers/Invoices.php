@@ -146,8 +146,13 @@ class Invoices extends CI_Controller
         //Invoice Data
         $bill_date = datefordatabase($invoicedate);
         $bill_due_date = datefordatabase($invocieduedate);
-        $how_pay=$this->input->post('how_pay');
-        $data = array('tid' => $invocieno, 'invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'ship_tax' => $shipping_tax, 'ship_tax_type' => $ship_taxtype, 'discount_rate' => $disc_val, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'eid' => $this->aauth->get_user()->id, 'taxstatus' => $tax, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency, 'loc' => $this->aauth->get_user()->loc,'how_pay'=>$how_pay);
+        $payment_type = $this->input->post('payment_type');
+        $payment_amount = $this->input->post('payment_amount');
+        $payment_type2 = $this->input->post('payment_type2');
+        if (!$payment_type2)
+            $payment_type2 = null;
+        $payment_amount2 = $this->input->post('payment_amount2');
+        $data = array('tid' => $invocieno, 'invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'ship_tax' => $shipping_tax, 'ship_tax_type' => $ship_taxtype, 'discount_rate' => $disc_val, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'eid' => $this->aauth->get_user()->id, 'taxstatus' => $tax, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency, 'loc' => $this->aauth->get_user()->loc, 'payment_type'=>$payment_type, 'payment_amount'=>$payment_amount, 'payment_type2'=>$payment_type2, 'payment_amount2'=>$payment_amount2);
         $invocieno2 = $invocieno;
         if ($this->db->insert('geopos_invoices', $data)) {
             $invocieno = $this->db->insert_id();
@@ -263,7 +268,7 @@ class Invoices extends CI_Controller
                 $text_message = $invoice_sms['message'];
                 require APPPATH . 'third_party/twilio-php-master/Twilio/autoload.php';
                 $sms_service = $this->plugins->universal_api(2);
-// Your Account SID and Auth Token from twilio.com/console
+                // Your Account SID and Auth Token from twilio.com/console
                 $sid = $sms_service['key1'];
                 $token = $sms_service['key2'];
                 $client = new Client($sid, $token);
@@ -452,8 +457,13 @@ class Invoices extends CI_Controller
         $transok = true;
         $bill_date = datefordatabase($invoicedate);
         $bill_due_date = datefordatabase($invocieduedate);
-        $how_pay=$this->input->post('how_pay');
-        $data = array('invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'ship_tax' => $shipping_tax, 'ship_tax_type' => $ship_taxtype, 'discount_rate' => $disc_val, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'items' => 0, 'taxstatus' => $tax, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency,'how_pay'=>$how_pay);
+        $payment_type=$this->input->post('payment_type');
+        $payment_amount = $this->input->post('payment_amount');
+        $payment_type2 = $this->input->post('payment_type2');
+        if (!$payment_type2)
+            $payment_type2 = null;
+        $payment_amount2 = $this->input->post('payment_amount2');
+        $data = array('invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'ship_tax' => $shipping_tax, 'ship_tax_type' => $ship_taxtype, 'discount_rate' => $disc_val, 'discount' => $total_discount, 'tax' => $total_tax, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'items' => 0, 'taxstatus' => $tax, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency, 'payment_type'=>$payment_type, 'payment_amount'=>$payment_amount, 'payment_type2'=>$payment_type2, 'payment_amount2'=>$payment_amount2);
         $this->db->set($data);
         $this->db->where('id', $iid);
 
@@ -481,7 +491,7 @@ class Invoices extends CI_Controller
 
             foreach ($pid as $key => $value) {
 
-                $total_discount += numberClean(@$ptotal_disc[$key]);
+                $total_discount = $total_discount . numberClean(@$ptotal_disc[$key]);
                 $total_tax += numberClean($ptotal_tax[$key]);
 
                 $data = array(
@@ -711,7 +721,7 @@ class Invoices extends CI_Controller
             'BillNumber' => $invocieno2,
             'URL' => "<a href='$link'>$link</a>",
             'CompanyDetails' => '<h6><strong>' . $this->config->item('ctitle') . ',</strong></h6>
-<address>' . $this->config->item('address') . '<br>' . $this->config->item('address2') . '</address>
+            <address>' . $this->config->item('address') . '<br>' . $this->config->item('address2') . '</address>
              ' . $this->lang->line('Phone') . ' : ' . $this->config->item('phone') . '<br>  ' . $this->lang->line('Email') . ' : ' . $this->config->item('email'),
             'DueDate' => dateformat($idate),
             'Amount' => amountExchange($total, $multi)

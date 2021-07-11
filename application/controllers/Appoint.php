@@ -128,8 +128,8 @@ class Appoint extends CI_Controller
 
     public function updateFactor(){
         $factor_code=$this->input->post('factor_code');
-        $how_pay=$this->input->post('how_pay');
-        $this->events->updateFactor($factor_code,$how_pay);
+        $payment_type=$this->input->post('payment_type');
+        $this->events->updateFactor($factor_code,$payment_type);
 
         echo json_encode(array('status' => 'Success', 'message' =>
             'Invoice Edited'));

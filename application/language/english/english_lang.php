@@ -815,3 +815,5 @@ $lang['High'] = "High";
 $lang['Birthday'] = "Birthday";
 $lang['Birthdate'] = "Birthdate";
 $lang['Referral'] = "Referral";
+$lang['Payment Amount'] = "Payment Amount";
+$lang['Payment Amount 2'] = "Payment Amount 2";

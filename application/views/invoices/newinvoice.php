@@ -299,26 +299,54 @@
                                 <td colspan="2">
                                     <?php echo $this->lang->line('Payment Terms') ?>
                                     <select name="pterms"
-                                                                                                         class="selectpicker form-control"><?php foreach ($terms as $row) {
+                                            class="selectpicker form-control"><?php foreach ($terms as $row) {
                                             echo '<option value="' . $row['id'] . '">' . $row['title'] . '</option>';
                                         } ?>
 
                                     </select>
-<br/>
-                                    <p>how Pay</p>
-                                    <select name="how_pay" class="form-control col-md-12">
-
-                                        <option value="1"   >حساب 1</option>
-                                        <option value="2"   >حساب 2</option>
-                                        <option value="3"   >نقدی</option>
-                                        <option value="4" >کارت به کارت</option>
+                                    <br>
+                                    <p>Payment Type</p>
+                                    <select name="payment_type" class="form-control col-md-12">
+                                        <option value="1">حساب 1</option>
+                                        <option value="2">حساب 2</option>
+                                        <option value="3">نقدی</option>
+                                        <option value="4">کارت به کارت</option>
                                     </select>
+                                    <div class="col-sm-6"><label for="payment_amount"
+                                        class="caption"><?php echo $this->lang->line('Payment Amount') ?></label>
+
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><span class="icon-bookmark-o"
+                                                                                 aria-hidden="true"></span></div>
+                                            <input type="text" class="form-control round" placeholder="Payment Amount"
+                                                   name="payment_amount">
+                                        </div>
+                                    </div>
+
+                                    <br>
+                                    <p>Payment Type 2</p>
+                                    <select name="payment_type2" class="form-control col-md-12">
+                                        <option value="0">--انتخاب کنید--</option>
+                                        <option value="1">حساب 1</option>
+                                        <option value="2">حساب 2</option>
+                                        <option value="3">نقدی</option>
+                                        <option value="4">کارت به کارت</option>
+                                    </select>
+                                    <div class="col-sm-6"><label for="payment_amount2"
+                                        class="caption"><?php echo $this->lang->line('Payment Amount 2') ?></label>
+
+                                        <div class="input-group">
+                                            <div class="input-group-addon"><span class="icon-bookmark-o"
+                                                                                 aria-hidden="true"></span></div>
+                                            <input type="text" class="form-control round" placeholder="Payment Amount 2"
+                                                   name="payment_amount2">
+                                        </div>
+                                    </div>
                                 </td>
                                 <td align="right" colspan="6"><input type="submit"
-                                                                     class="btn btn-success sub-btn btn-lg"
-                                                                     value="<?php echo $this->lang->line('Generate Invoice') ?> "
-                                                                     id="submit-data" data-loading-text="Creating...">
-
+                                    class="btn btn-success sub-btn btn-lg"
+                                    value="<?php echo $this->lang->line('Generate Invoice') ?> "
+                                    id="submit-data" data-loading-text="Creating...">
                                 </td>
 
                             </tr>

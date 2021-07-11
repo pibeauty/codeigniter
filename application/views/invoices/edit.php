@@ -333,7 +333,9 @@
                                         <input type="hidden"
                                                name="after_disc" id="after_disc">
                                         ( <?= $this->config->item('currency'); ?>
-                                        <span id="disc_final"><?= amountExchange_s((($invoice['discount'] / $invoice['discount_rate']) * 100) - $invoice['total'], $invoice['multi'], $this->aauth->get_user()->loc); ?></span>
+                                        <span id="disc_final">
+                                            <?= amountExchange_s((($invoice['discount'] / $invoice['discount_rate']) * 100) - $invoice['total'], $invoice['multi'], $this->aauth->get_user()->loc); ?>
+                                        </span>
                                         )
                                     </td>
                                 </tr>
@@ -348,15 +350,45 @@
                                         </select>
 
 
-                                        <br/>
-                                        <p>how Pay</p>
-                                        <select name="how_pay" class="form-control col-md-12">
+                                        <br>
 
-                                            <option value="1" <?php  if($invoice['how_pay']==1) {echo "selected"; } ?> >حساب 1</option>
-                                            <option value="2" <?php  if($invoice['how_pay']==2) {echo "selected"; } ?> >حساب 2</option>
-                                            <option value="3" <?php  if($invoice['how_pay']==3) {echo "selected"; } ?> >نقدی</option>
-                                            <option value="4" <?php  if($invoice['how_pay']==4) {echo "selected"; } ?> >کارت به کارت</option>
+                                        <p>Payment Type</p>
+                                        <select name="payment_type" class="form-control col-md-12">
+                                            <option value="1" <?php  if($invoice['payment_type']==1) {echo "selected"; } ?> >حساب 1</option>
+                                            <option value="2" <?php  if($invoice['payment_type']==2) {echo "selected"; } ?> >حساب 2</option>
+                                            <option value="3" <?php  if($invoice['payment_type']==3) {echo "selected"; } ?> >نقدی</option>
+                                            <option value="4" <?php  if($invoice['payment_type']==4) {echo "selected"; } ?> >کارت به کارت</option>
                                         </select>
+                                        <div class="col-sm-6"><label for="payment_amount"
+                                            class="caption"><?php echo $this->lang->line('Payment Amount') ?></label>
+
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><span class="icon-bookmark-o"
+                                                                                    aria-hidden="true"></span></div>
+                                                <input type="text" class="form-control round" placeholder="Payment Amount"
+                                                    name="payment_amount" value="<?php echo $invoice['payment_amount']; ?>">
+                                            </div>
+                                        </div>
+
+                                        <br>
+                                        <p>Payment Type 2</p>
+                                        <select name="payment_type2" class="form-control col-md-12">
+                                            <option value="0">--انتخاب کنید--</option>
+                                            <option value="1" <?php  if($invoice['payment_type2']==1) {echo "selected"; } ?> >حساب 1</option>
+                                            <option value="2" <?php  if($invoice['payment_type2']==2) {echo "selected"; } ?> >حساب 2</option>
+                                            <option value="3" <?php  if($invoice['payment_type2']==3) {echo "selected"; } ?> >نقدی</option>
+                                            <option value="4" <?php  if($invoice['payment_type2']==4) {echo "selected"; } ?> >کارت به کارت</option>
+                                        </select>
+                                        <div class="col-sm-6"><label for="payment_amount2"
+                                            class="caption"><?php echo $this->lang->line('Payment Amount 2') ?></label>
+
+                                            <div class="input-group">
+                                                <div class="input-group-addon"><span class="icon-bookmark-o"
+                                                                                    aria-hidden="true"></span></div>
+                                                <input type="text" class="form-control round" placeholder="Payment Amount 2"
+                                                    name="payment_amount2" value="<?php echo $invoice['payment_amount2']; ?>">
+                                            </div>
+                                        </div>
                                     </td>
                                     <td align="right" colspan="6"><input type="submit" class="btn btn-success sub-btn"
                                                                          value="<?php echo $this->lang->line('Update') ?>"

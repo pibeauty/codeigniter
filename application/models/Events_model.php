@@ -153,9 +153,9 @@ class Events_model extends CI_Model
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
-    public function updateFactor($factor_code,$how_pay){
-        $sql = "UPDATE geopos_events SET how_pay = ? WHERE description = ?";
-        $this->db->query($sql, array($how_pay, $factor_code));
+    public function updateFactor($factor_code,$payment_type){
+        $sql = "UPDATE geopos_events SET payment_type = ? WHERE description = ?";
+        $this->db->query($sql, array($payment_type, $factor_code));
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
