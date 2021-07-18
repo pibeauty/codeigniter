@@ -313,7 +313,7 @@
             // Clear buttons except Cancel
             $('.modal-footer button:not(".btn-default")').remove();
             // Set input values
-            $('#title').val(data.event ? data.event.cus_name : '');
+            $('#title').val(data.event ? data.event.title : '');
             $('#titleShow').val(data.event ? data.event.cus_name : '');
             $('#description').val(data.event ? data.event.description : '');
             $('#descriptionShow').val(data.event ? data.event.service_name : '');
@@ -323,12 +323,14 @@
 
             //customerid
             if(data.event){
-              $('#userid').val(data.event.userid);
-               // $("#customerid").val(data.event.customerid);
+                $('#userid').val(data.event.userid);
+                $("#customerid").val(data.event.customerid);
+                $("#select2-customerid-container").attr("title",data.event.cus_name);
+                $("#select2-customerid-container").text(data.event.cus_name);
                 $("#service_id").val(data.event.service_id);
-                $("#customerid").select2().select2('val',data.event.customerid);
-             //   $('#customerid').val(data.event.customerid);
-             // $('#customerid option[value='data.event.customerid']').prop('selected', true);
+                // $("#customerid").select2().select2('val',data.event.customerid);
+                // $('#customerid').val(data.event.customerid);
+                // $('#customerid option[value='data.event.customerid']').prop('selected', true);
           }
             //
             // Create Butttons
