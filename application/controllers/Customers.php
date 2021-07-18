@@ -222,15 +222,16 @@ class Customers extends CI_Controller
         $discount = $this->input->post('discount', true);
 
         $tavalodX = $this->input->post('tavalodX', true);
-        if ($tavalodX)
+        if ($tavalodX && ($tavalodX != 'NaN'))
             $tavalod = date('Y-m-d', substr($tavalodX, 0, -3));
         else
             $tavalod = null;
 
         $moaaref = $this->input->post('moaaref', true) ? $this->input->post('moaaref', true) : null;
+        $picode = $this->input->post('picode', true);
 
         if ($id) {
-            $this->customers->edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $docid, $custom, $language, $discount, $tavalod, $moaaref);
+            $this->customers->edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $docid, $custom, $language, $discount, $tavalod, $moaaref, $picode);
         }
     }
 

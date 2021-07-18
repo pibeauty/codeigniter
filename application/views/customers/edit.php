@@ -65,6 +65,16 @@
                                        value="<?php echo $customer['email'] ?>" id="mcustomer_email">
                             </div>
                         </div>
+                        <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label" for="picode">Picode</label>
+
+                            <div class="col-sm-10">
+                                <input type="text" placeholder="picode"
+                                       class="form-control margin-bottom required" name="picode"
+                                       value="<?php echo $customer['picode'] ?>" id="mcustomer_picode">
+                            </div>
+                        </div>
                         <!-- <div class="form-group row">
 
                             <label class="col-sm-2 col-form-label"
@@ -147,7 +157,7 @@
                                         if ($customer['moaaref'] == $value->id)
                                             $selected = "selected";
                                         $cid = $value->id;
-                                        $title = $value->title;
+                                        $title = $value->name;
                                         echo ' <option value="' . $value->id . '" '.$selected.'> ' . $value->name . '</option>';
                                     }
                                     ?>
