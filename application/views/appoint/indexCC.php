@@ -214,6 +214,11 @@
                             id: 'add-event', // Buttons id
                             css: 'btn-success', // Buttons class
                             label: 'Add' // Buttons label
+                        },
+                        addservice: {
+                            id: 'add-service',
+                            css: 'btn-success',
+                            label: 'Add new service'
                         }
                     },
                     title: 'Add Event' // Modal title
@@ -348,20 +353,70 @@
             var res = str.replace("T", " ")+":00";
             var str2 =$('#datetimeend').val();
             var res2 = str2.replace("T", " ")+":00";
-            //alert( res+":00")
-            var service_id =$('#service_id').val();
-           // alert(service_id)
-            if(validator(['title', 'description'])) {
-                $.post(base_url+'events/addAppointment',
-                    'title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&start='+$('#start').val()+'&end='+$('#end').val()+'&customerid='+ $('#customerid').val()+'&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+'&service_id='+ service_id+'&'+crsf_token+'='+crsf_hash , function(result){
-                        $('.alert').addClass('alert-success').text('Event added successful');
-                        $('.modal').modal('hide');
-                        $('#calendar').fullCalendar("refetchEvents");
-                        hide_notify();
-                    });
+            if (!str)
+            {
+                alert ('Start date is required.');
             }
+            else if (!str2)
+            {
+                alert ('End date is required.');
+            }
+            else if (res2 <= res)
+            {
+                alert ('End date must be bigger than start date.');
+            }
+            else
+            {
+                //alert( res+":00")
+                var service_id =$('#service_id').val();
+                // alert(service_id)
+                if(validator(['title', 'description'])) {
+                    $.post(base_url+'events/addAppointment',
+                        'title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&start='+$('#start').val()+'&end='+$('#end').val()+'&customerid='+ $('#customerid').val()+'&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+'&service_id='+ service_id+'&'+crsf_token+'='+crsf_hash , function(result){
+                            $('.alert').addClass('alert-success').text('Event added successful');
+                            $('.modal').modal('hide');
+                            $('#calendar').fullCalendar("refetchEvents");
+                            hide_notify();
+                        });
+                }
+            }
+            
         });
 
+        // Handle Click on Add Button
+        $('.modal').on('click', '#add-service',  function(e){
+            var str =$('#datetime').val();
+            var res = str.replace("T", " ")+":00";
+            var str2 =$('#datetimeend').val();
+            var res2 = str2.replace("T", " ")+":00";
+            if (!str)
+            {
+                alert ('Start date is required.');
+            }
+            else if (!str2)
+            {
+                alert ('End date is required.');
+            }
+            else if (res2 <= res)
+            {
+                alert ('End date must be bigger than start date.');
+            }
+            else
+            {
+                //alert( res+":00")
+                var service_id =$('#service_id').val();
+                // alert(service_id)
+                if(validator(['title', 'description'])) {
+                    $.post(base_url+'events/addAppointment',
+                        'title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&start='+$('#start').val()+'&end='+$('#end').val()+'&customerid='+ $('#customerid').val()+'&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+'&service_id='+ service_id+'&'+crsf_token+'='+crsf_hash , function(result){
+                            $('.alert').addClass('alert-success').text('Event added successful');
+                            // $('.modal').modal('hide');
+                            $('#calendar').fullCalendar("refetchEvents");
+                            hide_notify();
+                        });
+                }
+            }
+        });
 
         // Handle click on Update Button
         $('.modal').on('click', '#update-event',  function(e){
