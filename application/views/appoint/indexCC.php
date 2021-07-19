@@ -367,18 +367,38 @@
             }
             else
             {
-                //alert( res+":00")
                 var service_id =$('#service_id').val();
-                // alert(service_id)
-                if(validator(['title', 'description'])) {
-                    $.post(base_url+'events/addAppointment',
-                        'title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&start='+$('#start').val()+'&end='+$('#end').val()+'&customerid='+ $('#customerid').val()+'&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+'&service_id='+ service_id+'&'+crsf_token+'='+crsf_hash , function(result){
-                            $('.alert').addClass('alert-success').text('Event added successful');
-                            $('.modal').modal('hide');
-                            $('#calendar').fullCalendar("refetchEvents");
-                            hide_notify();
-                        });
+                
+                $.ajax({
+                    url: base_url+'events/checkEventExists',
+                    type: 'POST',
+                    data: '&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+crsf_token+'='+crsf_hash,
+                    async: false,
+                    fail: function(){
+                        alert('fail');
+                    },
+                    success: function(data,status){
+                        eventExists = data;
+                    },
+                });
+
+                if (eventExists == '1')
+                {
+                    alert ('The selected employee is busy in the selected hours.');
                 }
+                else
+                {
+                    if(validator(['title', 'description'])) {
+                        $.post(base_url+'events/addAppointment',
+                            'title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&start='+$('#start').val()+'&end='+$('#end').val()+'&customerid='+ $('#customerid').val()+'&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+'&service_id='+ service_id+'&'+crsf_token+'='+crsf_hash , function(result){
+                                $('.alert').addClass('alert-success').text('Event added successful');
+                                $('.modal').modal('hide');
+                                $('#calendar').fullCalendar("refetchEvents");
+                                hide_notify();
+                            });
+                    }
+                }
+                
             }
             
         });
@@ -403,18 +423,38 @@
             }
             else
             {
-                //alert( res+":00")
                 var service_id =$('#service_id').val();
-                // alert(service_id)
-                if(validator(['title', 'description'])) {
-                    $.post(base_url+'events/addAppointment',
-                        'title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&start='+$('#start').val()+'&end='+$('#end').val()+'&customerid='+ $('#customerid').val()+'&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+'&service_id='+ service_id+'&'+crsf_token+'='+crsf_hash , function(result){
-                            $('.alert').addClass('alert-success').text('Event added successful');
-                            // $('.modal').modal('hide');
-                            $('#calendar').fullCalendar("refetchEvents");
-                            hide_notify();
-                        });
+                
+                $.ajax({
+                    url: base_url+'events/checkEventExists',
+                    type: 'POST',
+                    data: '&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+crsf_token+'='+crsf_hash,
+                    async: false,
+                    fail: function(){
+                        alert('fail');
+                    },
+                    success: function(data,status){
+                        eventExists = data;
+                    },
+                });
+                
+                if (eventExists == '1')
+                {
+                    alert ('The selected employee is busy in the selected hours.');
                 }
+                else
+                {
+                    if(validator(['title', 'description'])) {
+                        $.post(base_url+'events/addAppointment',
+                            'title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&start='+$('#start').val()+'&end='+$('#end').val()+'&customerid='+ $('#customerid').val()+'&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+'&service_id='+ service_id+'&'+crsf_token+'='+crsf_hash , function(result){
+                                $('.alert').addClass('alert-success').text('Event added successful');
+                                // $('.modal').modal('hide');
+                                $('#calendar').fullCalendar("refetchEvents");
+                                hide_notify();
+                            });
+                    }
+                }
+                
             }
         });
 

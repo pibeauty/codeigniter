@@ -81,6 +81,20 @@ class Events extends CI_Controller
         $result = $this->events_model->addEvent($title, $start, $end, $description, $color);
 
     }
+
+    /* MO Check if employee is busy in selected hours */
+    public function checkEventExists()
+    {
+        $start = $this->input->post('datetime', true);
+        $end = $this->input->post('datetimeend', true);
+        $userId = $this->input->post('userid');
+        $result = $this->events_model->employeeHasEvent($start, $end, $userId);
+        if (empty($result))
+            echo '0';
+        else
+            echo '1';
+    }
+
     /*Add new Appointment */
     public function addAppointment()
     {
@@ -94,7 +108,7 @@ class Events extends CI_Controller
         $userid = $this->input->post('userid');
         $customerid = $this->input->post('customerid');
         $service_id = $this->input->post('service_id');
-       $result = $this->events_model->addAppointment($title, $start, $end, $description, $color,$userid,$customerid,$datetime,$datetimeend,$service_id);
+        $result = $this->events_model->addAppointment($title, $start, $end, $description, $color,$userid,$customerid,$datetime,$datetimeend,$service_id);
 
     }
     /*Update Event */

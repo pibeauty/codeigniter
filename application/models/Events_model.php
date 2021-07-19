@@ -35,6 +35,16 @@ class Events_model extends CI_Model
         return $this->db->query($sql, array($em_id,$start, $end))->result();
 
     }
+
+    /* MO Check if employee is busy in selected hours */
+    public function employeeHasEvent($start, $end, $emId)
+    {
+        $sql = "SELECT  * FROM geopos_events WHERE (geopos_events.userid = ?) AND ((geopos_events.start BETWEEN ? AND ?) OR (geopos_events.end BETWEEN ? AND ?) OR (geopos_events.start <= ? AND geopos_events.end >= ?)) ORDER BY id DESC";
+        $result = $this->db->query($sql, array($emId, $start, $end, $start, $end, $start, $end))->result();
+        log_message('error',"query result = ". json_encode($result));
+        return $result;
+    }
+
     public function getEvents($start, $end)
     {
 
