@@ -153,7 +153,8 @@
                                         <label class="col-sm-2 col-form-label"
                                             for="referral"><?php echo $this->lang->line('Referral') ?></label>
                                         <div class="col-sm-8">
-                                            <select name="moaaref" class="form-control margin-bottom">
+                                            <!-- <select name="customerid" id="customerid" class="form-control select-box" style="width: 100%"> -->
+                                            <select name="moaaref" class="form-control select-box" style="width: 100%">
                                                 <option value="0">--انتخاب کنید--</option>
                                                 <?php
                                                 foreach ($customers as $customer) {
@@ -414,6 +415,9 @@
 <script type="text/javascript" src="<?= assets_url() ?>app-assets/vendors/js/persian-datepicker/persian-date.min.js"></script>
 <script type="text/javascript" src="<?= assets_url() ?>app-assets/vendors/js/persian-datepicker/persian-datepicker.min.js"></script>
 <script>
+    $('.select-box').select2(
+
+    );
     $('#tavalod').persianDatepicker({
         minDate: new persianDate().unix(),
         format: 'YYYY-MM-DD',
