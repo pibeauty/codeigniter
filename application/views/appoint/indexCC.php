@@ -367,7 +367,7 @@
         $('.modal').on('click', '#update-event',  function(e){
             if(validator(['title', 'description'])) {
 
-                $.post(base_url+'events/updateEvent',  'id='+currentEvent.id+'&title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&'+crsf_token+'='+crsf_hash, function(result){
+                $.post(base_url+'events/updateEvent',  'id='+currentEvent.id+'&title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&customerid='+$('#customerid').val()+'&'+crsf_token+'='+crsf_hash, function(result){
                     $('.alert').addClass('alert-success').text('Event updated successful');
                     $('.modal').modal('hide');
                     $('#calendar').fullCalendar("refetchEvents");

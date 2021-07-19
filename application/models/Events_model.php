@@ -146,10 +146,16 @@ class Events_model extends CI_Model
     }
     /*Update  event */
 
-    public function updateEvent($id, $title, $description, $color)
+    public function updateEvent($id, $title, $description, $color, $customerid)
     {
-        $sql = "UPDATE geopos_events SET title = ?, description = ?, color = ? WHERE id = ?";
-        $this->db->query($sql, array($title, $description, $color, $id));
+        $this->db->select('*');
+        $this->db->from('geopos_customers');
+        $this->db->where('id', $customerid);
+        $query = $this->db->get();
+        $cus= $query->row_array();
+        
+        $sql = "UPDATE geopos_events SET title = ?, description = ?, color = ?, customerid = ?, cus_name = ? WHERE id = ?";
+        $this->db->query($sql, array($title, $description, $color, $customerid, $cus['name'], $id));
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 

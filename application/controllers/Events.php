@@ -104,7 +104,8 @@ class Events extends CI_Controller
         $id = $this->input->post('id');
         $description = $this->input->post('description', true);
         $color = $this->input->post('color');
-        $result = $this->events_model->updateEvent($id, $title, $description, $color);
+        $customerid = $this->input->post('customerid');
+        $result = $this->events_model->updateEvent($id, $title, $description, $color, $customerid);
         echo $result;
     }
 
