@@ -874,17 +874,9 @@ function sendMail_g(o_data, action_url) {
             url: baseurl + action_url,
             type: 'POST',
             data: o_data + '&' + crsf_token + '=' + crsf_hash,
-            dataType: 'json',
-            success: function (data) {
-                if (data.status == "Success") {
-                    $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
-                    $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
-                    $("html, body").animate({scrollTop: $('#notify').offset().top}, 1000);
-                } else {
-                    $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
-                    $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
-                    $("html, body").animate({scrollTop: $('body').offset().top}, 1000);
-                }
+            async: false,
+            success: function (data,status) {
+                smsSent = data;
             },
             error: function (data) {
                 $("#notify .message").html("<strong>" + data.status + "</strong>: " + data.message);
@@ -892,6 +884,18 @@ function sendMail_g(o_data, action_url) {
                 $("html, body").animate({scrollTop: $('body').offset().top}, 1000);
             }
         });
+        if (smsSent == '1')
+        {
+            $("#notify .message").html("<strong>SMS sent successfully.</strong>");
+            $("#notify").removeClass("alert-danger").addClass("alert-success").fadeIn();
+            $("html, body").animate({scrollTop: $('#notify').offset().top}, 1000);
+        }
+        else
+        {
+            $("#notify .message").html("<strong>There was a problem sending message</strong>");
+            $("#notify").removeClass("alert-success").addClass("alert-danger").fadeIn();
+            $("html, body").animate({scrollTop: $('body').offset().top}, 1000);
+        }
     }
 }
 

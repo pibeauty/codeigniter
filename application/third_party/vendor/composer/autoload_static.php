@@ -100,6 +100,10 @@ class ComposerStaticInit2f339ba354917fa9639f61518bfa4a08
             'Mike42\\' => 7,
             'Matrix\\' => 7,
         ),
+        'K' => 
+        array (
+            'Kavenegar\\' => 10,
+        ),
         'D' => 
         array (
             'DeepCopy\\' => 9,
@@ -179,6 +183,10 @@ class ComposerStaticInit2f339ba354917fa9639f61518bfa4a08
         array (
             0 => __DIR__ . '/..' . '/markbaker/matrix/classes/src',
         ),
+        'Kavenegar\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kavenegar/php/src',
+        ),
         'DeepCopy\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy',
@@ -213,6 +221,7 @@ class ComposerStaticInit2f339ba354917fa9639f61518bfa4a08
     public static $classMap = array (
         'ArithmeticError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/ArithmeticError.php',
         'AssertionError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/AssertionError.php',
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
         'DivisionByZeroError' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/DivisionByZeroError.php',
         'Error' => __DIR__ . '/..' . '/symfony/polyfill-php70/Resources/stubs/Error.php',
         'FPDF_TPL' => __DIR__ . '/..' . '/setasign/fpdi/fpdf_tpl.php',

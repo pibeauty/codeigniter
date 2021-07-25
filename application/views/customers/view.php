@@ -597,8 +597,8 @@
                             <div class="input-group">
                                 <div class="input-group-addon"><span class="icon-envelope-o"
                                                                      aria-hidden="true"></span></div>
-                                <input type="text" class="form-control" placeholder="Email" name="mailtoc"
-                                       value="<?php echo $details['email'] ?>">
+                                <input type="text" class="form-control" placeholder="Mobile" name="mobile"
+                                       value="<?php echo $details['phone'] ?>" readonly>
                             </div>
 
                         </div>
@@ -606,28 +606,28 @@
                     </div>
 
 
-                    <div class="row">
+                    <!-- <div class="row">
                         <div class="col mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Customer Name') ?></label>
                             <input type="text" class="form-control"
-                                   name="customername" value="<?php echo $details['name'] ?>"></div>
-                    </div>
-                    <div class="row">
+                                   name="customername" value="<?php echo $details['name'] ?>" readonly></div>
+                    </div> -->
+                    <!-- <div class="row">
                         <div class="col mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Subject') ?></label>
                             <input type="text" class="form-control"
                                    name="subject" id="subject">
                         </div>
-                    </div>
+                    </div> -->
                     <div class="row">
                         <div class="col mb-1"><label
                                     for="shortnote"><?php echo $this->lang->line('Message') ?></label>
-                            <textarea name="text" class="summernote" id="contents" title="Contents"></textarea></div>
+                            <textarea name="text_message" class="form-control" id="contents" title="Contents"></textarea></div>
                     </div>
 
                     <input type="hidden" class="form-control"
                            id="cid" name="tid" value="<?php echo $details['id'] ?>">
-                    <input type="hidden" id="action-url" value="communication/send_general">
+                    <input type="hidden" id="action-url" value="sms/send_sms">
 
 
                 </form>
