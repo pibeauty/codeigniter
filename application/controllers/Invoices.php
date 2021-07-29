@@ -27,6 +27,7 @@ class Invoices extends CI_Controller
     {
         parent::__construct();
         $this->load->model('invoices_model', 'invocies');
+        $this->load->model('customers_model', 'customers');
         $this->load->library("Aauth");
 
         if (!$this->aauth->is_loggedin()) {
@@ -138,6 +139,16 @@ class Invoices extends CI_Controller
             echo json_encode(array('status' => 'Error', 'message' =>
                 $this->lang->line('Please add a new client')));
             exit;
+        }
+        else
+        {
+            $customer = $this->customers->details($customer_id);
+            if (!$customer['picode'])
+            {
+                echo json_encode(array('status' => 'Error', 'message' =>
+                    $this->lang->line('Client Picode required.')));
+                exit;
+            }
         }
         $transok = true;
         $st_c = 0;
