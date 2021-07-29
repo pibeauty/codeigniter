@@ -39,6 +39,10 @@ class Customers_model extends CI_Model
     var $ptcolumn_search = array('name', 'edate', 'status');
     var $porder = array('id' => 'desc');
 
+    public function __construct()
+    {
+        $this->load->helper('kavenegar_helper');
+    }
 
     private function _get_datatables_query($id = '')
     {
@@ -234,7 +238,9 @@ class Customers_model extends CI_Model
                 $cid = $this->db->insert_id();
 
                 // MO generate picode and save it
-                $this->picodeGenerator($cid, $tavalod);
+                $picode = $this->picodeGenerator($cid, $tavalod);
+                $textMessage = "خانم $name به باشگاه مشتریان «سالن پی» خوش آمدید.\nشماره اشتراک (PInumber):\n$picode\n\n02140220012\n09393851976\nInstagram: pibeautysalon\nWebsite: pibeautysalon .com";
+                sendSms($phone, $textMessage);
                 $p_string = '';
                 $temp_password = '';
                 if ($create_login) {
@@ -301,6 +307,7 @@ class Customers_model extends CI_Model
         $this->db->set($data);
         $this->db->where('id', $id);
         $this->db->update('geopos_customers');
+        return $picode;
     }
 
     public function edit($id, $name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $docid = '', $custom = '', $language = '', $discount = 0, $tavalod, $moaaref, $picode)
