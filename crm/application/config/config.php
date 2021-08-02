@@ -26,7 +26,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 //$config['base_url'] = 'http://localhost/texon/pos/crm/';
 //$config['base_url'] = 'http://188.166.213.47/pos/';
-$config['base_url'] = 'http://365dailymart.net/pos2/';
+// $config['base_url'] = 'http://in.pibeautysalon.com/pos2/crm/';
+$config['base_url'] = 'http://localhost/pibeauty-codeigniter/crm/';
 /*
 |--------------------------------------------------------------------------
 | Index File

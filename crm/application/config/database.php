@@ -4,9 +4,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 $hostname ='localhost';
-$username ='infpos_nauwat';
-$password ='?5r?u&qJb_P3';
-$database ='infpos_nauwat';	
+// $username ='infpos_nauwat';
+// $password ='?5r?u&qJb_P3';
+// $database ='infpos_nauwat';
+$username ='root';
+$password ='123qwe';
+$database ='pibeauty_pos2';
 
 $db['default'] = array(
 	'dsn'	=> '',
