@@ -419,7 +419,7 @@
 
     );
     $('#tavalod').persianDatepicker({
-        minDate: new persianDate().unix(),
+        // minDate: new persianDate().unix(),
         format: 'YYYY-MM-DD',
         autoClose: true,
         initialValue: false,

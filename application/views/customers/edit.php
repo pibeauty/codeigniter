@@ -393,7 +393,7 @@
 <script>
     document.getElementById("tavalodX").value = new Date(document.getElementById("tavalod").value).getTime();
     $('#tavalod').persianDatepicker({
-        minDate: new persianDate().unix(),
+        // minDate: new persianDate().unix(),
         format: 'YYYY-MM-DD',
         autoClose: true,
         initialValue: false,
