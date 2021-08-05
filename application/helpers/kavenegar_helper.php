@@ -10,7 +10,7 @@ if ( ! function_exists('sendSms'))
             $api = new \Kavenegar\KavenegarApi("33584D58784576336A4B77616473746C594E4A5A416C61567A38417338727243794835725A78354C6344593D");
             $sender = "2000500666";
             // $message =  $this->input->post('text');
-            $receptor = array($mobile);
+            $receptor = $mobile;
             $result = $api->Send($sender,$receptor,$textMessage);
             if ($result)
             {

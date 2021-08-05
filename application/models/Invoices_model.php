@@ -30,6 +30,20 @@ class Invoices_model extends CI_Model
         parent::__construct();
     }
 
+    public function customerHasInvoice($customerId)
+    {
+        $this->db->select('id');
+        $this->db->from($this->table);
+        $this->db->where('csd', $customerId);
+        $query = $this->db->get();
+        $result = $query->result_array();
+        if($result)
+        {
+            return true;
+        }
+        return false;
+    }
+
     public function lastinvoice()
     {
         $this->db->select('tid');

@@ -515,6 +515,15 @@ class Users_model extends CI_Model
         return $result;
     }
 
+    public function getUserByCustomerId($customerId){
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('cid', $customerId);
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result[0];
+    }
+
     public function getRoles_PT(){
         $query = $this->db->get($this->DBname_roles);
         $query2 = $this->db->get($this->DBname_payment_term);

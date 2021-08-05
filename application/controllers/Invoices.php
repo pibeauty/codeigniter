@@ -29,6 +29,7 @@ class Invoices extends CI_Controller
         $this->load->model('invoices_model', 'invocies');
         $this->load->model('customers_model', 'customers');
         $this->load->library("Aauth");
+        $this->load->helper('kavenegar_helper');
 
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
@@ -142,8 +143,8 @@ class Invoices extends CI_Controller
         }
         else
         {
-            $customer = $this->customers->details($customer_id);
-            if (!$customer['picode'])
+            $customerDetails = $this->customers->details($customer_id);
+            if (!$customerDetails['picode'])
             {
                 echo json_encode(array('status' => 'Error', 'message' =>
                     $this->lang->line('Client Picode required.')));
@@ -165,6 +166,12 @@ class Invoices extends CI_Controller
         $payment_amount2 = $this->input->post('payment_amount2');
         $data = array('tid' => $invocieno, 'invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'ship_tax' => $shipping_tax, 'ship_tax_type' => $ship_taxtype, 'discount_rate' => $disc_val, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'eid' => $this->aauth->get_user()->id, 'taxstatus' => $tax, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency, 'loc' => $this->aauth->get_user()->loc, 'payment_type'=>$payment_type, 'payment_amount'=>$payment_amount, 'payment_type2'=>$payment_type2, 'payment_amount2'=>$payment_amount2);
         $invocieno2 = $invocieno;
+
+        // MO Check if this is user's first invoice
+        $customerFirstInvoice = false;
+        if (!$this->invocies->customerHasInvoice($customer_id))
+            $customerFirstInvoice = true;
+        
         if ($this->db->insert('geopos_invoices', $data)) {
             $invocieno = $this->db->insert_id();
             //products
@@ -251,6 +258,19 @@ class Invoices extends CI_Controller
             $this->db->trans_rollback();
         }
         if ($transok) {
+            if ($customerFirstInvoice)
+            {
+                $this->load->model('users_model', 'users');
+                log_message('error',"customerDetails id = ".$customerDetails['id']);
+                $customerUserDetails = $this->users->getUserByCustomerId($customerDetails['id']);
+                $customerPass = "pi".$customerDetails['phone'];
+                $customerName = $customerDetails['name'];
+                $customerPicode = $customerDetails['picode'];
+                $customerUserEmail = $customerUserDetails['email'];
+                $textMessage = "خانم $customerName به باشگاه مشتریان «سالن پی» خوش آمدید.\nشماره اشتراک (PInumber):\n$customerPicode\n\n02140220012\n09393851976\nInstagram: pibeautysalon\nWebsite: pibeautysalon.com\n\nاطلاعات ورود شما به پنل مشتری:\npos.pibeautysalon.com/crm\nنام کاربری: $customerUserEmail\nرمز عبور: $customerPass";
+                sendSms([$customerDetails['phone']], $textMessage);
+            }
+            
             $this->db->from('univarsal_api');
             $this->db->where('univarsal_api.id', 56);
             $query = $this->db->get();

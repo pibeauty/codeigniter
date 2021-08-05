@@ -240,7 +240,7 @@ class Customers_model extends CI_Model
                 // MO generate picode and save it
                 $picode = $this->picodeGenerator($cid, $tavalod);
                 $textMessage = "خانم $name به باشگاه مشتریان «سالن پی» خوش آمدید.\nشماره اشتراک (PInumber):\n$picode\n\n02140220012\n09393851976\nInstagram: pibeautysalon\nWebsite: pibeautysalon .com";
-                sendSms($phone, $textMessage);
+                // sendSms([$phone], $textMessage);
                 $p_string = '';
                 $temp_password = '';
                 if ($create_login) {
@@ -248,7 +248,8 @@ class Customers_model extends CI_Model
                     if ($password) {
                         $temp_password = $password;
                     } else {
-                        $temp_password = rand(200000, 999999);
+                        // $temp_password = rand(200000, 999999);
+                        $temp_password = "pi".$phone;
                     }
 
                     $pass = password_hash($temp_password, PASSWORD_DEFAULT);
