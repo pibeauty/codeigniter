@@ -60,8 +60,16 @@ class Appoint extends CI_Controller
             $data['getEventsURL'] ='events/getEvents';
         }*/
         if($this->aauth->get_user()->username=="admin"){
-            $data['getEventsURL'] ='events/getEvents';
-            $data['events'] = $this->events->eventList();
+            if (isset($id))
+            {
+                $data['getEventsURL'] ='events/getEventsCusUser/?id='.$id.'&cusUser=1';
+                $data['events'] = $this->events->eventListByuser($id);
+            }
+            else
+            {
+                $data['getEventsURL'] ='events/getEvents';
+                $data['events'] = $this->events->eventList();
+            }
         }
         else{
             $data['getEventsURL'] ='events/getEventsCusUser/?id='.$this->aauth->get_user()->id.'&cusUser=1';
