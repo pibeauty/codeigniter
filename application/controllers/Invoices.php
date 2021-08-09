@@ -258,6 +258,10 @@ class Invoices extends CI_Controller
             $this->db->trans_rollback();
         }
         if ($transok) {
+            // save percentage of invoice in customer credit
+            $amountToAddToCredit = $this->calculateAmountToAddToCredit($total);
+            $this->customers->recharge($customerDetails['id'], $amountToAddToCredit);
+            
             if ($customerFirstInvoice)
             {
                 $this->load->model('users_model', 'users');
@@ -334,6 +338,13 @@ class Invoices extends CI_Controller
 
         }
 
+    }
+
+
+    public function calculateAmountToAddToCredit ($amount)
+    {
+        $percentage = 5;
+        return round(($percentage / 100) * $amount);
     }
 
 
