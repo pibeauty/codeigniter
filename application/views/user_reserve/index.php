@@ -161,13 +161,17 @@
                                                     foreach ($row->sub as $rowx) {
                                                         $cidx = $rowx->id;
                                                         $titlex = $rowx->name;
-                                                        echo ' <option value="' . $cidx. '"> ' . $titlex . '</option>';
+                                                        echo '<option value="'.$cidx.'">'.$titlex.'</option>';
                                                     }
                                                     echo '</optgroup>';
 
                                                 }
                                                 ?>
                                             </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="referrer"></label>
+                                            <input type="text"  class="form-control my-2 my-lg-1" id="referrerCode" name="referrerCode" placeholder="کد معرف">
                                         </div>
 
                                         <div class="form-group col-md-12 align-self-center" align="center">

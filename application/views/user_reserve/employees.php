@@ -151,7 +151,7 @@
                                                 <select  name = "selectedEmployees[]" class="form-control" required>
                                                     <?php
                                                     foreach ($service['employees'] as $employee) {
-                                                        echo ' <option value="' . $employee['id']. '"> ' . $employee['name'] . '</option>';
+                                                        echo '<option value="' . $employee['id']. '"> ' . $employee['name'] . '</option>';
                                                     }
                                                     ?>
                                                 </select>
@@ -162,6 +162,7 @@
                                         <input type="hidden" name="name" value="<?php echo $name; ?>">
                                         <input type="hidden" name="mobile" value="<?php echo $mobile; ?>">
                                         <input type="hidden" name="setdateU" value="<?php echo $setdateU; ?>">
+                                        <input type="hidden" name="referrerCode" value="<?php echo $referrerCode; ?>">
                                         <input type="hidden" name="servicesWithEmployees" value="<?php echo htmlspecialchars(serialize($servicesWithEmployees)); ?>">
                                         <div class="form-group col-md-12 align-self-center" align="center">
                                             <button type="submit" class="btn btn-primary" style="background: #c29e76;border:solid 1px #c29e76;">بررسی تایم ها</button>

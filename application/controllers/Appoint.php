@@ -60,7 +60,7 @@ class Appoint extends CI_Controller
             $data['getEventsURL'] ='events/getEvents';
         }*/
         if($this->aauth->get_user()->username=="admin"){
-            if (isset($id))
+            if (isset($id) && $id!=0)
             {
                 $data['getEventsURL'] ='events/getEventsCusUser/?id='.$id.'&cusUser=1';
                 $data['events'] = $this->events->eventListByuser($id);
@@ -73,8 +73,8 @@ class Appoint extends CI_Controller
         }
         else{
             $data['getEventsURL'] ='events/getEventsCusUser/?id='.$this->aauth->get_user()->id.'&cusUser=1';
-           $data['events'] = $this->events->eventListByuser($this->aauth->get_user()->id);
-           // log_message('error',"------------------------------------ghjghacascsascj:". $this->aauth->get_user()->id);
+            $data['events'] = $this->events->eventListByuser($this->aauth->get_user()->id);
+            // log_message('error',"------------------------------------ghjghacascsascj:". $this->aauth->get_user()->id);
         }
 
 

@@ -161,6 +161,7 @@ class Customers_model extends CI_Model
         return $query->row_array();
     }
 
+    // MO
     public function getCustomerPhones()
     {
         $this->db->select('phone');
@@ -168,6 +169,16 @@ class Customers_model extends CI_Model
         $this->db->where('phone!=', '0' AND 'phone!=', null);
         $query = $this->db->get();
         return $query->result();
+    }
+
+    // MO
+    public function getCustomerByPicode($picode)
+    {
+        $this->db->select('id');
+        $this->db->from($this->table);
+        $this->db->where('picode', $picode);
+        $query = $this->db->get();
+        return $query->row_array();
     }
 
     public function money_details($custid)
@@ -709,6 +720,13 @@ class Customers_model extends CI_Model
         return $query->result_array();
     }
 
+    // MO
+    public function calculateAmountToAddToCredit ($amount)
+    {
+        $percentage = 5;
+        return round(($percentage / 100) * $amount);
+    }
+
     public function recharge($id, $amount)
     {
 
@@ -721,12 +739,13 @@ class Customers_model extends CI_Model
             'type' => 21,
             'rid' => $id,
             'col1' => $amount,
-            'col2' => date('Y-m-d H:i:s') . ' Account Recharge by ' . $this->aauth->get_user()->username
+            // 'col2' => date('Y-m-d H:i:s') . ' Account Recharge by ' . $this->aauth->get_user()->username
+            'col2' => date('Y-m-d H:i:s') . ' Account Recharge by '
         );
 
 
         if ($this->db->insert('geopos_metadata', $data)) {
-            $this->aauth->applog("[Client Wallet Recharge] Amt-$amount ID " . $id, $this->aauth->get_user()->username);
+            // $this->aauth->applog("[Client Wallet Recharge] Amt-$amount ID " . $id, $this->aauth->get_user()->username);
             return true;
         } else {
             return false;

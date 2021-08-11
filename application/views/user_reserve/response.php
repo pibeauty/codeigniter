@@ -142,8 +142,9 @@
                             <div class="col-lg-12 col-md-12 align-content-center">
                                 <form action="<?php echo base_url().'user_reserve/reserveSubmit'?>" method="post" >
                                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
-                                    <input type="hidden" name="mobile" value=" <?php echo $mobile; ?>">
-                                    <input type="hidden" name="name" value=" <?php echo $name; ?>">
+                                    <input type="hidden" name="mobile" value="<?php echo $mobile; ?>">
+                                    <input type="hidden" name="name" value="<?php echo $name; ?>">
+                                    <input type="hidden" name="referrerCode" value="<?php echo $referrerCode; ?>">
 
                                     <p>زمان مورد نظر خود را انتخاب نمایید</p>
                                     <div class="form-row" dir="rtl">
@@ -156,7 +157,7 @@
                                             if(count($itemx)==count($services)) {
                                                 ?>
                                                 <div class="form-group col-md-4 boxed">
-                                                    <input type="radio" id="data<?php echo $i; ?>"  name="data" value=" <?php echo htmlspecialchars(json_encode($itemx)); ?>">
+                                                    <input type="radio" id="data<?php echo $i; ?>"  name="data" value="<?php echo htmlspecialchars(json_encode($itemx)); ?>">
                                                     <label for="data<?php echo $i; ?>">
                                                         <?php
 

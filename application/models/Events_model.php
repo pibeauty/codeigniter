@@ -197,21 +197,34 @@ class Events_model extends CI_Model
 
     }
 
-    public function addReserve($data,$name,$mobile){
-
+    public function addReserve($data,$name,$mobile,$referrerCode){
+        log_message('error',"referrerCode = ".$referrerCode);
         $this->db->select('*');
         $this->db->from($this->table_customers);
         $this->db->where('phone', $mobile);
         $query = $this->db->get();
         $valid = $query->row_array();
         $insert_id=1;
+        $userFirstReserve = false;
         if (!$valid['phone']) {
+            $this->load->model('customers_model', 'customers');
+            $referrerCustomer = $this->customers->getCustomerByPicode($referrerCode);
+            if ($referrerCustomer)
+            {
+                $referrerId = $referrerCustomer['id'];
+            }
+            else
+            {
+                $referrerId = null;
+            }
             $post_data=array(
                 'name' => $name,
                 'phone' => $mobile,
+                'moaaref' => $referrerId,
             );
             $this->db->insert($this->table_customers, $post_data);
             $insert_id = $this->db->insert_id();
+            $userFirstReserve = true;
         }
         else{
             $insert_id=$valid['id'];
@@ -240,6 +253,19 @@ class Events_model extends CI_Model
             $this->db->insert('geopos_events', $data);
             log_message('error',"------------------------------------ghjghacascsascj3:".json_encode($item));
 
+        }
+
+        if ($userFirstReserve)
+        {
+            if ($referrerCustomer)
+            {
+                $amountToAddToCredit = $this->customers->calculateAmountToAddToCredit($price);
+                $this->customers->recharge($referrerCustomer['id'], $amountToAddToCredit);
+            }
+            else
+            {
+                log_message('error','referrerCustomer not found with referrerCode = '.$referrerCode);
+            }
         }
 
         //return $data;

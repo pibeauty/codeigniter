@@ -62,6 +62,7 @@ class User_reserve extends CI_Controller
         $name= $this->input->post('name');
         $mobile= $this->input->post('mobile');
         $setdateU= $this->input->post('setdateU');
+        $referrerCode = $this->input->post('referrerCode');
 
         $servicesWithEmployees = $this->getServiceEmployees($services);
         
@@ -69,6 +70,7 @@ class User_reserve extends CI_Controller
         $data['name'] = $name;
         $data['mobile'] = $mobile;
         $data['setdateU'] = $setdateU;
+        $data['referrerCode'] = $referrerCode;
         $this->load->view('user_reserve/employees',$data);
     }
 
@@ -94,6 +96,7 @@ class User_reserve extends CI_Controller
         $mobile= $this->input->post('mobile');
         $setdateU= $this->input->post('setdateU');
         $WeekNum= $this->input->post('WeekNum');
+        $referrerCode= $this->input->post('referrerCode');
 
         $day_from=10;$day_to=20;
         $date = date('Y-m-d H:i:s', substr($setdateU, 0, -3));
@@ -320,6 +323,7 @@ class User_reserve extends CI_Controller
         $data['result2']=$finalArr2;
             $data['name']=$name;
         $data['services']=$services;
+        $data['referrerCode']=$referrerCode;
         $data['mobile']=$mobile;//log_message('error',"------------------------------------ghjghacascsascj:". stripslashes(json_encode($finalArr)));
         //log_message('error',"ghjghacascsascj:". $name.'///'.$mobile.'////'.$setdateU.'////'.$WeekNum);
         $this->load->view('user_reserve/response',$data);
@@ -522,10 +526,12 @@ class User_reserve extends CI_Controller
         $dataX = $this->input->post('data');
         $name = $this->input->post('name');
         $mobile = $this->input->post('mobile');
+        $referrerCode = $this->input->post('referrerCode');
 
         $data['data']=$dataX;
         $data['name']=$name;
         $data['mobile']=$mobile;
+        $data['referrerCode']=$referrerCode;
       //  foreach ($dataX as $ii){
            // log_message('error',"------------------------------------ghjghacascsascj1:". $dataX);
        // }
@@ -540,11 +546,13 @@ class User_reserve extends CI_Controller
         $dataX = $this->input->post('data');
         $name = $this->input->post('name');
         $mobile = $this->input->post('mobile');
+        $referrerCode = $this->input->post('referrerCode');
         $data['data']=$dataX;
         $data['name']=$name;
         $data['mobile']=$mobile;
+        $data['referrerCode']=$referrerCode;
         // var_dump($dataX);die;
-        $res= $this->events->addReserve($dataX,$name,$mobile);
+        $res= $this->events->addReserve($dataX,$name,$mobile,$referrerCode);
         //log_message('error',"------------------------------------ghjghacascsascj3:".json_encode($res));
 
         $this->load->view('user_reserve/responsebank',$data);

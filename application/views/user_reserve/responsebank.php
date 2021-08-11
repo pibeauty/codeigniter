@@ -139,8 +139,9 @@
                             <div class="col-lg-12 col-md-12 align-content-center">
                                 <form action="<?php echo base_url().'user_reserve/gotobank'?>" method="post" >
                                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
-                                    <input type="hidden" name="mobile" value=" <?php echo $mobile; ?>">
-                                    <input type="hidden" name="name" value=" <?php echo $name; ?>">
+                                    <input type="hidden" name="mobile" value="<?php echo $mobile; ?>">
+                                    <input type="hidden" name="name" value="<?php echo $name; ?>">
+                                    <input type="hidden" name="referrerCode" value="<?php echo $referrerCode; ?>">
                                     <input type="hidden" name="data" value="<?php echo htmlspecialchars($data); ?>">
                                     <p>تایم مورد نظر رزرو شد</p>
 
