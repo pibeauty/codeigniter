@@ -363,6 +363,10 @@
                                         <td class="text-xs-right"><?php echo amountExchange($invoice['shipping'], $invoice['multi'], $invoice['loc']) ?></td>
                                     </tr>
                                     <tr>
+                                        <td class="text-bold-800"><?php echo $this->lang->line('Used Balance') ?></td>
+                                        <td class="text-bold-800 text-xs-right"> <?php echo amountExchange($invoice['used_balance'], $invoice['multi'], $invoice['loc']) ?></td>
+                                    </tr>
+                                    <tr>
                                         <td class="text-bold-800"><?php echo $this->lang->line('Total') ?></td>
                                         <td class="text-bold-800 text-xs-right"> <?php echo amountExchange($invoice['total'], $invoice['multi'], $invoice['loc']) ?></td>
                                     </tr>

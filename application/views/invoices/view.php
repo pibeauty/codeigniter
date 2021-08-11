@@ -396,6 +396,10 @@
                                         <td class="text-xs-right"><?php echo amountExchange($invoice['shipping'], 0, $this->aauth->get_user()->loc) ?></td>
                                     </tr>
                                     <tr>
+                                        <td class="text-bold-800"><?php echo $this->lang->line('Used Balance') ?></td>
+                                        <td class="text-bold-800 text-xs-right"> <?php echo amountExchange($invoice['used_balance'], 0, $this->aauth->get_user()->loc) ?></td>
+                                    </tr>
+                                    <tr>
                                         <td class="text-bold-800"><?php echo $this->lang->line('Total') ?></td>
                                         <td class="text-bold-800 text-xs-right"> <?php echo amountExchange($invoice['total'], 0, $this->aauth->get_user()->loc) ?></td>
                                     </tr>

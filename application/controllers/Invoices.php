@@ -150,6 +150,21 @@ class Invoices extends CI_Controller
                     $this->lang->line('Client Picode required.')));
                 exit;
             }
+            if ($customerDetails['balance'] > 0)
+            {
+                if ($customerDetails['balance'] >= $total)
+                {
+                    $newCustomerBalance = $customerDetails['balance'] - $total;
+                    $usedBalance = $total;
+                    $total = 0;
+                }
+                else
+                {
+                    $usedBalance = $customerDetails['balance'];
+                    $newCustomerBalance = 0;
+                    $total = $total - $usedBalance;
+                }
+            }
         }
         $transok = true;
         $st_c = 0;
@@ -164,7 +179,7 @@ class Invoices extends CI_Controller
         if (!$payment_type2)
             $payment_type2 = null;
         $payment_amount2 = $this->input->post('payment_amount2');
-        $data = array('tid' => $invocieno, 'invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'ship_tax' => $shipping_tax, 'ship_tax_type' => $ship_taxtype, 'discount_rate' => $disc_val, 'total' => $total, 'notes' => $notes, 'csd' => $customer_id, 'eid' => $this->aauth->get_user()->id, 'taxstatus' => $tax, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency, 'loc' => $this->aauth->get_user()->loc, 'payment_type'=>$payment_type, 'payment_amount'=>$payment_amount, 'payment_type2'=>$payment_type2, 'payment_amount2'=>$payment_amount2);
+        $data = array('tid' => $invocieno, 'invoicedate' => $bill_date, 'invoiceduedate' => $bill_due_date, 'subtotal' => $subtotal, 'shipping' => $shipping, 'ship_tax' => $shipping_tax, 'ship_tax_type' => $ship_taxtype, 'discount_rate' => $disc_val, 'total' => $total, 'used_balance' => $usedBalance, 'notes' => $notes, 'csd' => $customer_id, 'eid' => $this->aauth->get_user()->id, 'taxstatus' => $tax, 'discstatus' => $discstatus, 'format_discount' => $discountFormat, 'refer' => $refer, 'term' => $pterms, 'multi' => $currency, 'loc' => $this->aauth->get_user()->loc, 'payment_type'=>$payment_type, 'payment_amount'=>$payment_amount, 'payment_type2'=>$payment_type2, 'payment_amount2'=>$payment_amount2);
         $invocieno2 = $invocieno;
 
         // MO Check if this is user's first invoice
@@ -174,6 +189,10 @@ class Invoices extends CI_Controller
         
         if ($this->db->insert('geopos_invoices', $data)) {
             $invocieno = $this->db->insert_id();
+            if ($customerDetails['balance'] > 0)
+            {
+                $this->customers->updateBalance($customerDetails['id'], $newCustomerBalance);
+            }
             //products
             $pid = $this->input->post('pid');
             $productlist = array();

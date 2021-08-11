@@ -818,3 +818,4 @@ $lang['Referral'] = "Referral";
 $lang['Payment Amount'] = "Payment Amount";
 $lang['Payment Amount 2'] = "Payment Amount 2";
 $lang['Client Picode required.'] = "Client Picode required.";
+$lang['Used Balance'] = "Used Balance";

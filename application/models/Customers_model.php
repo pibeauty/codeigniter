@@ -725,6 +725,19 @@ class Customers_model extends CI_Model
 
     }
 
+    public function updateBalance($id, $newBalance)
+    {
+        $data = array('balance' => $newBalance);
+        $this->db->set($data);
+        $this->db->where('id', $id);
+        if ($this->db->update('geopos_customers')) {
+            $this->aauth->applog("[Customer Balance Updated]  CustomerId $id ", $this->aauth->get_user()->username);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private function _project_datatables_query($cday = '')
     {
         $this->db->select("geopos_projects.*,geopos_customers.name AS customer");
