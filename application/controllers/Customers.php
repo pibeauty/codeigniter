@@ -43,8 +43,9 @@ class Customers extends CI_Controller
     {
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = 'Customers';
+        $data['customers'] = $this->customers->get_datatables();
         $this->load->view('fixed/header', $head);
-        $this->load->view('customers/clist');
+        $this->load->view('customers/clist', $data);
         $this->load->view('fixed/footer');
     }
 

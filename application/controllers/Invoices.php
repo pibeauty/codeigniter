@@ -122,7 +122,7 @@ class Invoices extends CI_Controller
         $subtotal = rev_amountExchange_s($this->input->post('subtotal'), $currency, $this->aauth->get_user()->loc);
         $shipping = rev_amountExchange_s($this->input->post('shipping'), $currency, $this->aauth->get_user()->loc);
         $shipping_tax = rev_amountExchange_s($this->input->post('ship_tax'), $currency, $this->aauth->get_user()->loc);
-        if ($ship_taxtype == 'incl') $shipping = $shipping - $shipping_tax;
+        if ($ship_taxtype == 'incl') $shipping = (float)$shipping - (float)$shipping_tax;
         $refer = $this->input->post('refer', true);
         $total = rev_amountExchange_s($this->input->post('total'), $currency, $this->aauth->get_user()->loc);
         $project = $this->input->post('prjid');
@@ -154,7 +154,7 @@ class Invoices extends CI_Controller
             {
                 if ($customerDetails['balance'] >= $total)
                 {
-                    $newCustomerBalance = $customerDetails['balance'] - $total;
+                    $newCustomerBalance = (float)$customerDetails['balance'] - (float)$total;
                     $usedBalance = $total;
                     $total = 0;
                 }
@@ -164,6 +164,10 @@ class Invoices extends CI_Controller
                     $newCustomerBalance = 0;
                     $total = $total - $usedBalance;
                 }
+            }
+            else
+            {
+                $usedBalance = 0;
             }
         }
         $transok = true;
@@ -284,7 +288,6 @@ class Invoices extends CI_Controller
             if ($customerFirstInvoice)
             {
                 $this->load->model('users_model', 'users');
-                log_message('error',"customerDetails id = ".$customerDetails['id']);
                 $customerUserDetails = $this->users->getUserByCustomerId($customerDetails['id']);
                 $customerPass = "pi".$customerDetails['phone'];
                 $customerName = $customerDetails['name'];

@@ -161,6 +161,15 @@ class Customers_model extends CI_Model
         return $query->row_array();
     }
 
+    public function getCustomerPhones()
+    {
+        $this->db->select('phone');
+        $this->db->from($this->table);
+        $this->db->where('phone!=', '0' AND 'phone!=', null);
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     public function money_details($custid)
     {
 

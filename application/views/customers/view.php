@@ -87,7 +87,7 @@
                                 </a>
                                 <a href="#sendMail" data-toggle="modal" data-remote="false"
                                    class="btn btn-primary btn-md " data-type="reminder"><i
-                                            class="fa fa-envelope"></i> <?php echo $this->lang->line('Send Message') ?>
+                                            class="fa fa-envelope"></i> <?php echo $this->lang->line('Send SMS') ?>
                                 </a>
 
 
@@ -584,7 +584,7 @@
         <div class="modal-content">
             <div class="modal-header">
 
-                <h4 class="modal-title">Email</h4>
+                <h4 class="modal-title">SMS</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
 

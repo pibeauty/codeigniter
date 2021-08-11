@@ -6,16 +6,21 @@ if ($this->input->get('due')) {
 <div class="content-body">
     <div class="card">
         <div class="card-header">
-            <h4 class="card-title"><a
-                        href="<?php echo base_url('customers') ?>"
-                        class="mr-5">
-                    <?php echo $this->lang->line('Clients') ?></a> <a
-                        href="<?php echo base_url('customers/create') ?>"
-                        class="btn btn-primary btn-sm rounded">
-                    <?php echo $this->lang->line('Add new') ?></a> <a
-                        href="<?php echo base_url('customers?due=true') ?>"
-                        class="btn btn-danger btn-sm rounded">
-                    <?php echo $this->lang->line('Due') ?><?php echo $this->lang->line('Clients') ?></a></h4>
+            <h4 class="card-title">
+                <a href="<?php echo base_url('customers') ?>" class="mr-5">
+                    <?php echo $this->lang->line('Clients') ?>
+                </a>
+                <a href="<?php echo base_url('customers/create') ?>" class="btn btn-primary btn-sm rounded">
+                    <?php echo $this->lang->line('Add new') ?>
+                </a>
+                <a href="<?php echo base_url('customers?due=true') ?>" class="btn btn-danger btn-sm rounded">
+                    <?php echo $this->lang->line('Due') ?><?php echo $this->lang->line('Clients') ?>
+                </a>
+                <a href="#sendMail" data-toggle="modal" data-remote="false" class="btn btn-primary btn-sm" data-type="reminder">
+                    <i class="fa fa-envelope"></i>
+                    <?php echo $this->lang->line('Send SMS') ?>
+                </a>
+            </h4>
             <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
             <div class="heading-elements">
                 <ul class="list-inline mb-0">
@@ -127,3 +132,95 @@ if ($this->input->get('due')) {
         </div>
     </div>
 </div>
+
+
+<div id="sendMail" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">SMS</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form id="sendmail_form"><input type="hidden"
+                                                name="<?php echo $this->security->get_csrf_token_name(); ?>"
+                                                value="<?php echo $this->security->get_csrf_hash(); ?>">
+                    <!-- <div class="row">
+                        <div class="col">
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="icon-envelope-o"
+                                                                     aria-hidden="true"></span></div>
+                                <input type="text" class="form-control" placeholder="Mobile" name="mobile"
+                                       value="<?php //echo $details['phone'] ?>" readonly>
+                            </div>
+
+                        </div>
+
+                    </div> -->
+
+
+                    <div class="form-group row">
+
+                        <label class="col-sm-2 col-form-label"
+                                for="name">Customers</label>
+
+                        <div class="col-sm-12">
+                            <select name="mobile[]" class="select-box form-control margin-bottom"  multiple="multiple" style="width:100%">
+                                <?php
+                                foreach ($customers as $row) {
+                                    $name = $row->name;
+                                    $mobile = $row->phone;
+                                    if( isset($mobile) ){
+                                        echo ' <option value="' . $mobile . '"> ' . $name . '</option>';
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="input-group">
+                                <div class="input-group-addon"><span class="icon-envelope-o"
+                                                                     aria-hidden="true"></span></div>
+                                <input type="checkbox" name="sendToAll" value="1">
+                                    <label for="vehicle1">&nbsp;&nbsp;Send SMS to all customers</label>
+                                    <span style="color:red">(Caution: Please be careful with this option. A sms will be sent to all of your customers!)</span>
+                                    <br>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col mb-1"><label
+                                    for="shortnote"><?php echo $this->lang->line('Message') ?></label>
+                            <textarea name="text_message" class="form-control" id="contents" title="Contents"></textarea></div>
+                    </div>
+
+                    <input type="hidden" class="form-control"
+                           id="cid" name="tid" value="<?php echo $details['id'] ?>">
+                    <input type="hidden" id="action-url" value="sms/send_sms">
+
+
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+                        data-dismiss="modal"><?php echo $this->lang->line('Close') ?></button>
+                <button type="button" class="btn btn-primary"
+                        id="sendNow"><?php echo $this->lang->line('Send') ?></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.select-box').select2();
+    });
+</script>

@@ -34,6 +34,7 @@ class Sms Extends CI_Controller
         }
         $this->load->library('parser');
 
+        $this->load->helper('kavenegar_helper');
     }
 
     //todo section
@@ -146,6 +147,7 @@ class Sms Extends CI_Controller
 
         $mobile = $this->input->post('mobile');
         $text_message = $this->input->post('text_message');
+        $sendToAll = $this->input->post('sendToAll') ?? 0;
 
         switch ($gateway_code) {
             case 1:
@@ -167,22 +169,32 @@ class Sms Extends CI_Controller
 				$this->bulk_sms($mobile, $text_message);
 			break;
 			case 7:
-				$this->kavenegar($mobile, $text_message);
+				$this->kavenegar($mobile, $text_message, $sendToAll);
 			break;
         }
     }
 
-    private function kavenegar ($mobile, $text_message)
+    private function kavenegar ($phones, $textMessage, $sendToAll)
     {
         try{
             $api = new \Kavenegar\KavenegarApi("33584D58784576336A4B77616473746C594E4A5A416C61567A38417338727243794835725A78354C6344593D");
             $sender = "2000500666";
-            // $message =  $this->input->post('text');
-            $receptor = array($mobile);
-            $result = $api->Send($sender,$receptor,$text_message);
+            if ($sendToAll)
+            {
+                $this->load->model('customers_model', 'customers');
+                $customerPhones = $this->customers->getCustomerPhones();
+                $phones = [];
+                foreach ($customerPhones as $value)
+                {
+                    array_push($phones, $value->phone);
+                }
+            }
+            log_message('error','SMS sent to = '.json_encode($phones));
+            $receptor = $phones;
+            $result = $api->Send($sender,$receptor,$textMessage);
             if ($result)
             {
-                echo "1";	
+                echo "1";
             }
         }
         catch(\Kavenegar\Exceptions\ApiException $e)
