@@ -818,5 +818,7 @@ $lang['Referral'] = "Referral";
 $lang['Payment Amount'] = "Payment Amount";
 $lang['Payment Amount 2'] = "Payment Amount 2";
 $lang['Client Picode required.'] = "Client Picode required.";
+$lang['Client Email required.'] = "Client Email required.";
+$lang['Client Picode and Email required.'] = "Client Picode and Email required.";
 $lang['Used Balance'] = "Used Balance";
 $lang['Send SMS'] = "Send SMS";

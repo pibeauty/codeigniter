@@ -259,8 +259,11 @@ class Events_model extends CI_Model
         {
             if ($referrerCustomer)
             {
-                $amountToAddToCredit = $this->customers->calculateAmountToAddToCredit($price);
-                $this->customers->recharge($referrerCustomer['id'], $amountToAddToCredit);
+                if ($price > 0)
+                {
+                    $amountToAddToCredit = $this->customers->calculateAmountToAddToCredit($price);
+                    $this->customers->recharge($referrerCustomer['id'], $amountToAddToCredit);
+                }
             }
             else
             {
