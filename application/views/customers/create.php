@@ -78,7 +78,7 @@
 
                                         <div class="col-sm-8">
                                             <input type="text" placeholder="email"
-                                                   class="form-control margin-bottom required b_input" name="email"
+                                                   class="form-control margin-bottom b_input" name="email"
                                                    id="mcustomer_email">
                                         </div>
                                     </div>

@@ -204,12 +204,12 @@ class Customers_model extends CI_Model
 
     public function add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language = '', $create_login = true, $password = '', $docid = '', $custom = '', $discount = 0, $tavalod, $moaaref)
     {
-        $this->db->select('email');
+        $this->db->select('phone');
         $this->db->from('geopos_customers');
-        $this->db->where('email', $email);
+        $this->db->where('phone', $phone);
         $query = $this->db->get();
         $valid = $query->row_array();
-        if (!$valid['email']) {
+        if (!$valid['phone']) {
 
 
             if (!$discount) {
@@ -259,7 +259,7 @@ class Customers_model extends CI_Model
 
                 // MO generate picode and save it
                 $picode = $this->picodeGenerator($cid, $tavalod);
-                $textMessage = "خانم $name به باشگاه مشتریان «سالن پی» خوش آمدید.\nشماره اشتراک (PInumber):\n$picode\n\n02140220012\n09393851976\nInstagram: pibeautysalon\nWebsite: pibeautysalon .com";
+                // $textMessage = "خانم $name به باشگاه مشتریان «سالن پی» خوش آمدید.\nشماره اشتراک (PInumber):\n$picode\n\n02140220012\n09393851976\nInstagram: pibeautysalon\nWebsite: pibeautysalon .com";
                 // sendSms([$phone], $textMessage);
                 $p_string = '';
                 $temp_password = '';
@@ -313,7 +313,7 @@ class Customers_model extends CI_Model
             }
         } else {
             echo json_encode(array('status' => 'Error', 'message' =>
-                'Duplicate Email'));
+                'Duplicate Phone'));
         }
 
     }
