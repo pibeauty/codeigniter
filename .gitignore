@@ -16,3 +16,4 @@ application/logs/*
 !application/logs/.htaccess
 application/config/database.php
 crm/application/config/database.php
+crm/application/logs/*

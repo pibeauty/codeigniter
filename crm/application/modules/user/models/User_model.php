@@ -15,14 +15,21 @@ class User_model extends CI_Model
     {
         $email = $this->input->post('email');
         $password = $this->input->post('password');
-        $this->db->where("is_deleted='0' AND (email='$email')");
-        $result = $this->db->get('users')->result();
-        if (!empty($result)) {
-            if (password_verify($password, $result[0]->password)) {
-                if ($result[0]->status != 'active') {
-                    return 'not_varified';
+        $this->db->where('phone', $email);
+        $customer = $this->db->get('geopos_customers')->result();
+        if (!empty($customer)) {
+            $cid = $customer[0]->id;
+            $this->db->where("is_deleted='0' AND (cid='$cid')");
+            $result = $this->db->get('users')->result();
+            if (!empty($result)) {
+                if (password_verify($password, $result[0]->password)) {
+                    if ($result[0]->status != 'active') {
+                        return 'not_varified';
+                    }
+                    return $result;
+                } else {
+                    return false;
                 }
-                return $result;
             } else {
                 return false;
             }

@@ -14,7 +14,7 @@
                                 <div class="p-1"><img width="100%"  src="<?php echo substr_replace(base_url(), '', -4); ?>userfiles/company/<?php echo $this->config->item('logo'); ?>"
                                                       alt="Logo"></div>
                             </div>
-                            <h4 class="card-subtitle line-on-side text-muted text-xs-center  pt-2"><span><?php echo $this->lang->line('Customers')  ?> <?php echo $this->lang->line('login')  ?></span>
+                            <h4 class="card-subtitle line-on-side text-muted text-xs-center  pt-2"><span><?php echo $this->lang->line('Customers login')  ?></span>
                             </h4>
                         </div>
                         <div class="card-body collapse in">
@@ -28,14 +28,14 @@
                                       action="<?php echo base_url() . 'user/auth_user'; ?>" method="post">
                                     <input type="hidden" name="<?php echo $this->security->get_csrf_token_name();?>" value="<?php echo $this->security->get_csrf_hash();?>">
                                     <fieldset class="form-group position-relative has-icon-left mb-2">
-                                        <input type="text" name="email" class="form-control" placeholder="Email" required>
+                                        <input type="text" name="email" class="form-control" placeholder="تلفن" required>
                                         <div class="form-control-position">
                                             <i class="icon-head"></i>
                                         </div>
                                     </fieldset>
                                     <fieldset class="form-group position-relative has-icon-left mb-2">
                                         <input type="password" name="password" class="form-control" id="pwd"
-                                               placeholder="Password" required>
+                                               placeholder="رمز عبور" required>
                                         <div class="form-control-position">
                                             <i class="icon-key3"></i>
                                         </div>
@@ -51,7 +51,7 @@
 
                                    
                                     <button type="submit" class="btn btn-primary btn-lg btn-block"><i
-                                                class="icon-unlock2"></i> Login
+                                                class="icon-unlock2"></i> ورود
                                     </button>
                                 </form> <?php    if ($this->common->front_end()->register) {
         ?> <br> <div class="row"><span class="col-xs-7"><a

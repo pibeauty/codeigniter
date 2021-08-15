@@ -781,3 +781,4 @@ $lang['Out'] = "Out";
 $lang['Self'] = "Self";
 $lang['you can pre-define the discount'] = "You can pre-define the discount to current group customers. Discount Rate will be overwritten for all customers in this group.";
 $lang['Zero Stock'] = "Zero Stock";
+$lang['Customers login'] = "Customers Login";
