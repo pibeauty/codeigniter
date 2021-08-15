@@ -295,8 +295,8 @@ class Invoices extends CI_Controller
                 $customerPass = "pi".$customerDetails['phone'];
                 $customerName = $customerDetails['name'];
                 $customerPicode = $customerDetails['picode'];
-                $customerUserEmail = $customerUserDetails['email'];
-                $textMessage = "خانم $customerName به باشگاه مشتریان «سالن پی» خوش آمدید.\nشماره اشتراک (PInumber):\n$customerPicode\n\n02140220012\n09393851976\nInstagram: pibeautysalon\nWebsite: pibeautysalon.com\n\nاطلاعات ورود شما به پنل مشتری:\npos.pibeautysalon.com/crm\nنام کاربری: $customerUserEmail\nرمز عبور: $customerPass";
+                $customerUserPhone = $customerUserDetails['phone'];
+                $textMessage = "خانم $customerName به باشگاه مشتریان «سالن پی» خوش آمدید.\nشماره اشتراک (PInumber):\n$customerPicode\n\n02140220012\n09393851976\nInstagram: pibeautysalon\nWebsite: pibeautysalon.com\n\nاطلاعات ورود شما به پنل مشتری:\npos.pibeautysalon.com/crm\nنام کاربری: $customerUserPhone\nرمز عبور: $customerPass";
                 sendSms([$customerDetails['phone']], $textMessage);
             }
             
