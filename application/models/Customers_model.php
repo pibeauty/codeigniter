@@ -727,6 +727,17 @@ class Customers_model extends CI_Model
         return round(($percentage / 100) * $amount);
     }
 
+    // MO
+    public function resetAllBalances ()
+    {
+        $data = [
+            'balance' => 0
+        ];
+        $this->db->set($data);
+        // $this->db->where('id', '2614');
+        $this->db->update('geopos_customers');
+    }
+
     public function recharge($id, $amount)
     {
 

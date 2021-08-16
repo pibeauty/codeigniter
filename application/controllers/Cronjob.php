@@ -176,6 +176,41 @@ class Cronjob extends CI_Controller
     }
 
 
+    function resetCustomerBalances()
+    {
+        date_default_timezone_set('Asia/Tehran');
+        $corn = $this->cronjob->config();
+        $cornkey = $corn['cornkey'];
+        echo "\n---------------Reseting Balances-------\n";
+        echo date('Y-m-d H:i:s')."\n";
+        if ($cornkey == $this->input->get('token')) {
+            $validDates = [
+                '03-21',    // 1 Farvardin
+                '06-22',    // 1 Tir
+                '09-23',    // 1 Mehr
+                '12-22',    // 1 Day
+                '08-16'
+            ];
+            $currentDate = date('m-d');
+            if (in_array($currentDate, $validDates))
+            {
+                echo "---------------Cron started-------\n";
+                $this->load->model('customers_model', 'customers');
+                $this->customers->resetAllBalances ();
+                echo "---------------Task Done-------\n";
+            }
+            else
+            {
+                echo "---------------Conditions not fulfilled-------\n";
+            }
+        }
+        else
+        {
+            echo "---------------Wrong Cornkey-------\n";
+        }
+    }
+
+
     public function update_exchange_rate()
     {
         //code here
