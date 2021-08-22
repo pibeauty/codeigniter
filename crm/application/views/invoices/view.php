@@ -20,8 +20,11 @@
                             $link = '../../billing/view?id=' . $invoice['iid'] . '&token=' . $validtoken;
                             $linkp = '../../billing/printinvoice?id=' . $invoice['iid'] . '&token=' . $validtoken;
                             if ($invoice['status'] != 'canceled') {
-                                echo ' <div class="title-action"><a href="' . $link . '"  class="btn btn-large btn-success" title="Partial Payment"
-                                ><span class="fa fa-money"></span> '.$this->lang->line('Make Payment').' </a>
+                                // echo ' <div class="title-action"><a href="' . $link . '"  class="btn btn-large btn-success" title="Partial Payment"
+                                // ><span class="fa fa-money"></span> '.$this->lang->line('Make Payment').' </a>
+                                // <a href="' . $linkp . '"  class="btn btn-large btn-info" title="Partial Payment"
+                                // ><span class="fa fa-print"></span> '.$this->lang->line('Print').' </a>   </div>';
+                                echo ' <div class="title-action">
                                 <a href="' . $linkp . '"  class="btn btn-large btn-info" title="Partial Payment"
                                 ><span class="fa fa-print"></span> '.$this->lang->line('Print').' </a>   </div>';
                             } else {
@@ -33,9 +36,12 @@
                     <!-- Invoice Company Details -->
                     <div id="invoice-company-details" class="row">
                         <div class="col-md-9 col-sm-12 text-xs-center text-md-left mt-2"><p> <b><?php echo $this->lang->line('From') ?></b></p>
-                             <img src="<?php  $loc=location($invoice['loc']);  echo '../../userfiles/company/' . $loc['logo'] ?>"
+                             <!-- <img src="<?php  //$loc=location($invoice['loc']);  echo '../../userfiles/company/' . $loc['logo'] ?>"
+                                 class="img-responsive p-1 m-b-2" style="max-height: 120px;"> -->
+                             <img src="<?php  $loc=location($invoice['loc']);  echo '../../userfiles/theme/logo-header.png?t=721' ?>"
                                  class="img-responsive p-1 m-b-2" style="max-height: 120px;">
-<p class="ml-3"><?=$loc['cname']?></p>
+                            <!-- <p class="ml-3"><?//=$loc['cname']?></p> -->
+                            <p class="ml-3">PISALON</p>
                             <br>
 
 

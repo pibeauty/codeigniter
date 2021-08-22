@@ -55,7 +55,17 @@
 
                                     <div class="form-group has-feedback clear-both">
 
-                                        <h5><?php echo(isset($user_data[0]->email) ? $user_data[0]->email : ''); ?></h5>
+                                        <h5><?php echo(isset($user_data[0]->email) ? 'Email: '.$user_data[0]->email : ''); ?></h5>
+                                    </div>
+
+                                    <div class="form-group has-feedback clear-both">
+
+                                        <h5><?php echo(isset($user_data[0]->phone) ? 'Phone: '.$user_data[0]->phone : ''); ?></h5>
+                                    </div>
+
+                                    <div class="form-group has-feedback clear-both">
+
+                                        <h5><?php echo(isset($user_data[0]->picode) ? 'Picode: '.$user_data[0]->picode : ''); ?></h5>
                                     </div>
 
 
@@ -77,6 +87,12 @@
                                         <label for="exampleInputEmail1">Confirm New Password:</label>
                                         <input type="password" class="form-control" placeholder="Confirm New Password"
                                                name="confirmPassword">
+                                        <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
+                                    </div>
+                                    <div class="form-group has-feedback">
+                                        <label for="address">Address:</label>
+                                        <input type="text" class="form-control" placeholder="Your Address"
+                                               name="address" value="<?php echo $user_data[0]->address; ?>"">
                                         <span class="glyphicon glyphicon-pencil form-control-feedback"></span>
                                     </div>
                                     <br>

@@ -114,7 +114,7 @@ class User_model extends CI_Model
      */
     function get_users($userID = '')
     {
-        $this->db->select('users.*,geopos_customers.picture');
+        $this->db->select('users.*,geopos_customers.picture,geopos_customers.phone,geopos_customers.picode,geopos_customers.address');
         $this->db->from('users');
         $this->db->where('users.is_deleted', '0');
         if (isset($userID) && $userID != '') {

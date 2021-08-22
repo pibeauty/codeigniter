@@ -427,6 +427,7 @@ class User extends CI_Controller
             }
             $data['profile_pic'] = $profile_pic;
             $data2['picture'] = $profile_pic;
+            $data2['address'] = $this->input->post('address');
             $this->User_model->updateRow('users', 'users_id', $id, $data);
             $this->User_model->updateRow('geopos_customers', 'id', $this->session->userdata('user_details')[0]->cid, $data2);
 

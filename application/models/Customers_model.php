@@ -727,7 +727,7 @@ class Customers_model extends CI_Model
         return round(($percentage / 100) * $amount);
     }
 
-    // MO
+	// MO
     public function resetAllBalances ()
     {
         $data = [
