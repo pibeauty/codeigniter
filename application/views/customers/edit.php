@@ -61,7 +61,7 @@
 
                             <div class="col-sm-10">
                                 <input type="text" placeholder="email"
-                                       class="form-control margin-bottom required" name="email"
+                                       class="form-control margin-bottom" name="email"
                                        value="<?php echo $customer['email'] ?>" id="mcustomer_email">
                             </div>
                         </div>
