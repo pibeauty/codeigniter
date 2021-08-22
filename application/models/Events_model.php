@@ -224,6 +224,21 @@ class Events_model extends CI_Model
             );
             $this->db->insert($this->table_customers, $post_data);
             $insert_id = $this->db->insert_id();
+
+            $temp_password = "pi".$mobile;
+            $pass = password_hash($temp_password, PASSWORD_DEFAULT);
+            $userData = array(
+                'user_id' => 1,
+                'status' => 'active',
+                'is_deleted' => 0,
+                'name' => $name,
+                'password' => $pass,
+                'user_type' => 'Member',
+                'cid' => $insert_id,
+                'lang' => 'english'
+            );
+            $this->db->insert('users', $userData);
+
             $userFirstReserve = true;
         }
         else{
