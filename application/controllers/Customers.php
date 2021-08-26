@@ -187,9 +187,8 @@ class Customers extends CI_Controller
             $tavalod = null;
         
         $moaaref = $this->input->post('moaaref', true) ? $this->input->post('moaaref', true) : null;
-        $this->customers->add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language, $create_login, $password, $docid, $custom, $discount, $tavalod, $moaaref);
-
-
+        $picode = $this->input->post('picode', true);
+        $this->customers->add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language, $create_login, $password, $docid, $custom, $discount, $tavalod, $moaaref, $picode);
     }
 
     public function editcustomer()

@@ -67,7 +67,7 @@
                                                for="phone"><?php echo $this->lang->line('Phone') ?></label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" placeholder="phone"
+                                            <input type="text" placeholder="Phone"
                                                    class="form-control margin-bottom required b_input" name="phone"
                                                    id="mcustomer_phone">
                                         </div>
@@ -77,7 +77,7 @@
                                         <label class="col-sm-2 col-form-label" for="email">Email</label>
 
                                         <div class="col-sm-8">
-                                            <input type="text" placeholder="email"
+                                            <input type="text" placeholder="Email"
                                                    class="form-control margin-bottom b_input" name="email"
                                                    id="mcustomer_email">
                                         </div>
@@ -147,6 +147,16 @@
                                             <input type="text" placeholder="Birthdate"
                                                    class="setdate form-control margin-bottom b_input" name="tavalod" id="tavalod" 
                                                    style="background-color: white;" autocomplete="off" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+
+                                        <label class="col-sm-2 col-form-label" for="picode">Picode</label>
+
+                                        <div class="col-sm-8">
+                                            <input type="text" placeholder="Picode"
+                                                   class="form-control margin-bottom b_input" name="picode"
+                                                   id="mcustomer_picode">
                                         </div>
                                     </div>
                                     <div class="form-group row">

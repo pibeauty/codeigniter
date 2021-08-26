@@ -202,7 +202,7 @@ class Customers_model extends CI_Model
     }
 
 
-    public function add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language = '', $create_login = true, $password = '', $docid = '', $custom = '', $discount = 0, $tavalod, $moaaref)
+    public function add($name, $company, $phone, $email, $address, $city, $region, $country, $postbox, $customergroup, $taxid, $name_s, $phone_s, $email_s, $address_s, $city_s, $region_s, $country_s, $postbox_s, $language = '', $create_login = true, $password = '', $docid = '', $custom = '', $discount = 0, $tavalod, $moaaref, $picode)
     {
         $this->db->select('phone');
         $this->db->from('geopos_customers');
@@ -246,7 +246,8 @@ class Customers_model extends CI_Model
                 'custom1' => $custom,
                 'discount_c' => $discount,
                 'tavalod' => $tavalod,
-                'moaaref' => $moaaref
+                'moaaref' => $moaaref,
+                'picode' => $picode
             );
 
 
@@ -258,7 +259,7 @@ class Customers_model extends CI_Model
                 $cid = $this->db->insert_id();
 
                 // MO generate picode and save it
-                $picode = $this->picodeGenerator($cid, $tavalod);
+                // $picode = $this->picodeGenerator($cid, $tavalod);
                 // $textMessage = "خانم $name به باشگاه مشتریان «سالن پی» خوش آمدید.\nشماره اشتراک (PInumber):\n$picode\n\n02140220012\n09393851976\nInstagram: pibeautysalon\nWebsite: pibeautysalon .com";
                 // sendSms([$phone], $textMessage);
                 $p_string = '';
