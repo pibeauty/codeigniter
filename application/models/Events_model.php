@@ -133,14 +133,14 @@ class Events_model extends CI_Model
         $this->db->where('id', $customerid);
         $query = $this->db->get();
         $Cus= $query->row_array();
-        $factor_code=$this->generateRandomString();
+        // $factor_code=$this->generateRandomString();
         $data = array(
             'title' => $Cus['name'],
             'start' => $datetime,
             'end' => $datetimeend,
             'userid' => $userid,
             'customerid' => $customerid,
-            'description' => $factor_code,
+            'description' => $description,
             'color' => $color,
             'cus_name' => $Cus['name'],
             'cus_mobile' => $Cus['phone'],

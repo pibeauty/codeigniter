@@ -78,7 +78,7 @@
                                for="customerid">Customer</label>
                         <div class="col-md-8">
                             <select name="customerid" id="customerid" class="form-control select-box" style="width: 100%">
-                               <option value="1">--انتخاب کنید--</option>
+                               <option value="">--انتخاب کنید--</option>
                                 <?php
                                 foreach ($customers as $row) {
                                     $cid = $row->id;
@@ -125,8 +125,8 @@
                         <label class="col-md-4 control-label"
                                for="description"><?php echo $this->lang->line('Description') ?></label>
                         <div class="col-md-8">
-                            <textarea class="form-control" id="descriptionShow" name="descriptionShow"></textarea>
-                            <textarea class="form-control" id="description" name="description" style="display: none"></textarea>
+                            <!-- <textarea class="form-control" id="descriptionShow" name="descriptionShow"></textarea> -->
+                            <textarea class="form-control" id="description" name="description"></textarea>
                         </div>
                     </div>
                     <div class="row form-group">
@@ -353,6 +353,7 @@
             var res = str.replace("T", " ")+":00";
             var str2 =$('#datetimeend').val();
             var res2 = str2.replace("T", " ")+":00";
+            var customerId =$('#customerid').val();
             if (!str)
             {
                 alert ('Start date is required.');
@@ -364,6 +365,10 @@
             else if (res2 <= res)
             {
                 alert ('End date must be bigger than start date.');
+            }
+            else if (!customerId)
+            {
+                alert ('Customer is required.');
             }
             else
             {
