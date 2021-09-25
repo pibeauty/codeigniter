@@ -36,6 +36,7 @@ class Customers extends CI_Controller
         $this->load->library('jdf');
         $this->load->library("Custom");
         $this->load->model('Events_model', 'events');
+        $this->load->model('Invoices_model', 'invoices');
         $this->li_a = 'crm';
     }
 
@@ -79,6 +80,7 @@ class Customers extends CI_Controller
         $head['title'] = 'View Customer';
         $data['events'] = $this->events->eventListByuser($custid);
         $data['referral'] = $this->customers->details($data['details']['moaaref']);
+        $data['presenceCount'] = $this->invoices->userInvoiceCount($custid);
 
 
         $this->load->view('fixed/header', $head);
@@ -99,7 +101,8 @@ class Customers extends CI_Controller
                 $row[] = $no;
                 $row[] = '<span class="avatar-sm align-baseline"><img class="rounded-circle" src="' . base_url() . 'userfiles/customers/thumbnail/' . $customers->picture . '" ></span> &nbsp;<a href="customers/view?id=' . $customers->id . '">' . $customers->name . '</a>';
                 $row[] = amountExchange($customers->total - $customers->pamnt, 0, $this->aauth->get_user()->loc);
-                $row[] = $customers->address . ',' . $customers->city . ',' . $customers->country;
+                // $row[] = $customers->address . ',' . $customers->city . ',' . $customers->country;
+                $row[] = $age;
                 $row[] = $customers->email;
                 $row[] = $customers->phone;
                 $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="fa fa-eye"></span>  ' . $this->lang->line('View') . '</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span>  ' . $this->lang->line('Edit') . '</a> <a href="appoint/?id=' . $customers->id . '&cusUser=0" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span>  Appoint</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="fa fa-trash"></span></a>';
@@ -107,11 +110,16 @@ class Customers extends CI_Controller
             }
         } else {
             foreach ($list as $customers) {
+                $from = new DateTime($customers->tavalod);
+                $to   = new DateTime('today');
+                $age = $from->diff($to)->y;
+                
                 $no++;
                 $row = array();
                 $row[] = $no;
                 $row[] = '<span class="avatar-sm align-baseline"><img class="rounded-circle" src="' . base_url() . 'userfiles/customers/thumbnail/' . $customers->picture . '" ></span> &nbsp;<a href="customers/view?id=' . $customers->id . '">' . $customers->name . '</a>';
-                $row[] = $customers->address . ',' . $customers->city . ',' . $customers->country;
+                // $row[] = $customers->address . ',' . $customers->city . ',' . $customers->country;
+                $row[] = (int)$age;
                 $row[] = $customers->email;
                 $row[] = $customers->phone;
                 $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="fa fa-eye"></span>  ' . $this->lang->line('View') . '</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span>  ' . $this->lang->line('Edit') . '<a href="appoint/?id=' . $customers->id . '&cusUser=0" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span>  Appoint</a>'. '</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="fa fa-trash"></span></a>';

@@ -659,4 +659,12 @@ class Invoices_model extends CI_Model
             return array(false, $e->getMessage());
         }
     }
+
+    public function userInvoiceCount($userId)
+    {
+        $this->db->select('*');
+        $this->db->from('geopos_invoices');
+        $this->db->where('csd',$userId);
+        return $this->db->count_all_results();
+    }
 }

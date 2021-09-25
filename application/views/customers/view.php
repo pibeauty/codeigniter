@@ -237,10 +237,10 @@
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
-                                    <strong>count presence</strong>
+                                    <strong>presence count</strong>
                                 </div>
                                 <div class="col-md-10">
-                                    <?php  echo $count_hozor+$details['tedad_hozor']; ?>
+                                    <?php  echo $presenceCount; ?>
                                 </div>
 
                             </div>
@@ -248,7 +248,7 @@
                             <hr>
                             <div class="row m-t-lg">
                                 <div class="col-md-2">
-                                    <strong>count service</strong>
+                                    <strong>service count</strong>
                                 </div>
                                 <div class="col-md-10">
                                     <?php  echo $count_service+$details['kole_serviveha']; ?>
