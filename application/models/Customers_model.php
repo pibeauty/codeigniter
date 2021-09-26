@@ -580,6 +580,11 @@ class Customers_model extends CI_Model
         }
 
         if ($tyd) $this->db->where('geopos_invoices.i_class>', 1);
+        if ($this->input->post('start_date') && $this->input->post('end_date')) // if datatable send POST for search
+        {
+            $this->db->where('DATE(geopos_invoices.invoicedate) >=', datefordatabase($this->input->post('start_date')));
+            $this->db->where('DATE(geopos_invoices.invoicedate) <=', datefordatabase($this->input->post('end_date')));
+        }
         $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
 
         $i = 0;
