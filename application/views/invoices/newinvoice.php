@@ -211,9 +211,20 @@
                                 <input type="hidden" name="hsn[]" id="hsn-0" value="">
                             </tr>
                             <tr>
-                                <td colspan="8"><textarea id="dpid-0" class="form-control" name="product_description[]"
+                                <td colspan="6"><textarea id="dpid-0" class="form-control" name="product_description[]"
                                                           placeholder="<?php echo $this->lang->line('Enter Product description'); ?> (Optional)"
                                                           autocomplete="off"></textarea><br></td>
+                                <td colspan="2">
+                                    <select name="employeeId[]" class="form-control input-md">
+                                        <?php
+                                        foreach ($employees as $employee) {
+                                            $cid = $employee['id'];
+                                            $acn = $employee['name'];
+                                            echo "<option value='$cid'>$acn</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </td>
                             </tr>
 
                             <tr class="last-item-row sub_c">

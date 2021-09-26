@@ -1055,4 +1055,17 @@ class Employee extends CI_Controller
             header('Location: http://'.$_SERVER['SERVER_NAME']);}
         exit;
     }
+
+    public function createEmployeeSelectOption()
+    {
+        $employees= $this->employee->list_employee();
+        $html = "<select name='employeeId[]' class='form-control input-md'>";
+        foreach ($employees as $row) {
+            $cid = $row['id'];
+            $acn = $row['name'];
+            $html .= "<option value='$cid'>$acn</option>";
+        }
+        $html .= "</select>";
+        echo $html;
+    }
 }

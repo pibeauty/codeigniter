@@ -241,7 +241,21 @@
                         <input type="hidden" class="pdIn" name="pid[]" id="pid-' . $i . '" value="' . $row['pid'] . '">
                              <input type="hidden" name="unit[]" id="unit-' . $i . '" value="' . $row['unit'] . '">
                                    <input type="hidden" name="hsn[]" id="unit-' . $i . '" value="' . $row['code'] . '">
-                    </tr> <tr class="desc_p"><td colspan="8"><textarea id="dpid-' . $i . '" class="form-control" name="product_description[]" placeholder="' . $this->lang->line('Enter Product description') . '" autocomplete="off">' . $row['product_des'] . '</textarea><br></td></tr>';
+                    </tr> <tr class="desc_p"><td colspan="6"><textarea id="dpid-' . $i . '" class="form-control" name="product_description[]" placeholder="' . $this->lang->line('Enter Product description') . '" autocomplete="off">' . $row['product_des'] . '</textarea><br></td>
+                        <td colspan="2">
+                            <select name="employeeId[]" class="form-control input-md">';
+                                foreach ($employees as $employee) {
+                                    $selected = '';
+                                    $cid = $employee['id'];
+                                    $acn = $employee['name'];
+                                    if ($row['eid'] == $employee['id'])
+                                        $selected = 'selected';
+                                    echo "<option value='$cid'".$selected.">$acn</option>";
+                                }
+                                echo '
+                            </select>
+                        </td>
+                    </tr>';
                                     $i++;
                                 } ?>
                                 <tr class="last-item-row sub_c">

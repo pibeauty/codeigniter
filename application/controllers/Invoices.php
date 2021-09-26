@@ -53,6 +53,7 @@ class Invoices extends CI_Controller
     {
         $this->load->model('customers_model', 'customers');
         $this->load->model('plugins_model', 'plugins');
+        $this->load->model('employee_model', 'employee');
         $data['exchange'] = $this->plugins->universal_api(5);
         $data['customergrouplist'] = $this->customers->group_list();
         $data['lastinvoice'] = $this->invocies->lastinvoice();
@@ -64,6 +65,7 @@ class Invoices extends CI_Controller
         $head['title'] = "New Invoice";
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['taxdetails'] = $this->common->taxdetail();
+        $data['employees'] = $this->employee->list_employee();
         $this->load->view('fixed/header', $head);
         $this->load->view('invoices/newinvoice', $data);
         $this->load->view('fixed/footer');
@@ -72,7 +74,7 @@ class Invoices extends CI_Controller
     //edit invoice
     public function edit()
     {
-
+        $this->load->model('employee_model', 'employee');
         $tid = intval($this->input->get('id'));
         $data['id'] = $tid;
         $data['title'] = "Edit Invoice $tid";
@@ -89,6 +91,7 @@ class Invoices extends CI_Controller
         $data['exchange'] = $this->plugins->universal_api(5);
         $this->load->library("Common");
         $data['taxlist'] = $this->common->taxlist_edit($data['invoice']['taxstatus']);
+        $data['employees'] = $this->employee->list_employee();
 
 
         $this->load->view('fixed/header', $head);
@@ -212,6 +215,7 @@ class Invoices extends CI_Controller
             $ptotal_tax = $this->input->post('taxa');
             $ptotal_disc = $this->input->post('disca');
             $product_des = $this->input->post('product_description', true);
+            $employeeId = $this->input->post('employeeId');
             $product_unit = $this->input->post('unit');
             $product_hsn = $this->input->post('hsn', true);
             $product_alert = $this->input->post('alert');
@@ -231,6 +235,7 @@ class Invoices extends CI_Controller
                     'totaltax' => rev_amountExchange_s($ptotal_tax[$key], $currency, $this->aauth->get_user()->loc),
                     'totaldiscount' => rev_amountExchange_s($ptotal_disc[$key], $currency, $this->aauth->get_user()->loc),
                     'product_des' => $product_des[$key],
+                    'eid' => $employeeId[$key],
                     'unit' => $product_unit[$key]
                 );
 
@@ -546,6 +551,7 @@ class Invoices extends CI_Controller
             $ptotal_tax = $this->input->post('taxa');
             $ptotal_disc = $this->input->post('disca');
             $product_des = $this->input->post('product_description', true);
+            $employeeId = $this->input->post('employeeId');
             $product_unit = $this->input->post('unit');
             $product_hsn = $this->input->post('hsn');
 
@@ -567,6 +573,7 @@ class Invoices extends CI_Controller
                     'totaltax' => rev_amountExchange_s($ptotal_tax[$key], $currency, $this->aauth->get_user()->loc),
                     'totaldiscount' => rev_amountExchange_s($ptotal_disc[$key], $currency, $this->aauth->get_user()->loc),
                     'product_des' => $product_des[$key],
+                    'eid' => $employeeId[$key],
                     'unit' => $product_unit[$key]
                 );
                 $productlist[$prodindex] = $data;
