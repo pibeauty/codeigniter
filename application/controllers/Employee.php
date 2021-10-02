@@ -199,30 +199,13 @@ class Employee extends CI_Controller
             $no++;
             $row = array();
             $row[] = $no;
-            $row[] = $invoices->tid;
-            $row[] = $invoices->name;
-            $row[] = $invoices->invoicedate;
-            $row[] = amountExchange($invoices->total, 0, $this->aauth->get_user()->loc);
-            switch ($invoices->status) {
-                case "paid" :
-                    $out = '<span class="label label-success">Paid</span> ';
-                    break;
-                case "due" :
-                    $out = '<span class="label label-danger">Due</span> ';
-                    break;
-                case "canceled" :
-                    $out = '<span class="label label-warning">Canceled</span> ';
-                    break;
-                case "partial" :
-                    $out = '<span class="label label-primary">Partial</span> ';
-                    break;
-                default :
-                    $out = '<span class="label label-info">Pending</span> ';
-                    break;
-            }
-            $row[] = $out;
-            $row[] = '<a href="' . base_url("invoices/view?id=$invoices->id") . '" class="btn btn-success btn-xs"><i class="fa fa-eye"></i> View</a> &nbsp; <a href="' . base_url("invoices/printinvoice?id=$invoices->id") . '&d=1" class="btn btn-info btn-xs"  title="Download"><span class="fa fa-download"></span></a>';
 
+            $row[] = '<a href="' . base_url("invoices/view?id=$invoices->id") . '">&nbsp; ' . $invoices->tid . '</a>';
+            $row[] = $invoices->name;
+            $row[] = dateformat($invoices->invoicedate);
+            $row[] = amountExchange($invoices->total, 0, $this->aauth->get_user()->loc);
+            $row[] = '<span class="st-' . $invoices->status . '">' . $this->lang->line(ucwords($invoices->status)) . '</span>';
+            $row[] = '<a href="' . base_url("invoices/view?id=$invoices->id") . '" class="btn btn-success btn-sm" title="View"><i class="fa fa-eye"></i></a>&nbsp;<a href="' . base_url("invoices/printinvoice?id=$invoices->id") . '&d=1" class="btn btn-info btn-sm"  title="Download"><span class="fa fa-download"></span></a> <a href="#" data-object-id="' . $invoices->id . '" class="btn btn-danger btn-sm delete-object"><span class="fa fa-trash"></span></a>';
             $data[] = $row;
         }
 

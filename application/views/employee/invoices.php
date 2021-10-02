@@ -81,9 +81,10 @@
         draw_data();
         
         function draw_data(start_date = '', end_date = '') {
-            var table = $('#invoices').DataTable({
+            $('#invoices').DataTable({
                 "processing": true,
                 "serverSide": true,
+                'stateSave': true,
                 responsive: true,
                 "order": [],
                 "ajax": {
@@ -102,7 +103,16 @@
                         "orderable": false,
                     },
                 ],
-
+                dom: 'Blfrtip',
+                buttons: [
+                    {
+                        extend: 'excelHtml5',
+                        footer: true,
+                        exportOptions: {
+                            columns: [1, 2, 3, 4, 5]
+                        }
+                    }
+                ],
             });
         }
 

@@ -263,10 +263,17 @@ class Employee_model extends CI_Model
 
     private function _invoice_datatables_query($id)
     {
-        $this->db->select('geopos_invoices.*,geopos_customers.name');
+        $this->db->select('geopos_invoices.*,geopos_customers.name,geopos_invoice_items.tid,geopos_invoice_items.eid');
         $this->db->from('geopos_invoices');
-        $this->db->where('geopos_invoices.eid', $id);
+        $this->db->join('geopos_invoice_items', 'geopos_invoices.id=geopos_invoice_items.tid', 'left');
+        $this->db->where('geopos_invoice_items.eid', $id);
+        if ($this->input->post('start_date') && $this->input->post('end_date')) // if datatable send POST for search
+        {
+            $this->db->where('DATE(geopos_invoices.invoicedate) >=', datefordatabase($this->input->post('start_date')));
+            $this->db->where('DATE(geopos_invoices.invoicedate) <=', datefordatabase($this->input->post('end_date')));
+        }
         $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
+        $this->db->group_by('geopos_invoices.id');
 
         $i = 0;
 
