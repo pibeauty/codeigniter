@@ -77,6 +77,16 @@ class Employee_model extends CI_Model
         return $query->row_array();
     }
 
+    public function employee_details_custom($id)
+    {
+        $this->db->select('geopos_employees.*,geopos_users.email,geopos_users.loc,geopos_users.roleid as userRoleId,');
+        $this->db->from('geopos_employees');
+        $this->db->where('geopos_employees.id', $id);
+        $this->db->join('geopos_users', 'geopos_employees.id = geopos_users.id', 'left');
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+
     public function salary_history($id)
     {
         $this->db->select('*');
@@ -102,6 +112,7 @@ class Employee_model extends CI_Model
 
 
         $data = array(
+            'roleid' => $roleid,
             'name' => $name,
             'phone' => $phone,
             'phonealt' => $phonealt,
@@ -130,6 +141,7 @@ class Employee_model extends CI_Model
         );
         if ($department > -1) {
             $data = array(
+                'roleid' => $roleid,
                 'name' => $name,
                 'phone' => $phone,
                 'phonealt' => $phonealt,

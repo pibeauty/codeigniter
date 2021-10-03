@@ -428,7 +428,8 @@ class Employee extends CI_Controller
 
             $data['services'] = $this->services->getServices();
             $data['roles'] = $this->employee->list_roles();
-            $data['user'] = $this->employee->employee_details($id);
+            // $data['user'] = $this->employee->employee_details($id);
+            $data['user'] = $this->employee->employee_details_custom($id);
             $data['dept'] = $this->employee->department_list($id, $this->aauth->get_user()->loc);
             $data['eid'] = intval($id);
             $this->load->view('fixed/header', $head);
