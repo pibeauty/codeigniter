@@ -48,6 +48,48 @@ class Employee extends CI_Controller
         $this->load->view('fixed/footer');
     }
 
+    public function customers()
+    {
+        $id = $this->input->get('id');
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'Employee Invoices';
+        $data['employee'] = $this->employee->employee_details($id);
+        $data['eid'] = intval($id);
+        $this->load->view('fixed/header', $head);
+        $this->load->view('employee/customers', $data);
+        $this->load->view('fixed/footer');
+    }
+
+    public function customers_list()
+    {
+
+        $eid = $this->input->post('eid');
+        $list = $this->employee->employee_customers_datatables($eid);
+        $data = array();
+
+        $no = $this->input->post('start');
+
+
+        foreach ($list as $invoices) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = $invoices->name;
+            $row[] = '<a href="' . base_url("customers/view?id=$invoices->csd") . '" class="btn btn-success btn-sm" title="View"><i class="fa fa-eye"></i></a>';
+            $data[] = $row;
+        }
+
+        $output = array(
+            "draw" => $_POST['draw'],
+            "recordsTotal" => $this->employee->invoicecount_all($eid),
+            "recordsFiltered" => $this->employee->invoicecount_filtered($eid),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+
+    }
+
     public function salaries()
     {
         $head['usernm'] = $this->aauth->get_user()->username;

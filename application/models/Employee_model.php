@@ -328,6 +328,56 @@ class Employee_model extends CI_Model
         return $query->result();
     }
 
+    private function _employee_customers_datatables_query($id)
+    {
+        $this->db->select('geopos_invoices.*,geopos_customers.name,geopos_invoice_items.tid,geopos_invoice_items.eid');
+        $this->db->from('geopos_invoices');
+        $this->db->join('geopos_invoice_items', 'geopos_invoices.id=geopos_invoice_items.tid', 'left');
+        $this->db->where('geopos_invoice_items.eid', $id);
+        $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
+        $this->db->group_by('geopos_invoices.csd');
+
+        $i = 0;
+
+        foreach ($this->column_search as $item) // loop column
+        {
+            $search = $this->input->post('search');
+            $value = $search['value'];
+            if ($value) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $value);
+                } else {
+                    $this->db->or_like($item, $value);
+                }
+
+                if (count($this->column_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+        $search = $this->input->post('order');
+        if ($search) // here order processing
+        {
+            $this->db->order_by($this->column_order[$search['0']['column']], $search['0']['dir']);
+        } else if (isset($this->order)) {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+
+    function employee_customers_datatables($id)
+    {
+        $this->_employee_customers_datatables_query($id);
+        if ($this->input->post('length') != -1)
+            $this->db->limit($this->input->post('length'), $this->input->post('start'));
+        $query = $this->db->get();
+        return $query->result();
+    }
+
     function invoicecount_filtered($id)
     {
         $this->_invoice_datatables_query($id);

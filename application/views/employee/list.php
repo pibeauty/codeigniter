@@ -57,11 +57,17 @@
                         }
 
                         echo "<tr>
-                    <td>$i</td>
-                    <td>$name</td>
-                    <td>$role</td>                 
-                    <td>$status</td>
-                    <td><a href='" . base_url("appoint/?id=$aid"."&cusUser=1") . "' class='btn btn-success btn-xs'><i class='fa fa-eye'></i> appointments</a> <a href='" . base_url("employee/view?id=$aid") . "' class='btn btn-success btn-xs'><i class='fa fa-eye'></i> " . $this->lang->line('View') . "</a>&nbsp;&nbsp;$btn&nbsp;&nbsp;<a href='#pop_model' data-toggle='modal' data-remote='false' data-object-id='" . $aid . "' class='btn btn-danger btn-xs delemp' title='Delete'><i class='fa fa-trash'></i></a></td></tr>";
+                            <td>$i</td>
+                            <td>$name</td>
+                            <td>$role</td>                 
+                            <td>$status</td>
+                            <td>
+                                <a href='" . base_url("appoint/?id=$aid"."&cusUser=1") . "' class='btn btn-success btn-xs'><i class='fa fa-eye'></i> appointments</a> 
+                                <a href='" . base_url("employee/customers?id=$aid"."") . "' class='btn btn-success btn-xs'><i class='fa fa-eye'></i> clients</a> 
+                                <a href='" . base_url("employee/view?id=$aid") . "' class='btn btn-success btn-xs'><i class='fa fa-eye'></i> " . $this->lang->line('View') . "</a>&nbsp;&nbsp;$btn&nbsp;&nbsp;
+                                <a href='#pop_model' data-toggle='modal' data-remote='false' data-object-id='" . $aid . "' class='btn btn-danger btn-xs delemp' title='Delete'><i class='fa fa-trash'></i></a>
+                            </td>
+                        </tr>";
                         $i++;
                     }
                     //<a href="appoint/?id=' . $customers->id . '&cusUser=0
