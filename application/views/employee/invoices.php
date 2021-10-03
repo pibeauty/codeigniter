@@ -31,7 +31,7 @@
                 <th><?php echo $this->lang->line('Customer') ?></th>
                 <th><?php echo $this->lang->line('Date') ?></th>
                 <th><?php echo $this->lang->line('Total') ?></th>
-                <th class="no-sort"><?php echo $this->lang->line('Status') ?></th>
+                <!-- <th class="no-sort"><?php //echo $this->lang->line('Status') ?></th> -->
                 <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -47,7 +47,7 @@
                 <th><?php echo $this->lang->line('Customer') ?></th>
                 <th><?php echo $this->lang->line('Date') ?></th>
                 <th><?php echo $this->lang->line('Total') ?></th>
-                <th class="no-sort"><?php echo $this->lang->line('Status') ?></th>
+                <!-- <th class="no-sort"><?php //echo $this->lang->line('Status') ?></th> -->
                 <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 
             </tr>
