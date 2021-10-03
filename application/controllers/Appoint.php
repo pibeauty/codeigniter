@@ -38,6 +38,7 @@ class Appoint extends CI_Controller
         $this->load->model('users_model', 'users');
         $this->load->model('employee_model', 'employee');
         $this->load->model('Events_model', 'events');
+        $this->load->model('Services_model', 'services');
     }
 
 
@@ -53,6 +54,7 @@ class Appoint extends CI_Controller
         $data['customers'] = $this->customers->get_datatables();
         //$data['users'] = $this->users->getAllUser();
         $data['employee'] = $this->employee->list_employee();
+        $data['services'] = $this->services->getParentServices();
        /* if($id !=0 ){
             $data['getEventsURL'] ='events/getEventsCusUser/?id='.$id.'&cusUser='.$cusUser;
         }

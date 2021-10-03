@@ -823,3 +823,4 @@ $lang['Client Picode and Email required.'] = "Client Picode and Email required."
 $lang['Used Balance'] = "Used Balance";
 $lang['Send SMS'] = "Send SMS";
 $lang['Age'] = "Age";
+$lang['Service'] = "Service";

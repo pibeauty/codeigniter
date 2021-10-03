@@ -306,9 +306,17 @@ class Events_model extends CI_Model
 
     public function eventList()
     {
+        $this->load->model('Services_model', 'services');
+        $subServiceIds = $this->services->getParentSubServiceIds($this->input->get('serviceId'));
         $this->db->select('*');
         $this->db->from('geopos_events');
-        $this->db->group_by('description');
+        if ($this->input->get('start_date') && $this->input->get('end_date') && $this->input->get('serviceId')) // if datatable send POST for search
+        {
+            $this->db->where('DATE(geopos_events.start) >=', datefordatabase($this->input->get('start_date')));
+            $this->db->where('DATE(geopos_events.start) <=', datefordatabase($this->input->get('end_date')));
+            $this->db->where_in('service_id', $subServiceIds);
+        }
+        // $this->db->group_by('description');
         $this->db->order_by('id', 'desc');  # or desc
 
         $query = $this->db->get();

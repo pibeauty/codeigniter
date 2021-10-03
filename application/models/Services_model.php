@@ -28,6 +28,27 @@ class Services_model extends CI_Model
         parent::__construct();
     }
 
+    public function getParentServices(){
+        $this->db->select('*');
+        $this->db->from($this->table);
+        $this->db->where('parent_id', 0);
+        $parent = $this->db->get();
+        return $parent->result_array();
+    }
+
+    public function getParentSubServiceIds($parentId){
+        $this->db->select('*');
+        $this->db->from('services');
+        $this->db->where('parent_id', $parentId);
+        $result = $this->db->get();
+        $subServices = $result->result_array();
+        $subServiceIds = [];
+        foreach ($subServices as $subService)
+        {
+            array_push($subServiceIds, $subService['id']);
+        }
+        return $subServiceIds;
+    }
 
     public function getServices(){
 
