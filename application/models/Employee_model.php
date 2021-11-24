@@ -285,6 +285,7 @@ class Employee_model extends CI_Model
             $this->db->where('DATE(geopos_invoices.invoicedate) <=', datefordatabase($this->input->post('end_date')));
         }
         $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'left');
+        $this->db->select('SUM(geopos_invoice_items.subtotal) + SUM(geopos_invoice_items.totaltax) - SUM(geopos_invoice_items.totaldiscount) AS employeesshare');
         $this->db->group_by('geopos_invoices.id');
 
         $i = 0;
