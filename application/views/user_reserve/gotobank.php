@@ -36,6 +36,7 @@
     <link rel='stylesheet'  href='https://unpkg.com/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css' type='text/css' />
 
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="<?= assets_url() ?>app-assets/front2/css/user_reserve.css">
 
     <style>
 
@@ -122,15 +123,16 @@
 
 
 
-<section class="hero-area bg-1 text-center overly">
+<section class="hero-area bg-5 text-center overly">
     <!-- Container Start -->
     <div class="container">
         <div class="row">
             <div class="col-md-12">
                 <!-- Header Contetnt -->
                 <div class="content-block">
-                    <h1>پی سالن </h1>
-                    <p>نمایش زیبایی درون و بیرون ِ زنان پیشروی جامعه در برند پی</p>
+                    <img src=<?php echo base_url("assets/images/logo.png")?> alt="logo" style="max-width:200px">
+                    <!-- <h1>پی سالن </h1> -->
+                    <!-- <p>نمایش زیبایی درون و بیرون ِ زنان پیشروی جامعه در برند پی</p> -->
                 </div>
                 <!-- Advance Search -->
                 <div class="advance-search">
@@ -184,7 +186,7 @@
 =            All Category Section            =
 ===========================================-->
 
-<section class=" section">
+<section class=" section" style="background: rgb(151 204 196);">
     <!-- Container Start -->
     <div class="container">
         <div class="row">
@@ -197,9 +199,11 @@
                     <!-- Category list -->
                     <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
                         <div class="category-block">
-                            <div class="header">
-                                <i class="fa fa-laptop icon-bg-1"></i>
-                                <h4>مانیکور</h4>
+                            <!-- <div class="header"> -->
+                            <div>
+                                <!-- <i class="fa fa-laptop icon-bg-1"></i>
+                                <h4>مانیکور</h4> -->
+                                <img src=<?php echo base_url('/app-assets/images/user_reserve/3.jpg') ?> style="max-width: 100%;">
                             </div>
 
                         </div>
@@ -207,18 +211,22 @@
                     <!-- Category list -->
                     <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
                         <div class="category-block">
-                            <div class="header">
-                                <i class="fa fa-apple icon-bg-2"></i>
-                                <h4>پدیکور</h4>
+                           <!-- <div class="header"> -->
+                            <div>
+                                <!-- <i class="fa fa-apple icon-bg-2"></i>
+                                <h4>پدیکور</h4> -->
+                                <img src=<?php echo base_url('/app-assets/images/user_reserve/IMG_2936.jpg') ?> style="max-width: 100%;">
                             </div>
                         </div>
                     </div> <!-- /Category List -->
                     <!-- Category list -->
                     <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
                         <div class="category-block">
-                            <div class="header">
-                                <i class="fa fa-home icon-bg-3"></i>
-                                <h4>ابرو</h4>
+                            <!-- <div class="header"> -->
+                            <div>
+                                <!-- <i class="fa fa-home icon-bg-3"></i>
+                                <h4>ابرو</h4> -->
+                                <img src=<?php echo base_url('/app-assets/images/user_reserve/1.jpg') ?> style="max-width: 100%;">
                             </div>
 
                         </div>
@@ -226,9 +234,11 @@
                     <!-- Category list -->
                     <div class="col-lg-3 offset-lg-0 col-md-5 offset-md-1 col-sm-6 col-6">
                         <div class="category-block">
-                            <div class="header">
-                                <i class="fa fa-shopping-basket icon-bg-4"></i>
-                                <h4>مو</h4>
+                            <!-- <div class="header"> -->
+                            <div>
+                                <!-- <i class="fa fa-shopping-basket icon-bg-4"></i>
+                                <h4>مو</h4> -->
+                                <img src=<?php echo base_url('/app-assets/images/user_reserve/2.jpg') ?> style="max-width: 100%;">
                             </div>
 
                         </div>
@@ -246,48 +256,67 @@
 <!--============================
 =            Footer            =
 =============================-->
+<style>
+    .footer .block {
+        height: 100%;
+        display: flex;
+        justify-content: center; /* align horizontal */
+        align-items: center; /* align vertical */
+    }
+    .footer .block p {
+        font-size: 1em;
+    }
+    .footer .block i {
+        padding: 0.5em
+    }
+</style>
 
 <footer class="footer section section-sm" dir="rtl">
     <!-- Container Start -->
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-7 offset-md-1 offset-lg-0">
+            <div class="col-lg-3 col-md-6 offset-lg-0">
                 <!-- About -->
                 <div class="block about" align="right">
                     <!-- footer logo -->
-                    <img src="http://pibeautysalon.com/wp-content/uploads/2021/01/pi_logo.png" alt="">
+                    <img src=<?php echo base_url("assets/images/logo.png")?> alt="logo" style="max-width:200px">
+                    <!-- <img src="http://pibeautysalon.com/wp-content/uploads/2021/01/pi_logo.png" alt=""> -->
                     <!-- description -->
-                    <p class="alt-color">پی‌سالن یک مرکز آرایشی و زیبایی است که اتمسفر متفاوتی رو برای خانم‌‌های فعال و پیشروی این جامعه تدارک دیده.   نکته مهم اینه که وقتی میاین آرایشگاه که به خودتون استراحت بدین، محیط در خور شأن و شخصیت شما باشه.   در پی‌سالن همه تلاشمون رو کردیم که این جو رو برای شما بسازیم.</p>
+                    <!-- <p class="alt-color">پی‌سالن یک مرکز آرایشی و زیبایی است که اتمسفر متفاوتی رو برای خانم‌‌های فعال و پیشروی این جامعه تدارک دیده.   نکته مهم اینه که وقتی میاین آرایشگاه که به خودتون استراحت بدین، محیط در خور شأن و شخصیت شما باشه.   در پی‌سالن همه تلاشمون رو کردیم که این جو رو برای شما بسازیم.</p> -->
                 </div>
             </div>
             <!-- Link list -->
-            <div class="col-lg-2 offset-lg-1 col-md-3">
+            <div class="col-lg-3 col-md-6">
                 <div class="block"  align="right">
-                    <h4>اطلاعات</h4>
+                    <p><i class="fa fa-map-marker" aria-hidden="true"></i>فرمانیه، مرکز خرید سانا، طبقه ششم، واحد ۶۰۲</p>
+                    <!-- <h4>اطلاعات</h4>
                     <ul>
                         <li><a href="http://pibeautysalon.com/contact-us/"  >تماس با ما</a></li>
                         <li><a href="http://pibeautysalon.com/faq/"  >سوالات رایج</a></li>
                         <li><a href="http://pibeautysalon.com/blog/" >بلاگ</a></li>
 
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
             <!-- Link list -->
-            <div class="col-lg-2 col-md-3 offset-md-1 offset-lg-0">
+            <div class="col-lg-3 col-md-6 offset-lg-0">
                 <div class="block"  align="right">
-                    <h4>حساب کاربری</h4>
+                    <p><i class="fa fa-phone-square" aria-hidden="true"></i>۴۰۲−۲۰۰۱۲</p>
+                    <!-- <h4>حساب کاربری</h4>
                     <ul>
                         <li><a href="http://pibeautysalon.com/cart/"  >سبد خرید</a></li>
 
 
 
 
-                    </ul>
+                    </ul> -->
                 </div>
             </div>
             <!-- Promotion -->
-            <div class="col-lg-4 col-md-7">
-
+            <div class="col-lg-3 col-md-6">
+                <div class="block"  align="right">
+                    <p><i class="fa fa-instagram" aria-hidden="true"></i>pibeautysalon</p>
+                </div>
             </div>
         </div>
     </div>
