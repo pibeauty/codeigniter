@@ -656,6 +656,12 @@ ul.pagination .active a {
   background: #c29e76;
 }
 
+.bg-5 {
+  background: url(../images/user_reserve/banner-pi1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 .navigation {
   padding: 20px 0;
 }
