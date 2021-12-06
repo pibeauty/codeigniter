@@ -13,6 +13,7 @@ return array(
     'Psr\\SimpleCache\\' => array($vendorDir . '/psr/simple-cache/src'),
     'Psr\\Log\\' => array($vendorDir . '/psr/log/Psr/Log'),
     'PhpOffice\\PhpSpreadsheet\\' => array($vendorDir . '/phpoffice/phpspreadsheet/src/PhpSpreadsheet'),
+    'Pasargad\\' => array($vendorDir . '/pepco-api/php-rest-sdk/src'),
     'PHPMailer\\PHPMailer\\' => array($vendorDir . '/phpmailer/phpmailer/src'),
     'Omnipay\\TwoCheckoutPlus\\' => array($vendorDir . '/collizo4sky/omnipay-2checkout/src'),
     'Omnipay\\Stripe\\' => array($vendorDir . '/omnipay/stripe/src'),
