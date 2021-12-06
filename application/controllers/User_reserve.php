@@ -17,7 +17,9 @@
  */
 
 defined('BASEPATH') OR exit('No direct script access allowed');
-
+require_once APPPATH . 'third_party/vendor/autoload.php';
+use \Pasargad\Pasargad;
+use \Pasargad\Classes\PaymentItem;
 class User_reserve extends CI_Controller
 {
 
@@ -36,6 +38,8 @@ class User_reserve extends CI_Controller
         $this->load->model('services_model', 'services');
         $this->load->model('employee_model', 'employee');
         $this->load->model('Events_model', 'events');
+        $this->load->model('Factor_model', 'factors');
+        $this->config->load('pep');
         // Session
         $this->load->library('session');
         $this->load->library('jdf');
@@ -552,16 +556,86 @@ class User_reserve extends CI_Controller
         $data['mobile']=$mobile;
         $data['referrerCode']=$referrerCode;
         // var_dump($dataX);die;
-        $res= $this->events->addReserve($dataX,$name,$mobile,$referrerCode);
+        [$factorCode, $amount] = $this->events->addReserve($dataX,$name,$mobile,$referrerCode);
         //log_message('error',"------------------------------------ghjghacascsascj3:".json_encode($res));
+        $date = date('Y/m/d H:i:s');
+        $this->factors->add($factorCode, $amount, $date);
+        try {
+            // Tip! Initialize this property in your payment service __constructor() method!
+            $pasargad = new Pasargad(
+            $this->config->item('merchant_code'),
+            $this->config->item('terminal_id'),
+            $this->config->item('base_url') . 'user_reserve/responseBank',
+            $this->config->item('cert_localtion'));
+            //e.q: 
+            // $pasargad = new Pasargad(123456,555555,"http://pep.co.ir/ipgtest","../cert/cert.xml");
 
-        $this->load->view('user_reserve/responsebank',$data);
+            // Set Amount
+            $pasargad->setAmount($amount * 10); 
+
+            // Set Invoice Number (it MUST BE UNIQUE) 
+            $pasargad->setInvoiceNumber($factorCode);
+
+            // set Invoice Date with below format (Y/m/d H:i:s)
+            $pasargad->setInvoiceDate($date);
+
+            // get the Generated RedirectUrl from Pasargad API:
+            $redirectUrl = $pasargad->redirect();
+
+            // and redirect user to payment gateway:
+            return header("Location: $redirectUrl");
+
+        } catch (\Exception $ex) {
+            var_dump($ex->getMessage());
+            die();
+        }
+        // $this->load->view('user_reserve/responsebank',$data);
         //log_message('error',"------------------------------------ghjghacascsascj2:".json_decode($dataX));
     }
 
     public function responseBank(){
-
-
+        $factorCode = $this->input->get('iN');
+        $date = $this->input->get('iD');
+        $TransactionReferenceID = $this->input->get('tref');
+        $pasargad = new Pasargad(
+            $this->config->item('merchant_code'),
+            $this->config->item('terminal_id'),
+            $this->config->item('base_url') . 'user_reserve/responseBank',
+            $this->config->item('cert_localtion'));
+        $pasargad->setTransactionReferenceId($TransactionReferenceID);
+        $pasargad->setInvoiceNumber($factorCode);
+        $pasargad->setInvoiceDate($date);
+        $result = $pasargad->checkTransaction();
+        $events = $this->events->eventDetails($factorCode);
+        $data = [];
+        $data['name'] = $events[0]['cus_name'];
+        $data['mobile'] = $events[0]['cus_mobile'];
+        $data['data'] = $events;
+        if ($result['IsSuccess'] === true) {
+            $amount = $this->factors->getAmount($factorCode);
+            $pasargad->setAmount($amount * 10);
+            $verification = $pasargad->verifyPayment();
+            if ($verification['IsSuccess'] === true) {
+                $this->factors->update($factorCode, [
+                    'status' => 'accepted',
+                    'transaction_ref' => $TransactionReferenceID
+                ]);
+                $data['paymentStatus'] = 'accepted';
+            } else {
+                $this->factors->update($factorCode, [
+                    'status' => 'unkonwn',
+                    'transaction_ref' => $TransactionReferenceID
+                ]);
+                $data['paymentStatus'] = 'unkonwn';
+            }
+        } else {
+            $this->factors->update($factorCode, [
+                    'status' => 'rejected',
+                    'transaction_ref' => $TransactionReferenceID
+                ]);
+            $data['paymentStatus'] = 'rejected';
+        }
+        $this->load->view('user_reserve/responsebank',$data);
     }
 
     public function add(){
