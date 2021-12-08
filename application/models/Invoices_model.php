@@ -21,7 +21,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Invoices_model extends CI_Model
 {
     var $table = 'geopos_invoices';
-    var $column_order = array(null, 'geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total', 'geopos_invoices.status', null);
+    var $column_order = array(null, 'geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total', 'geopos_invoices.status', 'geopos_invoices.used_balance', 'geopos_invoices.notes', 'geopos_invoices.payment_type', 'geopos_invoices.payment_amount', 'geopos_invoices.payment_type2', 'geopos_invoices.payment_amount2', null);
     var $column_search = array('geopos_invoices.tid', 'geopos_customers.name', 'geopos_invoices.invoicedate', 'geopos_invoices.total','geopos_invoices.status');
     var $order = array('geopos_invoices.tid' => 'desc');
 
@@ -229,7 +229,7 @@ class Invoices_model extends CI_Model
 
     private function _get_datatables_query($opt = '')
     {
-        $this->db->select('geopos_invoices.id,geopos_invoices.tid,geopos_invoices.invoicedate,geopos_invoices.invoiceduedate,geopos_invoices.total,geopos_invoices.status,geopos_customers.name');
+        $this->db->select('geopos_invoices.id,geopos_invoices.tid,geopos_invoices.invoicedate,geopos_invoices.invoiceduedate,geopos_invoices.total,geopos_invoices.status,geopos_customers.name,geopos_invoices.used_balance,geopos_invoices.payment_type,geopos_invoices.payment_amount,geopos_invoices.payment_type2,,geopos_invoices.payment_amount2, geopos_invoices.notes');
         $this->db->from($this->table);
         $this->db->where('geopos_invoices.i_class', 0);
         if ($opt) {
@@ -282,12 +282,36 @@ class Invoices_model extends CI_Model
         if ($_POST['length'] != -1)
             $this->db->limit($_POST['length'], $_POST['start']);
         $query = $this->db->get();
-        $this->db->where('geopos_invoices.i_class', 0);
+        // $this->db->where('geopos_invoices.i_class', 0);
         if ($this->aauth->get_user()->loc) {
             $this->db->where('geopos_invoices.loc', $this->aauth->get_user()->loc);
         }  elseif(!BDATA) { $this->db->where('geopos_invoices.loc', 0); }
-
-        return $query->result();
+        $invoicesResult = $query->result();
+        // print_r($invoicesResult);
+        // die;
+        foreach ($invoicesResult as $key => $invoice) {
+            $products = $this->invoice_products($invoice->id);
+            $invoicesResult[$key]->excelExtra = [];
+            foreach ($products as $item) {
+                foreach ($item as $column => $value) {
+                    switch ($column) {
+                        case 'id':
+                        case 'tid':
+                            continue 2;
+                        break;
+                        case 'name':
+                            $column = 'employee';
+                            break;
+                    }
+                    if (isset($invoicesResult[$key]->excelExtra[$column])) {
+                        $invoicesResult[$key]->excelExtra[$column] .= ", $value";
+                    } else {
+                        $invoicesResult[$key]->excelExtra[$column] = $value;
+                    }
+                }
+            }
+        }
+        return $invoicesResult;
     }
 
     function count_filtered($opt = '')
