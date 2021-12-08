@@ -170,6 +170,7 @@ $lang['Note'] = "Note";
 $lang['Total Due'] = "Total Due";
 $lang['Sub Total'] = "Sub Total";
 $lang['Total'] = "Total";
+$lang['Employees Share'] = "Employees Share";
 $lang['Payment Made'] = "Payment Made";
 $lang['Balance Due'] = "Balance Due";
 $lang['Authorized person'] = "Authorized person";

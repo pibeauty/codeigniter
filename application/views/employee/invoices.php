@@ -1,3 +1,8 @@
+<style>
+    .income * {
+        display: inline;
+    }
+</style>
 <div class="card card-block">
     <div id="notify" class="alert alert-success" style="display:none;">
         <a href="#" class="close" data-dismiss="alert">&times;</a>
@@ -6,6 +11,9 @@
     </div>
     <div class="card-body">
         <h5><?php echo $this->lang->line('Invoices') ?> by <?php echo $employee['name'] ?></h5>
+        <div class = "income">
+            <h6>Total Income: </h6><p id="totalIncome">0</p><span> RM</span>
+        </div>
         <hr>
         <div class="row">
             <div class="col-md-2"><?php echo $this->lang->line('Invoice Date') ?></div>
@@ -31,6 +39,7 @@
                 <th><?php echo $this->lang->line('Customer') ?></th>
                 <th><?php echo $this->lang->line('Date') ?></th>
                 <th><?php echo $this->lang->line('Total') ?></th>
+                <th><?php echo $this->lang->line('Employees Share') ?></th>
                 <!-- <th class="no-sort"><?php //echo $this->lang->line('Status') ?></th> -->
                 <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 
@@ -47,6 +56,7 @@
                 <th><?php echo $this->lang->line('Customer') ?></th>
                 <th><?php echo $this->lang->line('Date') ?></th>
                 <th><?php echo $this->lang->line('Total') ?></th>
+                <th><?php echo $this->lang->line('Employees Share') ?></th>
                 <!-- <th class="no-sort"><?php //echo $this->lang->line('Status') ?></th> -->
                 <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
 
@@ -83,7 +93,7 @@
         function draw_data(start_date = '', end_date = '') {
             $('#invoices').DataTable({
                 "processing": true,
-                "serverSide": true,
+                // "serverSide": true,
                 'stateSave': true,
                 responsive: true,
                 "order": [],
@@ -96,6 +106,35 @@
                         start_date: start_date,
                         end_date: end_date
                     }
+                },
+                "footerCallback": function ( row, data, start, end, display ) {
+                    var api = this.api(), data;
+                    // Remove the formatting to get integer data for summation
+                    var intVal = function ( i ) {
+                        return typeof i === 'string' ?
+                            i.replace(/[^0-9.]/g, '')*1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+                    // Total over all pages
+                    total = api
+                        .column( 5 )
+                        .data()
+                        .reduce( function (a, b) {
+                            return intVal(a) + intVal(b);
+                        }, 0 );
+                    // // Total over this page
+                    // pageTotal = api
+                    //     .column( 5, { page: 'current'} )
+                    //     .data()
+                    //     .reduce( function (a, b) {
+                    //         return intVal(a) + intVal(b);
+                    //     }, 0 );
+                    // // Update footer
+                    // $( api.column( 5 ).footer() ).html(
+                    //     pageTotal +' ('+ total +' total)'
+                    // );
+                    $("#totalIncome").html(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
                 },
                 "columnDefs": [
                     {

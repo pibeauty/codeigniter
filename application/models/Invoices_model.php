@@ -85,6 +85,8 @@ class Invoices_model extends CI_Model
         $this->db->select('*');
         $this->db->from('geopos_invoice_items');
         $this->db->where('tid', $id);
+        $this->db->select('geopos_employees.id, geopos_employees.name');
+        $this->db->join('geopos_employees', 'geopos_invoice_items.eid = geopos_employees.id', 'left');
         $query = $this->db->get();
         return $query->result_array();
 
