@@ -48,9 +48,19 @@
                         <th><?php echo $this->lang->line('Date') ?></th>
                         <th><?php echo $this->lang->line('Amount') ?></th>
                         <th><?php echo $this->lang->line('Status') ?></th>
+                        <th>Used Balance</th>
+                        <th>Notes</th>
+                        <th>Payment Type</th>
+                        <th>Payment Amount</th>
+                        <th>Payment Type 2</th>
+                        <th>Payment Amount 2</th>
+                        <th>Employee</th>
+                        <th>Description</th>
+                        <th>Qty</th>
+                        <th>Tax</th>
+                        <th>Discount</th>
+                        <th>Subtotal</th>
                         <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
-
-
                     </tr>
                     </thead>
                     <tbody>
@@ -62,11 +72,21 @@
                         <th> #</th>
                         <th><?php echo $this->lang->line('Customer') ?></th>
                         <th><?php echo $this->lang->line('Date') ?></th>
-
                         <th><?php echo $this->lang->line('Amount') ?></th>
                         <th><?php echo $this->lang->line('Status') ?></th>
+                        <th>Used Balance</th>
+                        <th>Notes</th>
+                        <th>Payment Type</th>
+                        <th>Payment Amount</th>
+                        <th>Payment Type 2</th>
+                        <th>Payment Amount 2</th>
+                        <th>Employee</th>
+                        <th>Description</th>
+                        <th>Qty</th>
+                        <th>Tax</th>
+                        <th>Discount</th>
+                        <th>Subtotal</th>
                         <th class="no-sort"><?php echo $this->lang->line('Settings') ?></th>
-
                     </tr>
                     </tfoot>
                 </table>
@@ -124,14 +144,25 @@
                         'targets': [0],
                         'orderable': false,
                     },
+                    {
+                        'targets': [6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17],
+                        'visible': false,
+                        'searchable': false,
+                        'orderable': false,
+                    },
+                    {
+                        "targets": [18],
+                        "searchable": false,
+                        "orderable": false
+                    }
                 ],
                 dom: 'Blfrtip',
                 buttons: [
                     {
                         extend: 'excelHtml5',
-                        footer: true,
+                        footer: false,
                         exportOptions: {
-                            columns: [1, 2, 3, 4, 5]
+                            columns: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17]
                         }
                     }
                 ],
