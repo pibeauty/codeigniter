@@ -26,7 +26,7 @@
                     <?php
                     $payment_type=1;
                     $factor_code="";
-                    foreach($event as $item){ $payment_type=$item['payment_type'];$factor_code=$item['description']; } ?>
+                    foreach($event as $item){ $payment_type=$item['payment_type'];/* $factor_code=$item['description']; */$factor_code=$item['factor_code']; } ?>
 
                     <input type="hidden" value="<?php echo $factor_code; ?>" name="factor_code">
 

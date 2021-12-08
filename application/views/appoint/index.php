@@ -59,7 +59,8 @@
             foreach ($events as $row) {
                 $cid = $row['id'];
                 $cus_name = $row['cus_name'];
-                $factor_code= $row['description'];
+                // $factor_code= $row['description'];
+                $factor_code= $row['factor_code'];
                 $cus_mobile= $row['cus_mobile'];
                 $time = strtotime($row['start'].'+ 210 minutes');
                 $timeEnd = strtotime($row['end'].'+ 210 minutes');

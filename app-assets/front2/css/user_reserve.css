@@ -1,0 +1,12 @@
+@font-face {
+        font-family: 'Roya';
+        src:        url(http://pibeautysalon.com/wp-content/themes/monochrome-pro/fonts/Far_Roya.eot),
+                    url(http://pibeautysalon.com/wp-content/themes/monochrome-pro/fonts/fonts/Far_Roya.woff) format(woff),
+                    url(http://pibeautysalon.com/wp-content/themes/monochrome-pro/fonts/fonts/Far_Roya.ttf) format(truetype),
+                    url(http://pibeautysalon.com/wp-content/themes/monochrome-pro/fonts/fonts/Far_Roya.svg) format(svg);
+        font-weight: normal;
+        font-style: normal;
+        }
+body * {
+    font-family: 'Roya';
+}

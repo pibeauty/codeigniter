@@ -170,7 +170,8 @@ class Events_model extends CI_Model
     }
 
     public function updateFactor($factor_code,$payment_type){
-        $sql = "UPDATE geopos_events SET payment_type = ? WHERE description = ?";
+        // $sql = "UPDATE geopos_events SET payment_type = ? WHERE description = ?";
+        $sql = "UPDATE geopos_events SET payment_type = ? WHERE factor_code = ?";
         $this->db->query($sql, array($payment_type, $factor_code));
         return ($this->db->affected_rows() != 1) ? false : true;
     }
@@ -260,7 +261,8 @@ class Events_model extends CI_Model
                 'customerid' => $insert_id,
                 'cus_name' => $name,
                 'cus_mobile' => $mobile,
-                'description' => $factor_code,
+                // 'description' => $factor_code,
+                'factor_code' => $factor_code,
                 'title' => $name,
                 'total_price' => $price,
                 'pay_price' => $price,
@@ -292,7 +294,7 @@ class Events_model extends CI_Model
         } else {
             return false;
         }*/
-
+        return [$factor_code, $price];
     }
     function generateRandomString($length = 8) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
@@ -351,7 +353,8 @@ class Events_model extends CI_Model
         $this->db->select('*')
             ->from('geopos_events')
             ->join('geopos_employees', 'geopos_events.userid = geopos_employees.id', 'left')
-            ->where('geopos_events.description', $factor_code);
+            // ->where('geopos_events.description', $factor_code);
+            ->where('geopos_events.factor_code', $factor_code);
 
         /*$this->db->select('*')
             ->from('geopos_events')
