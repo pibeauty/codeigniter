@@ -215,47 +215,63 @@
                                 <?php $i = 0;
                                 foreach ($products as $row) {
                                     echo '<tr >
-                        <td><input type="text" class="form-control text-center" name="product_name[]"  value="' . $row['product'] . '">
-                        </td>
-                        <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-' . $i . '"
-                                   onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
-                                   autocomplete="off" value="' . amountFormat_general($row['qty']) . '" ><input type="hidden" name="old_product_qty[]" value="' . amountFormat_general($row['qty']) . '" ></td>
-                        <td><input type="text" class="form-control req prc" name="product_price[]" id="price-' . $i . '"
-                                   onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
-                                   autocomplete="off" value="' . edit_amountExchange_s($row['price'], $invoice['multi'], $this->aauth->get_user()->loc) . '"></td>
-                        <td> <input type="text" class="form-control vat" name="product_tax[]" id="vat-' . $i . '"
-                                    onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
-                                    autocomplete="off"  value="' . amountFormat_general($row['tax']) . '"></td>
-                        <td class="text-center" id="texttaxa-' . $i . '">' . edit_amountExchange_s($row['totaltax'], $invoice['multi'], $this->aauth->get_user()->loc) . '</td>
-                        <td><input type="text" class="form-control discount" name="product_discount[]"
-                                   onkeypress="return isNumber(event)" id="discount-' . $i . '"
-                                   onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off"  value="' . amountFormat_general($row['discount']) . '"></td>
-                        <td><span class="currenty">' . $this->config->item('currency') . '</span>
-                            <strong><span class="ttlText" id="result-' . $i . '">' . edit_amountExchange_s($row['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) . '</span></strong></td>
-                        <td class="text-center">
-<button type="button" data-rowid="' . $i . '" class="btn-sm btn-danger removeProd" title="Remove"> <i class="fa fa-minus-square"></i> </button>
-                        </td>
-                        <input type="hidden" name="taxa[]" id="taxa-' . $i . '" value="' . edit_amountExchange_s($row['totaltax'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
-                        <input type="hidden" name="disca[]" id="disca-' . $i . '" value="' . edit_amountExchange_s($row['totaldiscount'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
-                        <input type="hidden" class="ttInput" name="product_subtotal[]" id="total-' . $i . '" value="' . edit_amountExchange_s($row['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
-                        <input type="hidden" class="pdIn" name="pid[]" id="pid-' . $i . '" value="' . $row['pid'] . '">
-                             <input type="hidden" name="unit[]" id="unit-' . $i . '" value="' . $row['unit'] . '">
-                                   <input type="hidden" name="hsn[]" id="unit-' . $i . '" value="' . $row['code'] . '">
-                    </tr> <tr class="desc_p"><td colspan="6"><textarea id="dpid-' . $i . '" class="form-control" name="product_description[]" placeholder="' . $this->lang->line('Enter Product description') . '" autocomplete="off">' . $row['product_des'] . '</textarea><br></td>
-                        <td colspan="2">
-                            <select name="employeeId[]" class="form-control input-md">';
-                                foreach ($employees as $employee) {
-                                    $selected = '';
-                                    $cid = $employee['id'];
-                                    $acn = $employee['name'];
-                                    if ($row['eid'] == $employee['id'])
-                                        $selected = 'selected';
-                                    echo "<option value='$cid'".$selected.">$acn</option>";
-                                }
-                                echo '
-                            </select>
-                        </td>
-                    </tr>';
+                                        <td>';
+                                        echo '<input type="text" class="form-control text-center" name="product_name[]"  value="' . $row['product'] . '">';
+                                        ?>
+                                        <!-- <select name="product_name[]" class="form-control select-box" style='width:100%'>
+                                            <?php
+                                            // foreach ($services as $service) {
+                                            //     $cid = $service['id'];
+                                            //     $acn = $service['name'];
+                                            //     $selected = '';
+                                            //     if ($acn == $row['product'])
+                                            //         $selected = 'selected';
+                                            //     echo "<option value='$acn' $selected>$acn</option>";
+                                            // }
+                                            ?>
+                                        </select> -->
+                                        <?php
+                                        echo '</td>
+                                        <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-' . $i . '"
+                                                onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
+                                                autocomplete="off" value="' . amountFormat_general($row['qty']) . '" ><input type="hidden" name="old_product_qty[]" value="' . amountFormat_general($row['qty']) . '" ></td>
+                                        <td><input type="text" class="form-control req prc" name="product_price[]" id="price-' . $i . '"
+                                                onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
+                                                autocomplete="off" value="' . edit_amountExchange_s($row['price'], $invoice['multi'], $this->aauth->get_user()->loc) . '"></td>
+                                        <td> <input type="text" class="form-control vat" name="product_tax[]" id="vat-' . $i . '"
+                                                    onkeypress="return isNumber(event)" onkeyup="rowTotal(' . $i . '), billUpyog()"
+                                                    autocomplete="off"  value="' . amountFormat_general($row['tax']) . '"></td>
+                                        <td class="text-center" id="texttaxa-' . $i . '">' . edit_amountExchange_s($row['totaltax'], $invoice['multi'], $this->aauth->get_user()->loc) . '</td>
+                                        <td><input type="text" class="form-control discount" name="product_discount[]"
+                                                onkeypress="return isNumber(event)" id="discount-' . $i . '"
+                                                onkeyup="rowTotal(' . $i . '), billUpyog()" autocomplete="off"  value="' . amountFormat_general($row['discount']) . '"></td>
+                                        <td><span class="currenty">' . $this->config->item('currency') . '</span>
+                                            <strong><span class="ttlText" id="result-' . $i . '">' . edit_amountExchange_s($row['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) . '</span></strong></td>
+                                        <td class="text-center">
+                                            <button type="button" data-rowid="' . $i . '" class="btn-sm btn-danger removeProd" title="Remove"> <i class="fa fa-minus-square"></i> </button>
+                                        </td>
+                                        <input type="hidden" name="taxa[]" id="taxa-' . $i . '" value="' . edit_amountExchange_s($row['totaltax'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
+                                        <input type="hidden" name="disca[]" id="disca-' . $i . '" value="' . edit_amountExchange_s($row['totaldiscount'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
+                                        <input type="hidden" class="ttInput" name="product_subtotal[]" id="total-' . $i . '" value="' . edit_amountExchange_s($row['subtotal'], $invoice['multi'], $this->aauth->get_user()->loc) . '">
+                                        <input type="hidden" class="pdIn" name="pid[]" id="pid-' . $i . '" value="' . $row['pid'] . '">
+                                            <input type="hidden" name="unit[]" id="unit-' . $i . '" value="' . $row['unit'] . '">
+                                                <input type="hidden" name="hsn[]" id="unit-' . $i . '" value="' . $row['code'] . '">
+                                    </tr>
+                                    <tr class="desc_p"><td colspan="6"><textarea id="dpid-' . $i . '" class="form-control" name="product_description[]" placeholder="' . $this->lang->line('Enter Product description') . '" autocomplete="off">' . $row['product_des'] . '</textarea><br></td>
+                                        <td colspan="2">
+                                            <select name="employeeId[]" class="form-control input-md">';
+                                                foreach ($employees as $employee) {
+                                                    $selected = '';
+                                                    $cid = $employee['id'];
+                                                    $acn = $employee['name'];
+                                                    if ($row['eid'] == $employee['id'])
+                                                        $selected = 'selected';
+                                                    echo "<option value='$cid'".$selected.">$acn</option>";
+                                                }
+                                                echo '
+                                            </select>
+                                        </td>
+                                    </tr>';
                                     $i++;
                                 } ?>
                                 <tr class="last-item-row sub_c">
@@ -348,7 +364,6 @@
                                                name="after_disc" id="after_disc">
                                         ( <?= $this->config->item('currency'); ?>
                                         <span id="disc_final">
-                                            <?= amountExchange_s((($invoice['discount'] / $invoice['discount_rate']) * 100) - $invoice['total'], $invoice['multi'], $this->aauth->get_user()->loc); ?>
                                         </span>
                                         )
                                     </td>
@@ -683,4 +698,9 @@
             window.onload = function () {
                 billUpyog();
             };
+        </script>
+        <script>
+            $('.select-box').select2(
+
+            );
         </script>

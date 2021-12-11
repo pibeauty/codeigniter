@@ -54,6 +54,7 @@ class Invoices extends CI_Controller
         $this->load->model('customers_model', 'customers');
         $this->load->model('plugins_model', 'plugins');
         $this->load->model('employee_model', 'employee');
+		$this->load->model('Services_model', 'services');
         $data['exchange'] = $this->plugins->universal_api(5);
         $data['customergrouplist'] = $this->customers->group_list();
         $data['lastinvoice'] = $this->invocies->lastinvoice();
@@ -66,6 +67,7 @@ class Invoices extends CI_Controller
         $head['usernm'] = $this->aauth->get_user()->username;
         $data['taxdetails'] = $this->common->taxdetail();
         $data['employees'] = $this->employee->list_employee();
+		$data['services'] = $this->services->serviceslist();
         $this->load->view('fixed/header', $head);
         $this->load->view('invoices/newinvoice', $data);
         $this->load->view('fixed/footer');
@@ -75,6 +77,7 @@ class Invoices extends CI_Controller
     public function edit()
     {
         $this->load->model('employee_model', 'employee');
+		$this->load->model('Services_model', 'services');
         $tid = intval($this->input->get('id'));
         $data['id'] = $tid;
         $data['title'] = "Edit Invoice $tid";
@@ -92,7 +95,7 @@ class Invoices extends CI_Controller
         $this->load->library("Common");
         $data['taxlist'] = $this->common->taxlist_edit($data['invoice']['taxstatus']);
         $data['employees'] = $this->employee->list_employee();
-
+		$data['services'] = $this->services->serviceslist();
 
         $this->load->view('fixed/header', $head);
         if ($data['invoice']['id']) $this->load->view('invoices/edit', $data);

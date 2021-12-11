@@ -180,10 +180,27 @@
                             </thead>
                             <tbody>
                             <tr>
-                                <td><input type="text" class="form-control" name="product_name[]"
-                                           placeholder="<?php echo $this->lang->line('Enter Product name') ?>"
-                                           id='productname-0'>
+                                <td>
+                                    <!-- <div class="row form-group">
+                                        <label class="col-md-4 control-label"
+                                            for="userid">Service</label>
+                                        <div class="col-md-8"> -->
+                                            <select name="product_name[]" class="form-control select-box-0" style='width:100%'>
+                                                <?php
+                                                foreach ($services as $row) {
+                                                    $cid = $row['id'];
+                                                    $acn = $row['name'];
+                                                    echo "<option value='$acn'>$acn</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        <!-- </div>
+                                    </div> -->
                                 </td>
+                                <!-- <td><input type="text" class="form-control" name="product_name[]"
+                                           placeholder="<?php //echo $this->lang->line('Enter Product name') ?>"
+                                           id='productname-0'>
+                                </td> -->
                                 <td><input type="text" class="form-control req amnt" name="product_qty[]" id="amount-0"
                                            onkeypress="return isNumber(event)" onkeyup="rowTotal('0'), billUpyog()"
                                            autocomplete="off" value="1"><input type="hidden" id="alert-0" value=""
@@ -618,3 +635,9 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('.select-box-0').select2(
+
+    );
+</script>

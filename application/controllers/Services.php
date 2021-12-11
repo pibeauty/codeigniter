@@ -110,4 +110,23 @@ class Services extends CI_Controller
             header('Location: http://'.$_SERVER['SERVER_NAME']);}
         exit;
     }
+
+    public function createServicesSelectOption()
+    {
+        $services = $this->services->serviceslist();
+        $html = "<select name='product_name[]' class='form-control select-box' style='width:100%'>";
+        foreach ($services as $row) {
+            $cid = $row['id'];
+            $acn = $row['name'];
+            $html .= "<option value='$acn'>$acn</option>";
+        }
+        $html .= "</select>";
+        echo $html;
+    }
 }
+?>
+<script>
+    $('.select-box').select2(
+
+    );
+</script>
