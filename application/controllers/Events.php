@@ -119,8 +119,17 @@ class Events extends CI_Controller
         $description = $this->input->post('description', true);
         $color = $this->input->post('color');
         $customerid = $this->input->post('customerid');
-        $result = $this->events_model->updateEvent($id, $title, $description, $color, $customerid);
-        echo $result;
+        $employeeid = $this->input->post('employeeid');
+        $serviceid = $this->input->post('serviceid');
+        $start = $this->input->post('datetime', true);
+        $end = $this->input->post('datetimeend', true);
+        $employeeHasEvent = $this->events_model->employeeHasEvent($start, $end, $employeeid);
+        if (empty($employeeHasEvent) || $employeeHasEvent[0]->id === $id) {
+            $result = $this->events_model->updateEvent($id, $title, $description, $color, $customerid, $employeeid, $serviceid, $start, $end);
+            echo $result;
+        } else {
+            echo 'employee is busy';
+        }
     }
 
     /*Delete Event*/

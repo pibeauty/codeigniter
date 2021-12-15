@@ -466,13 +466,19 @@
         // Handle click on Update Button
         $('.modal').on('click', '#update-event',  function(e){
             if(validator(['title', 'description'])) {
-
-                $.post(base_url+'events/updateEvent',  'id='+currentEvent.id+'&title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&customerid='+$('#customerid').val()+'&'+crsf_token+'='+crsf_hash, function(result){
-                    $('.alert').addClass('alert-success').text('Event updated successful');
-                    $('.modal').modal('hide');
-                    $('#calendar').fullCalendar("refetchEvents");
-                    hide_notify();
-
+                var str =$('#datetime').val();
+                var res = str.replace("T", " ")+":00";
+                var str2 =$('#datetimeend').val();
+                var res2 = str2.replace("T", " ")+":00";
+                $.post(base_url+'events/updateEvent',  'id='+currentEvent.id+'&title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&employeeid='+$('#userid').val()+'&serviceid='+$('#service_id').val()+'&datetime='+res+'&datetimeend='+res2+'&customerid='+$('#customerid').val()+'&'+crsf_token+'='+crsf_hash, function(result){
+                    if (result === 'employee is busy') {
+                        alert('employee is busy on selected time, please select a different time or employee')
+                    } else {
+                        $('.alert').addClass('alert-success').text('Event updated successful');
+                        $('.modal').modal('hide');
+                        $('#calendar').fullCalendar("refetchEvents");
+                        hide_notify();
+                    }
                 });
             }
         });
