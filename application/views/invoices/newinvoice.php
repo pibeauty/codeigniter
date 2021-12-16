@@ -79,7 +79,7 @@
                                             <div class="input-group-addon"><span class="icon-file-text-o"
                                                                                  aria-hidden="true"></span></div>
                                             <input type="text" class="form-control round" placeholder="Invoice #"
-                                                    disabled
+                                                    readonly
                                                    name="invocieno"
                                                    value="<?php echo $lastinvoice + 1 ?>">
                                         </div>
