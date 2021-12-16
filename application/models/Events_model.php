@@ -156,16 +156,20 @@ class Events_model extends CI_Model
     }
     /*Update  event */
 
-    public function updateEvent($id, $title, $description, $color, $customerid)
+    public function updateEvent($id, $title, $description, $color, $customerid, $employeeid, $serviceid, $start, $end)
     {
         $this->db->select('*');
         $this->db->from('geopos_customers');
         $this->db->where('id', $customerid);
         $query = $this->db->get();
         $cus= $query->row_array();
-        
-        $sql = "UPDATE geopos_events SET title = ?, description = ?, color = ?, customerid = ?, cus_name = ? WHERE id = ?";
-        $this->db->query($sql, array($title, $description, $color, $customerid, $cus['name'], $id));
+        $this->db->select('name');
+        $this->db->from('services');
+        $this->db->where('id', $serviceid);
+        $result = $this->db->get();
+        ['name' => $serviceName] = $result->row_array();
+        $sql = "UPDATE geopos_events SET title = ?, description = ?, color = ?, customerid = ?, cus_name = ?, userid = ?, service_id = ?, service_name = ?, start = ?, end = ? WHERE id = ?";
+        $this->db->query($sql, array($title, $description, $color, $customerid, $cus['name'], $employeeid, $serviceid, $serviceName, $start, $end, $id));
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
@@ -252,6 +256,7 @@ class Events_model extends CI_Model
         $price=0;
         foreach (json_decode($data) as $item){
             $price=$price+50000;
+			// $price+=1000;
             $data = array(
                 'start' => $item->date_fromSET,
                 'end' => $item->date_toSET,
