@@ -27,7 +27,7 @@ class Sms Extends CI_Controller
     {
         parent::__construct();
         $this->load->model('plugins_model', 'plugins');
-
+        $this->load->library('Melipayamak');
         $this->load->library("Aauth");
         if (!$this->aauth->is_loggedin()) {
             redirect('/user/', 'refresh');
@@ -142,7 +142,7 @@ class Sms Extends CI_Controller
          */
         #################################
         ########### SWITCH HERE###########
-        $gateway_code = 7;
+        $gateway_code = 8;
         ################################
 
         $mobile = $this->input->post('mobile');
@@ -171,7 +171,29 @@ class Sms Extends CI_Controller
 			case 7:
 				$this->kavenegar($mobile, $text_message, $sendToAll);
 			break;
+			case 8:
+				$this->Mellipayamak($mobile, $text_message, $sendToAll);
+			break;
         }
+    }
+
+    private function Mellipayamak($mobile, $text_message, $sendToAll) {
+        $result = [];
+        if ($sendToAll) {
+            $this->load->model('customers_model', 'customers');
+            $customerPhones = $this->customers->getCustomerPhones();
+            foreach ($customerPhones as $value)
+            {
+                array_push($result, $this->melipayamak->send($value->phone, $text_message));
+            }
+        }
+        else {
+            foreach ($mobile as $number) {
+                array_push($result, $this->melipayamak->send($number, $text_message));
+            }
+        }
+        if (array_unique($result) === ['1']) echo '1';
+        else echo '0';
     }
 
     private function kavenegar ($phones, $textMessage, $sendToAll)

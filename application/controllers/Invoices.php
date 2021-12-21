@@ -29,6 +29,7 @@ class Invoices extends CI_Controller
         $this->load->model('invoices_model', 'invocies');
         $this->load->model('customers_model', 'customers');
         $this->load->library("Aauth");
+        $this->load->library("Melipayamak");
         $this->load->helper('kavenegar_helper');
 
         if (!$this->aauth->is_loggedin()) {
@@ -305,7 +306,8 @@ class Invoices extends CI_Controller
                 $customerPicode = $customerDetails['picode'];
                 $customerPhone = $customerDetails['phone'];
                 $textMessage = "خانم $customerName به باشگاه مشتریان «سالن پی» خوش آمدید.\nشماره اشتراک (PInumber):\n$customerPicode\n\n02140220012\n09393851976\nInstagram: pibeautysalon\nWebsite: pibeautysalon.com\n\nاطلاعات ورود شما به پنل مشتری:\npos.pibeautysalon.com/crm\nنام کاربری: $customerPhone\nرمز عبور: $customerPass";
-                sendSms([$customerDetails['phone']], $textMessage);
+                $this->melipayamak->send([$customerDetails['phone']], $textMessage);
+                // sendSms([$customerDetails['phone']], $textMessage);
             }
             
             $this->db->from('univarsal_api');
