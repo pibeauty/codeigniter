@@ -23,6 +23,7 @@ return array(
     'Omnipay\\AuthorizeNet\\' => array($vendorDir . '/omnipay/authorizenet/src'),
     'Mpdf\\' => array($vendorDir . '/mpdf/mpdf/src'),
     'Mike42\\' => array($vendorDir . '/mike42/escpos-php/src/Mike42'),
+    'Melipayamak\\' => array($vendorDir . '/melipayamak/php/src'),
     'Matrix\\' => array($vendorDir . '/markbaker/matrix/classes/src'),
     'Kavenegar\\' => array($vendorDir . '/kavenegar/php/src'),
     'DeepCopy\\' => array($vendorDir . '/myclabs/deep-copy/src/DeepCopy'),
