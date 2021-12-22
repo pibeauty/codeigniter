@@ -99,6 +99,7 @@ class ComposerStaticInit2f339ba354917fa9639f61518bfa4a08
         array (
             'Mpdf\\' => 5,
             'Mike42\\' => 7,
+            'Melipayamak\\' => 12,
             'Matrix\\' => 7,
         ),
         'K' => 
@@ -183,6 +184,10 @@ class ComposerStaticInit2f339ba354917fa9639f61518bfa4a08
         'Mike42\\' => 
         array (
             0 => __DIR__ . '/..' . '/mike42/escpos-php/src/Mike42',
+        ),
+        'Melipayamak\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/melipayamak/php/src',
         ),
         'Matrix\\' => 
         array (

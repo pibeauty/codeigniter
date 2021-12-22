@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '052e8b86c9f6900c940adc4b76619ce89d72f701',
+        'reference' => 'a8a50195349d5e9b205e9dc4a39fdc75af5b63d9',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '052e8b86c9f6900c940adc4b76619ce89d72f701',
+            'reference' => 'a8a50195349d5e9b205e9dc4a39fdc75af5b63d9',
             'dev_requirement' => false,
         ),
         'collizo4sky/omnipay-2checkout' => array(
@@ -203,6 +203,15 @@
             'install_path' => __DIR__ . '/../markbaker/matrix',
             'aliases' => array(),
             'reference' => '6ea97472b5baf12119b4f31f802835b820dd6d64',
+            'dev_requirement' => false,
+        ),
+        'melipayamak/php' => array(
+            'pretty_version' => '1.0.0',
+            'version' => '1.0.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../melipayamak/php',
+            'aliases' => array(),
+            'reference' => 'b8f7db07eef1fa57f8a23d379949e3f04cb923b8',
             'dev_requirement' => false,
         ),
         'mike42/escpos-php' => array(
