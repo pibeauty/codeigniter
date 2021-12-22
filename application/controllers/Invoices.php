@@ -18,6 +18,9 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+require_once APPPATH . 'third_party/vendor/autoload.php';
+use SimpleXLSXGen;
+
 use Mike42\Escpos\PrintConnectors\FilePrintConnector;
 use Mike42\Escpos\Printer;
 
@@ -446,6 +449,58 @@ class Invoices extends CI_Controller
         );
         //output to json format
         echo json_encode($output);
+    }
+
+    public function downloadDetailedExcel () {
+        $start = $this->input->get('start');
+        $end = $this->input->get('end');
+        $invoices = $this->invocies->getInvoices($start, $end);
+        $maxProducts = 0;
+        foreach ($invoices as $key => $invoice) {
+            $products = $this->invocies->invoice_products($invoice['id']);
+            if (count($products) > $maxProducts) $maxProducts = count($products);
+            foreach ($products as $product) {
+                [
+                    'name' => $employee,
+                    'price' => $share,
+                    'product_des' => $description,
+                    'qty' => $qty
+                ] = $product;
+                array_push($invoices[$key], $employee, $share, $description, $qty);
+            }
+        }
+        $header = [
+            '#',
+            'Date',
+            'Amount',
+            'Subtotal',
+            'Tax',
+            'Discount',
+            'Status',
+            'Customer',
+            'Used Balance',
+            'Payment Type',
+            'Payment Amount',
+            'Payment Type 2',
+            'Payment Amount 2',
+            'Notes'
+        ];
+        for ($i=1; $i <= $maxProducts; $i++) { 
+            array_push($header, "Item $i - Employee", "Item $i - Employee's share", "Item $i - Description", "Item $i - Qty");
+        }
+        $columnsNumber = count($header);
+        foreach ($invoices as $key => $invoice) {
+            $invoiceColumnsNumber = count($invoice);
+            $diff = $columnsNumber - $invoiceColumnsNumber;
+            if ($diff > 0) {
+                for ($i = 0; $i < $diff; $i++) {
+                    array_push($invoices[$key], '');
+                }
+            }
+        }
+        $data = [$header];
+        $data = array_merge($data, $invoices);
+        SimpleXLSXGen::fromArray( $data )->downloadAs('table.xlsx');
     }
 
     public function view()

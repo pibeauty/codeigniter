@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'a8a50195349d5e9b205e9dc4a39fdc75af5b63d9',
+        'reference' => '36410f8b47093ec93c5db626c759df3794dfd6c9',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'a8a50195349d5e9b205e9dc4a39fdc75af5b63d9',
+            'reference' => '36410f8b47093ec93c5db626c759df3794dfd6c9',
             'dev_requirement' => false,
         ),
         'collizo4sky/omnipay-2checkout' => array(
@@ -359,6 +359,15 @@
             'install_path' => __DIR__ . '/../setasign/fpdi',
             'aliases' => array(),
             'reference' => 'a6ad58897a6d97cc2d2cd2adaeda343b25a368ea',
+            'dev_requirement' => false,
+        ),
+        'shuchkin/simplexlsxgen' => array(
+            'pretty_version' => '1.0.22',
+            'version' => '1.0.22.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../shuchkin/simplexlsxgen',
+            'aliases' => array(),
+            'reference' => '9a555eef9b922ec5a7b6893e8cc40cbbe68de999',
             'dev_requirement' => false,
         ),
         'symfony/event-dispatcher' => array(
