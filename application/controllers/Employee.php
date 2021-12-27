@@ -138,6 +138,7 @@ class Employee extends CI_Controller
         $data['dept'] = $this->employee->department_list(0);
         $data['services'] = $this->services->getServices();
         $data['roles'] = $this->employee->list_roles();
+        $data['professions'] = $this->employee->list_professions();
         $this->load->view('fixed/header', $head);
         $this->load->view('employee/add', $data);
         $this->load->view('fixed/footer');
@@ -155,7 +156,7 @@ class Employee extends CI_Controller
 
         $password = $this->input->post('password', true);
         $roleid = 5;
-        if ($this->input->post('roleid')) {
+        if ($this->input->post('roleid') !== null) {
             $roleid = $this->input->post('roleid');
 
         }
@@ -178,6 +179,7 @@ class Employee extends CI_Controller
         $salary = numberClean($this->input->post('salary', true));
         $commission = $this->input->post('commission', true);
         $department = $this->input->post('department', true);
+        $profession = $this->input->post('profession', true);
         $service = implode(",",$this->input->post('service'));
 
         $daysTime=array(
@@ -205,7 +207,7 @@ class Employee extends CI_Controller
             if ($nuid > 0) {
 
 
-                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary, $commission, $department,$service,$daysTime);
+                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary, $commission, $department, $profession, $service,$daysTime);
 
             }
 
@@ -443,6 +445,7 @@ class Employee extends CI_Controller
             $department = $this->input->post('department', true);
             $commission = $this->input->post('commission', true);
             $roleid = $this->input->post('roleid', true);
+            $profession = $this->input->post('profession', true);
             $service = implode(",",$this->input->post('service'));
 
             $daysTime=array(
@@ -463,7 +466,7 @@ class Employee extends CI_Controller
             );
 
 
-            $this->employee->update_employee($eid, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary, $department, $commission, $roleid,$service,$daysTime);
+            $this->employee->update_employee($eid, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary, $department, $commission, $roleid, $profession, $service,$daysTime);
 
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;
@@ -471,6 +474,7 @@ class Employee extends CI_Controller
 
             $data['services'] = $this->services->getServices();
             $data['roles'] = $this->employee->list_roles();
+            $data['professions'] = $this->employee->list_professions();
             // $data['user'] = $this->employee->employee_details($id);
             $data['user'] = $this->employee->employee_details_custom($id);
             $data['dept'] = $this->employee->department_list($id, $this->aauth->get_user()->loc);

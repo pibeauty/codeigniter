@@ -58,26 +58,37 @@ function timefordatabase($input)
 function user_role($id = 5)
 {
     $ci =& get_instance();
-    switch ($id) {
-        case 5:
-            return $ci->lang->line('Business Owner');
-            break;
-        case 4:
-            return $ci->lang->line('Business Manager');
-            break;
-        case 3:
-            return $ci->lang->line('Sales Manager');
-            break;
-        case 2:
-            return $ci->lang->line('Sales Person');
-            break;
-        case 1:
-            return $ci->lang->line('Inventory Manager');
-            break;
-        case -1:
-            return $ci->lang->line('Project Manager');
-            break;
-    }
+    $ci->load->model('employee_model', 'employee');
+    $role = $ci->employee->detailsRole($id);
+    return $role['name'];
+    // switch ($id) {
+    //     case 5:
+    //         return $ci->lang->line('Business Owner');
+    //         break;
+    //     case 4:
+    //         return $ci->lang->line('Business Manager');
+    //         break;
+    //     case 3:
+    //         return $ci->lang->line('Sales Manager');
+    //         break;
+    //     case 2:
+    //         return $ci->lang->line('Sales Person');
+    //         break;
+    //     case 1:
+    //         return $ci->lang->line('Inventory Manager');
+    //         break;
+    //     case -1:
+    //         return $ci->lang->line('Project Manager');
+    //         break;
+    // }
+}
+
+function user_profession($id)
+{
+    $ci =& get_instance();
+    $ci->load->model('employee_model', 'employee');
+    $profession = $ci->employee->detailsProfession($id);
+    return $profession['name'];
 }
 
 function amountFormat($number)

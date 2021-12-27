@@ -129,7 +129,23 @@
                     </select>
                 </div>
             </div>
+            <div class="form-group row">
 
+                <label class="col-sm-2 col-form-label"
+                        for="name">Profession</label>
+
+                <div class="col-sm-5">
+                    <select name="profession" class="form-control margin-bottom" required>
+                        <?php
+
+                        foreach ($professions as $row) {
+                            echo ' <option value="' . $row['id'] . '"> ' . $row['name'] . '</option>';
+                        }
+
+                        ?>
+                    </select>
+                </div>
+            </div>
             <hr>
 
             <div class="form-group row">
