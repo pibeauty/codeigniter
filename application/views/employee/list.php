@@ -32,6 +32,7 @@
                         <th>#</th>
                         <th><?php echo $this->lang->line('Name') ?></th>
                         <th>Role</th>
+                        <th>Profession</th>
                         <th><?php echo $this->lang->line('Status') ?></th>
                         <th><?php echo $this->lang->line('Actions') ?></th>
 
@@ -46,6 +47,7 @@
                         $username = $row['username'];
                         $name = $row['name'];
                         $role = user_role($row['roleid']);
+                        $profession = user_profession($row['profession_id']);
                         $status = $row['banned'];
 
                         if ($status == 1) {
@@ -60,6 +62,7 @@
                             <td>$i</td>
                             <td>$name</td>
                             <td>$role</td>                 
+                            <td>$profession</td>                 
                             <td>$status</td>
                             <td>
                                 <a href='" . base_url("appoint/?id=$aid"."&cusUser=1") . "' class='btn btn-success btn-xs'><i class='fa fa-eye'></i> appointments</a> 
@@ -78,6 +81,7 @@
                         <th>#</th>
                         <th><?php echo $this->lang->line('Name') ?></th>
                         <th>Role</th>
+                        <th>Profession</th>
                         <th><?php echo $this->lang->line('Status') ?></th>
                         <th><?php echo $this->lang->line('Actions') ?></th>
                     </tr>

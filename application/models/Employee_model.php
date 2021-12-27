@@ -97,7 +97,7 @@ class Employee_model extends CI_Model
         return $query->result_array();
     }
 
-    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary = 0, $department = -1,$commission=0,$roleid=false,$service,$daysTime)
+    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary = 0, $department = -1,$commission=0,$roleid=false, $profession, $service,$daysTime)
     {
         $this->db->select('salary');
         $this->db->from('geopos_employees');
@@ -113,6 +113,7 @@ class Employee_model extends CI_Model
 
         $data = array(
             'roleid' => $roleid,
+            'profession_id' => $profession,
             'name' => $name,
             'phone' => $phone,
             'phonealt' => $phonealt,
@@ -142,6 +143,7 @@ class Employee_model extends CI_Model
         if ($department > -1) {
             $data = array(
                 'roleid' => $roleid,
+                'profession_id' => $profession,
                 'name' => $name,
                 'phone' => $phone,
                 'phonealt' => $phonealt,
@@ -178,7 +180,7 @@ class Employee_model extends CI_Model
 
         if ($this->db->update('geopos_employees')) {
 
-            if($roleid && $role['roleid']!=5){
+            if($roleid/*  && $role['roleid']!=5 */){
                  $this->db->set('loc', $location);
                  $this->db->set('roleid', $roleid);
                 $this->db->where('id', $id);
@@ -470,7 +472,7 @@ class Employee_model extends CI_Model
     }
 
 
-    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location,$salary = 0,$commission = 0,$department=0,$service,$daysTime)
+    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location,$salary = 0,$commission = 0,$department=0, $profession, $service,$daysTime)
     {
         $data = array(
             'id' => $id,
@@ -482,8 +484,9 @@ class Employee_model extends CI_Model
             'country' => $country,
             'postbox' => $postbox,
             'phone' => $phone,
-              'dept' => $department,
-              'salary' => $salary,
+            'dept' => $department,
+            'profession_id' => $profession,
+            'salary' => $salary,
             'c_rate' => $commission,
             'service'=>$service,
             'sat_from'=>$daysTime['sat_from'],
@@ -504,7 +507,7 @@ class Employee_model extends CI_Model
 
         if ($this->db->insert('geopos_employees', $data)) {
             $data1 = array(
-                'roleid' => 5,
+                'roleid' => $roleid,
                 'loc' => $location
             );
 
@@ -971,6 +974,13 @@ class Employee_model extends CI_Model
 
         return $query->result_array();
     }
+    public function list_professions(){
+        $this->db->select('*');
+        $this->db->from('geopos_professions');
+        $query = $this->db->get();
+
+        return $query->result_array();
+    }
     public function addnewRole($name)
     {
         $data = array(
@@ -990,6 +1000,14 @@ class Employee_model extends CI_Model
     {
         $this->db->select('*');
         $this->db->from($this->DBname_roles);
+        $this->db->where('id', $id);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
+    public function detailsProfession($id)
+    {
+        $this->db->select('*');
+        $this->db->from('geopos_professions');
         $this->db->where('id', $id);
         $query = $this->db->get();
         return $query->row_array();

@@ -260,6 +260,30 @@
                         <div class="form-group row">
 
                             <label class="col-sm-2 col-form-label"
+                                    for="roleid">Profession</label>
+
+                            <div class="col-sm-5">
+                                <select name="profession"
+                                        class="form-control margin-bottom" >
+                                    <?php
+
+                                    foreach ($professions as $row) {
+                                    if($row['id']==$user['roleid']){
+                                        echo ' <option selected value="' . $row['id'] . '" > ' . $row['name'] . '</option>';
+                                    }
+                                    else{
+                                        echo ' <option value="' . $row['id'] . '"> ' . $row['name'] . '</option>';
+                                    }
+
+                                    }
+
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+
+                            <label class="col-sm-2 col-form-label"
                                    for="name"><?php echo $this->lang->line('Department') ?></label>
 
                             <div class="col-sm-5">
