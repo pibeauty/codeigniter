@@ -12,6 +12,7 @@
         "collizo4sky/omnipay-2checkout": "^1.6",
         "kavenegar/php": "^1.2",
         "pepco-api/php-rest-sdk": "^0.4.0",
-        "melipayamak/php": "1.0.0"
+        "melipayamak/php": "1.0.0",
+        "shuchkin/simplexlsxgen": "^1.0"
     }
 }

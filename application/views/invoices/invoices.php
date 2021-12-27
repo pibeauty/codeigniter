@@ -37,6 +37,10 @@
                         <input type="button" name="search" id="search" value="Search" class="btn btn-info btn-sm"/>
                     </div>
 
+                    <div class="col-md-2">
+                        <input type="button" name="detailedExcel" id="detailedExcel" value="Download Detailed Excel" class="btn btn-info btn-sm"/>
+                    </div>
+
                 </div>
                 <hr>
                 <table id="invoices" class="table table-striped table-bordered zero-configuration ">
@@ -175,6 +179,22 @@
             if (start_date != '' && end_date != '') {
                 $('#invoices').DataTable().destroy();
                 draw_data(start_date, end_date);
+            } else {
+                alert("Date range is Required");
+            }
+        });
+
+        $('#detailedExcel').click(function () {
+            const pattern = /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/
+            const start_date = ($('#start_date').val()).split('-');
+            const start = start_date[2] + "-" + start_date[1] + "-" + start_date[0]
+            const end_date = ($('#end_date').val()).split('-');
+            const end = end_date[2] + "-" + end_date[1] + "-" + end_date[0]
+            console.log(start)
+            console.log(end)
+            if (pattern.test(start) && pattern.test(end)) {
+                var win = window.open("<?php echo site_url('invoices/downloadDetailedExcel')?>" + `?start=${start}&end=${end}`, "_blank");
+                window.focus();
             } else {
                 alert("Date range is Required");
             }

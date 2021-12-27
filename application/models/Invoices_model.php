@@ -226,10 +226,20 @@ class Invoices_model extends CI_Model
 
     }
 
+    public function getInvoices($start, $end) {
+        $this->db->select('geopos_invoices.id,geopos_invoices.invoicedate,geopos_invoices.total,geopos_invoices.subtotal,geopos_invoices.tax,geopos_invoices.discount,geopos_invoices.status,geopos_customers.name,geopos_invoices.used_balance,geopos_invoices.payment_type,geopos_invoices.payment_amount,geopos_invoices.payment_type2,geopos_invoices.payment_amount2,geopos_invoices.notes');
+        $this->db->from($this->table);
+        $this->db->where('invoicedate >=', $start);
+        $this->db->where('invoicedate <=', $end);
+        $this->db->join('geopos_customers', 'geopos_invoices.csd=geopos_customers.id', 'right');
+        $query = $this->db->get();
+        return $query->result_array();
+    }
+
 
     private function _get_datatables_query($opt = '')
     {
-        $this->db->select('geopos_invoices.id,geopos_invoices.tid,geopos_invoices.invoicedate,geopos_invoices.invoiceduedate,geopos_invoices.total,geopos_invoices.status,geopos_customers.name,geopos_invoices.used_balance,geopos_invoices.payment_type,geopos_invoices.payment_amount,geopos_invoices.payment_type2,,geopos_invoices.payment_amount2, geopos_invoices.notes');
+        $this->db->select('geopos_invoices.id,geopos_invoices.tid,geopos_invoices.invoicedate,geopos_invoices.invoiceduedate,geopos_invoices.total,geopos_invoices.status,geopos_customers.name,geopos_invoices.used_balance,geopos_invoices.payment_type,geopos_invoices.payment_amount,geopos_invoices.payment_type2,geopos_invoices.payment_amount2,geopos_invoices.notes');
         $this->db->from($this->table);
         $this->db->where('geopos_invoices.i_class', 0);
         if ($opt) {
