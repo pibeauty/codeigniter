@@ -37,6 +37,10 @@
             <div class="col-md-2">
                 <input type="button" name="search" id="search" value="Search" class="btn btn-info btn-sm"/>
             </div>
+            <div class="col-md-2">
+                <input type="checkbox" id="onlinePayedFilter" name="onlinePayed" value="online payed" />
+                <lable for="onlinePayed">only show online payed appointments</lable>
+            </div>
         </div>
 
         <hr>
@@ -66,13 +70,14 @@
                 $timeEnd = strtotime($row['end'].'+ 210 minutes');
                 $start= $this->jdf->jdate('l, j F',$time);
                 $end= $this->jdf->jdate('l, j F',$timeEnd);
-                echo "<tr>
-                    <td>$i</td>
+                $onlinePayed = $row['onlinePayed'] ? 1 : 0;
+                echo "<tr data-onlinepayed = $onlinePayed>
+                    <td>$i<i style='display: none' data-onlinepayed=$onlinePayed></i></td>
                     <td><b>$cus_name</b></td>
                   <td>$cus_mobile</td>
                   <td>$start</td>
                   <td>$end</td>
-                    <td><a href='" . base_url("appoint/view?factor_code=$factor_code") . "' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i>view</a>
+                    <td><a href='" . base_url("appoint/view?id=$cid") . "' class='btn btn-cyan btn-xs'><i class='icon-pencil'></i>view</a>
                   </td></tr>";
                 $i++;
                 //  print_r($row);
@@ -96,9 +101,18 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
-
+        /* Custom filtering function which will search data in column four between two values */
+        $.fn.dataTable.ext.search.push(
+            function( settings, data, dataIndex, rawData ) {
+                const pattern = /data-onlinepayed="(\d{1})"/
+                result = rawData[0].match(pattern);
+                const isFilterChecked = $('#onlinePayedFilter').is(':checked')
+                if (isFilterChecked) return result[1] == 1;
+                else return true;
+            }
+        );
         //datatables
-        $('#catgtable').DataTable({
+        var table = $('#catgtable').DataTable({
             responsive: true,
             dom: 'Blfrtip',
             buttons: [
@@ -122,6 +136,11 @@
                 alert("Date range is Required");
             }
         });
+
+        // Event listener to filtering inputs to redraw on input
+        $('#onlinePayedFilter').click( function() {
+            table.draw();
+        } );
 
     });
 </script>

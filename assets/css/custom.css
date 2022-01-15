@@ -3,3 +3,7 @@
     z-index: 10;
     position: absolute;
 }
+
+tr[data-onlinepayed="1"] {
+    background-color: aqua !important;
+}
