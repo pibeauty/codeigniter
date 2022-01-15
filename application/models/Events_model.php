@@ -375,4 +375,13 @@ class Events_model extends CI_Model
         $query = $this->db->get();
         return $query->result_array();*/
     }
+
+    public function eventDetailsById($id) {
+        $this->db->select('*')
+            ->from('geopos_events')
+            ->join('geopos_employees', 'geopos_events.userid = geopos_employees.id', 'left')
+            ->where('geopos_events.id', $id);
+        $query = $this->db->get();
+        return $query->result_array();
+    }
 }

@@ -38,6 +38,7 @@ class Appoint extends CI_Controller
         $this->load->model('users_model', 'users');
         $this->load->model('employee_model', 'employee');
         $this->load->model('Events_model', 'events');
+        $this->load->model('Factor_model', 'factors');
         $this->load->model('Services_model', 'services');
     }
 
@@ -78,7 +79,11 @@ class Appoint extends CI_Controller
             $data['events'] = $this->events->eventListByuser($this->aauth->get_user()->id);
             // log_message('error',"------------------------------------ghjghacascsascj:". $this->aauth->get_user()->id);
         }
-
+        foreach ($data['events'] as $key => $event) {
+            if (!$event['factor_code']) continue;
+            $status = $this->factors->getStatus($event['factor_code']);
+            if ($status === 'accepted') $data['events'][$key]['onlinePayed'] = true;
+        }
 
 
 
@@ -126,10 +131,10 @@ class Appoint extends CI_Controller
 
     public function view()
     {
-        $factor_code=$this->input->get('factor_code');
+        $id=$this->input->get('id');
         $head['usernm'] = $this->aauth->get_user()->username;
         $head['title'] = $head['usernm'] . ' attendance ';
-        $data['event'] = $this->events->eventDetails($factor_code);
+        $data['event'] = $this->events->eventDetailsById($id);
 
         $this->load->view('fixed/header', $head);
         $this->load->view('appoint/view',$data);

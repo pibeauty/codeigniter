@@ -39,6 +39,7 @@ class User_reserve extends CI_Controller
         $this->load->model('employee_model', 'employee');
         $this->load->model('Events_model', 'events');
         $this->load->model('Factor_model', 'factors');
+        $this->load->model('Manager_model', 'manager');
         $this->config->load('pep');
         // Session
         $this->load->library('session');
@@ -557,6 +558,20 @@ class User_reserve extends CI_Controller
         $data['referrerCode']=$referrerCode;
         // var_dump($dataX);die;
         [$factorCode, $amount] = $this->events->addReserve($dataX,$name,$mobile,$referrerCode);
+        [$decodedData] = json_decode($dataX);
+        // echo "<pre>" . var_export($decodedData->date_fromSET, true) . "</pre>";
+        // die();
+        $this->manager->addtask(
+            /* name:  */'New Online Reserve',
+            /* status:  */'Due',
+            /* priority:  */'Low',
+            /* stdate:  */$decodedData->date_fromSET,
+            /* tdate:  */$decodedData->date_toSET,
+            // employee: $decodedData->id,
+            // we set employee to 14, because its the id of the current admin on geopos_users.
+            /* employee:  */14,
+            /* content:  */'a new online reserve has been submitted, please check customer appointments'
+        );
         //log_message('error',"------------------------------------ghjghacascsascj3:".json_encode($res));
         $date = date('Y/m/d H:i:s');
         $this->factors->add($factorCode, $amount, $date);

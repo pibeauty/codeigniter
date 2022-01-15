@@ -28,6 +28,14 @@ class Factor_model extends CI_Model
         return $result->row_array()['amount'];
     }
 
+    function getStatus($code) {
+        $this->db->select('status');
+        $this->db->from('geopos_factors');
+        $this->db->where('code', $code);
+        $result = $this->db->get();
+        return $result->row_array()['status'];
+    }
+
     function add ($factorCode, $amount, $date, $status = 'processing') {
         $this->db->insert('geopos_factors', [
             'code' => $factorCode,
@@ -47,5 +55,13 @@ class Factor_model extends CI_Model
         $this->db->update('geopos_factors', [
             'transaction_ref' => $tRef
         ]);
+    }
+
+    function getDetails ($code) {
+        $this->db->select('*');
+        $this->db->from('geopos_factors');
+        $this->db->where('code', $code);
+        $result = $this->db->get();
+        return $result->row();
     }
 }
