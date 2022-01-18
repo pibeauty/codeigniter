@@ -103,8 +103,13 @@ class User_reserve extends CI_Controller
         $WeekNum= $this->input->post('WeekNum');
         $referrerCode= $this->input->post('referrerCode');
 
-        $day_from=10;$day_to=20;
         $date = date('Y-m-d H:i:s', substr($setdateU, 0, -3));
+        if ($date === date('Y-m-d') . " 00:00:00") {
+            $day_from=date('h');
+        } else {
+            $day_from=10;
+        }
+        $day_to=20;
         // MO set date_from hour to ten oclock (starting hour of working day)
         $date_from=date('Y-m-d H:i:s', strtotime($date. ' + '.$day_from.' hours'));
         // MO set date_to hour to 20 oclock (ending hour of working day)
