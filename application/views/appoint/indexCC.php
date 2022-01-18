@@ -61,6 +61,38 @@
                     </div>
                     <div class="row form-group">
                         <label class="col-md-4 control-label"
+                               for="userid">Service</label>
+                        <div class="col-md-8">
+                            <select name="service_id" id="service_id" class="form-control input-md">
+                                <?php
+                                foreach ($services as $row) {
+                                    $cid = $row['id'];
+                                    $acn = $row['name'];
+                                    $timeEst = $row['settime'];
+                                    echo "<option value='$cid' data-servicetime=$timeEst>$acn</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-md-4 control-label"
+                               for="userid">User(employee)</label>
+                        <div class="col-md-8">
+                            <select name="userid" id="userid" class="form-control input-md">
+                                <?php
+                                foreach ($employee as $row) {
+                                    $serviceIds = $row['service'];
+                                    $cid = $row['id'];
+                                    $acn = $row['name'];
+                                    echo "<option value='$cid' data-serviceid = '[$serviceIds]'>$acn</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-md-4 control-label"
                                for="datetime">Date Time start</label>
                         <div class="col-md-8">
                             <input id="datetime" name="datetime" type="datetime-local" class="form-control input-md"/>
@@ -89,37 +121,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="row form-group">
-                        <label class="col-md-4 control-label"
-                               for="userid">User(employee)</label>
-                        <div class="col-md-8">
-                            <select name="userid" id="userid" class="form-control input-md">
-                                <?php
-                                foreach ($employee as $row) {
-                                    $cid = $row['id'];
-                                     $acn = $row['name'];
-                                    echo "<option value='$cid'>$acn</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
 
-                    <div class="row form-group">
-                        <label class="col-md-4 control-label"
-                               for="userid">Service</label>
-                        <div class="col-md-8">
-                            <select name="service_id" id="service_id" class="form-control input-md">
-                                <?php
-                                foreach ($services as $row) {
-                                    $cid = $row['id'];
-                                    $acn = $row['name'];
-                                    echo "<option value='$cid'>$acn</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
 
                     <div class="row form-group">
                         <label class="col-md-4 control-label"
@@ -203,10 +205,12 @@
             select: function(start, end) {
                 var thisdate = new Date(start).getFullYear() + '-' + ('0'+(new Date(start).getMonth()+1)).slice(-2)  + '-' + ('0'+(new Date(start).getDate())).slice(-2)
                 console.log(thisdate);//2018-06-12T19:30
-                document.getElementById("datetime").value=thisdate+"T12:00";
+                document.getElementById("datetime").value=thisdate+"T10:00";
                 $('#start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
                 $('#end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
                 // Open modal to add event
+                const eventStart = thisdate + " 10:00:00"
+                const eventEnd = calculateMockEndTime(eventStart)
                 modal({
                     // Available buttons when adding
                     buttons: {
@@ -221,7 +225,16 @@
                             label: 'Add new service'
                         }
                     },
-                    title: 'Add Event' // Modal title
+                    title: 'Add Event', // Modal title
+                    event: {
+                        type: 'mock',
+                        start: {
+                            _i: eventStart
+                        },
+                        end: {
+                            _i: eventEnd
+                        }
+                    }
                 });
             },
 
@@ -318,16 +331,16 @@
             // Clear buttons except Cancel
             $('.modal-footer button:not(".btn-default")').remove();
             // Set input values
-            $('#title').val(data.event ? data.event.title : '');
-            $('#titleShow').val(data.event ? data.event.cus_name : '');
-            $('#description').val(data.event ? data.event.description : '');
-            $('#descriptionShow').val(data.event ? data.event.service_name : '');
-            $('#color').val(data.event ? data.event.color : '#3a87ad');
-            $('#datetime').val(data.event ? data.event.start["_i"].replace(" ", "T").slice(0,-3) : '');
-            $('#datetimeend').val(data.event ? data.event.end["_i"].replace(" ", "T").slice(0,-3) : '');
+            $('#title').val(data.event?.title ? data.event.title : '');
+            $('#titleShow').val(data.event?.cus_name ? data.event.cus_name : '');
+            $('#description').val(data.event?.description ? data.event.description : '');
+            $('#descriptionShow').val(data.event?.service_name ? data.event.service_name : '');
+            $('#color').val(data.event?.color ? data.event.color : '#3a87ad');
+            $('#datetime').val(data.event?.start ? data.event.start["_i"].replace(" ", "T").slice(0,-3) : '');
+            $('#datetimeend').val(data.event?.end ? data.event.end["_i"].replace(" ", "T").slice(0,-3) : '');
 
             //customerid
-            if(data.event){
+            if(data.event && data.event?.type !== 'mock'){
                 $('#userid').val(data.event.userid);
                 $("#customerid").val(data.event.customerid);
                 $("#select2-customerid-container").attr("title",data.event.cus_name);
@@ -414,6 +427,7 @@
             var res = str.replace("T", " ")+":00";
             var str2 =$('#datetimeend').val();
             var res2 = str2.replace("T", " ")+":00";
+            var eventExists;
             if (!str)
             {
                 alert ('Start date is required.');
@@ -456,6 +470,8 @@
                                 // $('.modal').modal('hide');
                                 $('#calendar').fullCalendar("refetchEvents");
                                 hide_notify();
+                                $('#datetime').val(str2)
+                                $('#datetime').change()
                             });
                     }
                 }
@@ -575,6 +591,56 @@
 
 
         });
+
+        function calculateMockEndTime(startTime) {
+            const dateObj = new Date(startTime);
+            const estimation = parseInt($("#service_id :selected").data('servicetime'))
+            dateObj.setMinutes(dateObj.getMinutes() + estimation)
+            return moment(dateObj).format('YYYY-MM-DD[T]HH:mm:ss')
+        }
+
+        function filterEmployee(serviceId) {
+            const employeeDropDown = $("#userid")[0]
+            let firstOption = undefined;
+            $.each(employeeDropDown.options, function(index, option) {
+                option = $(option);
+                if (option.data('serviceid').includes(serviceId)) {
+                    option.removeAttr('disabled')
+                    if (firstOption === undefined) firstOption = option.val()
+                } else {
+                    option.attr('disabled', 'true')
+                }
+            })
+            employeeDropDown.value = firstOption;
+        }
+
+        function setEndTime(estimation) {
+            const start = $('#datetime').val();
+            const dateObj = new Date(start);
+            dateObj.setMinutes(dateObj.getMinutes() + estimation)
+            $('#datetimeend').val(moment(dateObj).format('YYYY-MM-DD[T]HH:mm:ss'))
+        }
+
+        $("#datetime").on("change", function (event) {
+            const value = event.target.value
+            const end = calculateMockEndTime(value)
+            $("#datetimeend").val(end);
+        })
+
+        $("#service_id").on("change", function (event) {
+            let target = event.target;
+            selectedService = parseInt(target.value);
+            filterEmployee(selectedService);
+            selected = $(target)[0].selectedOptions[0];
+            const estimation = parseInt($(selected).data('servicetime'));
+            setEndTime(estimation);
+        })
+
+        if (parseInt($("#service_id").val()) != NaN) {
+            const service = $("#service_id");
+            filterEmployee(parseInt(service.val()));
+            // setEndTime(parseInt(service.data('servicetime')));
+        }
 
     });
 
