@@ -153,13 +153,17 @@
 
                                         <?php
                                         $i=0;
-
+                                        $j=0;
                                         foreach ($result as $itemx)
                                         {
                                             if(count($itemx)==count($services)) {
                                                 ?>
                                                 <div class="form-group col-md-4 boxed">
-                                                    <input type="radio" id="data<?php echo $i; ?>"  name="data" value="<?php echo htmlspecialchars(json_encode($itemx)); ?>">
+                                                    <input required 
+                                                    oninvalid="noEventSelectedError()"
+                                                    type="radio" id="data<?php echo $i; ?>" 
+                                                    name="data"
+                                                    value="<?php echo htmlspecialchars(json_encode($itemx)); ?>">
                                                     <label for="data<?php echo $i; ?>">
                                                         <?php
 
@@ -179,7 +183,7 @@
                                                                 }
                                                                 print_r($item['service_name'] . " از: " . $date_fromSET . " تا: " . $date_toSET);
                                                                 echo "<br/>";
-
+                                                                $j++;
                                                             }
 
                                                         ?>
@@ -192,7 +196,12 @@
                                         ?>
 
                                         <div class="form-group col-md-12 align-self-center" align="center">
-                                            <button type="submit" class="btn btn-primary" style="background: #c29e76;border:solid 1px #c29e76;">رزرو کنید! </button>
+                                            <?php if ($j === 0) {
+                                                echo "<p>زمانی یافت نشد</p>";
+                                                echo '<button type="button" id="return" class="btn btn-primary" style="background: #c29e76;border:solid 1px #c29e76;">بازگشت </button>';
+                                            } else {
+                                                echo '<button type="submit" class="btn btn-primary" style="background: #c29e76;border:solid 1px #c29e76;">رزرو کنید! </button>';
+                                            } ?>
                                         </div>
                                     </div>
                                 </form>
@@ -404,6 +413,18 @@
    /* var json_value = '< ?php echo $resultjson; ?>';
     json_value = $.parseJSON(json_value);
     console.log(json_value);*/
+    $("#return").on('click', function () {
+        window.location = '/user_reserve/'
+    })
+    var numberOfEvents = <?=$j;?>;
+    var numberOfRadioError = 0
+    function noEventSelectedError () {
+        numberOfRadioError++
+        if (numberOfRadioError === numberOfEvents) {
+            alert('لطفا یک زمان را انتخاب کنید');
+            numberOfRadioError = 0
+        }
+    }
 </script>
 </body>
 
