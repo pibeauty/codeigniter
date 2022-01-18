@@ -143,7 +143,7 @@
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="mobile"></label>
-                                            <input type="text"  class="form-control my-2 my-lg-1" id="mobile" name="mobile" placeholder="موبایل" required>
+                                            <input type="number"  class="form-control my-2 my-lg-1" id="mobile" name="mobile" min="09000000000" max="09999999999" placeholder="موبایل (انگلیسی)" required>
                                         </div>
                                         <div class="form-group col-md-6">
                                             <input type="hidden" id="WeekNum" name="WeekNum" required>
