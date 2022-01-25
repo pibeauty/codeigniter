@@ -157,6 +157,16 @@
                                         foreach ($result as $itemx)
                                         {
                                             if(count($itemx)==count($services)) {
+                                                $condition = true;
+                                                foreach ($itemx as $item) {
+                                                    $time = strtotime($item['date_fromSET']);
+                                                    $now = time();
+                                                    if ($now > $time) {
+                                                        $condition = false;
+                                                        break;
+                                                    }
+                                                }
+                                                if ($condition) {
                                                 ?>
                                                 <div class="form-group col-md-4 boxed">
                                                     <input required 
@@ -190,7 +200,7 @@
                                                     </label>
                                                 </div>
                                                 <?php
-
+                                                }
                                             } $i++; 
                                         }
                                         ?>
