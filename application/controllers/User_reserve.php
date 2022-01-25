@@ -104,11 +104,12 @@ class User_reserve extends CI_Controller
         $referrerCode= $this->input->post('referrerCode');
 
         $date = date('Y-m-d H:i:s', substr($setdateU, 0, -3));
-        if ($date === date('Y-m-d') . " 00:00:00") {
-            $day_from=date('h');
-        } else {
-            $day_from=10;
-        }
+        // if ($date === date('Y-m-d') . " 00:00:00") {
+        //     $day_from=date('h');
+        // } else {
+        //     $day_from=10;
+        // }
+        $day_from = 10;
         $day_to=20;
         // MO set date_from hour to ten oclock (starting hour of working day)
         $date_from=date('Y-m-d H:i:s', strtotime($date. ' + '.$day_from.' hours'));
@@ -134,13 +135,19 @@ class User_reserve extends CI_Controller
                     $getEvent = null;
                     $em_date_from = $date_from;
                     $em_date_to = $date_to;
-                    if($events && !in_array($ems[$ii]["id"], $chkEmployeeInArr)){
-                        $getEvent=$events[0];
-                        $em_date_from=$events[0]->end;
-                        // MO inja moshkel darad zaheran
-                        $em_date_to=$events[0]->end;
-                        array_push($chkEmployeeInArr,$ems[$ii]["id"]);
-                    }
+                    /** 
+                     * The below block is pointless, because the $ems variable has been removed and not set!
+                     * refer to git commits:
+                     * * 038cd87112ba51c66e255dee9b18e4d380fddad8
+                     * * 4fd09f9376f598abfd8de83e2a8215859ca8433f
+                     */
+                    // if($events && !in_array($ems[$ii]["id"], $chkEmployeeInArr)){
+                    //     $getEvent=$events[0];
+                    //     $em_date_from=$events[0]->end;
+                    //     // MO inja moshkel darad zaheran
+                    //     $em_date_to=$events[0]->end;
+                    //     array_push($chkEmployeeInArr,$ems[$ii]["id"]);
+                    // }
 
                     $result[$resultCounter]['service_name']=$service['name'];
                     $result[$resultCounter]['service_id']=$service['id'];
@@ -182,7 +189,7 @@ class User_reserve extends CI_Controller
 
         //     $s+=1;
         // }
-        
+
 
         // $firstArr=[];
         // $chkEmployeeInArr=[];
