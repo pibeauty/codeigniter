@@ -97,7 +97,7 @@ class Employee_model extends CI_Model
         return $query->result_array();
     }
 
-    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary = 0, $department = -1,$commission=0,$roleid=false, $profession, $service,$daysTime)
+    public function update_employee($id, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $color, $salary = 0, $department = -1,$commission=0,$roleid=false, $profession, $service,$daysTime)
     {
         $this->db->select('salary');
         $this->db->from('geopos_employees');
@@ -121,6 +121,7 @@ class Employee_model extends CI_Model
             'city' => $city,
             'region' => $region,
             'country' => $country,
+            'color' => $color,
             'postbox' => $postbox,
             'salary' => $salary,
              'c_rate' => $commission,
@@ -150,6 +151,7 @@ class Employee_model extends CI_Model
                 'address' => $address,
                 'city' => $city,
                 'region' => $region,
+                'color' => $color,
                 'country' => $country,
                 'postbox' => $postbox,
                 'salary' => $salary,
@@ -472,7 +474,7 @@ class Employee_model extends CI_Model
     }
 
 
-    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location,$salary = 0,$commission = 0,$department=0, $profession, $service,$daysTime)
+    public function add_employee($id, $username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $color,$salary = 0,$commission = 0,$department=0, $profession, $service,$daysTime)
     {
         $data = array(
             'id' => $id,
@@ -489,6 +491,7 @@ class Employee_model extends CI_Model
             'salary' => $salary,
             'c_rate' => $commission,
             'service'=>$service,
+            'color' => $color,
             'sat_from'=>$daysTime['sat_from'],
             'sat_to'=>$daysTime['sat_to'],
             'sun_from'=>$daysTime['sun_from'],

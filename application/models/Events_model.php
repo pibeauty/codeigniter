@@ -59,10 +59,12 @@ class Events_model extends CI_Model
     {
 
 
-        $this->db->select('*');
+        $this->db->select('geopos_events.*, geopos_employees.id, geopos_factors.status, geopos_employees.color AS employee_color');
         $this->db->from('geopos_events');
         //$this->db->group_by('description');
-        $this->db->order_by('id', 'desc');  # or desc
+        $this->db->join('geopos_employees', 'geopos_events.userid = geopos_employees.id', 'left');
+        $this->db->join('geopos_factors', 'geopos_events.factor_code = geopos_factors.code', 'left');
+        $this->db->order_by('geopos_events.id', 'desc');  # or desc
 
         $query = $this->db->get();
         return $query->result();
@@ -120,7 +122,7 @@ class Events_model extends CI_Model
     }
     /*Create new Appointment */
 
-    public function addAppointment($title, $start, $end, $description, $color,$userid,$customerid,$datetime,$datetimeend,$service_id)
+    public function addAppointment($title, $start, $end, $description,/*  $color, */$userid,$customerid,$datetime,$datetimeend,$service_id)
     {
         $this->db->select('*');
         $this->db->from('services');
@@ -141,7 +143,7 @@ class Events_model extends CI_Model
             'userid' => $userid,
             'customerid' => $customerid,
             'description' => $description,
-            'color' => $color,
+            // 'color' => $color,
             'cus_name' => $Cus['name'],
             'cus_mobile' => $Cus['phone'],
             'service_id' => $service_id,
@@ -156,7 +158,7 @@ class Events_model extends CI_Model
     }
     /*Update  event */
 
-    public function updateEvent($id, $title, $description, $color, $customerid, $employeeid, $serviceid, $start, $end)
+    public function updateEvent($id, $title, $description/* , $color */, $customerid, $employeeid, $serviceid, $start, $end)
     {
         $this->db->select('*');
         $this->db->from('geopos_customers');
@@ -168,8 +170,8 @@ class Events_model extends CI_Model
         $this->db->where('id', $serviceid);
         $result = $this->db->get();
         ['name' => $serviceName] = $result->row_array();
-        $sql = "UPDATE geopos_events SET title = ?, description = ?, color = ?, customerid = ?, cus_name = ?, userid = ?, service_id = ?, service_name = ?, start = ?, end = ? WHERE id = ?";
-        $this->db->query($sql, array($title, $description, $color, $customerid, $cus['name'], $employeeid, $serviceid, $serviceName, $start, $end, $id));
+        $sql = "UPDATE geopos_events SET title = ?, description = ?, /* color = ?, */ customerid = ?, cus_name = ?, userid = ?, service_id = ?, service_name = ?, start = ?, end = ? WHERE id = ?";
+        $this->db->query($sql, array($title, $description, /* $color, */ $customerid, $cus['name'], $employeeid, $serviceid, $serviceName, $start, $end, $id));
         return ($this->db->affected_rows() != 1) ? false : true;
     }
 
