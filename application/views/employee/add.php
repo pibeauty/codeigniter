@@ -291,8 +291,15 @@
                     <input class="form-control" type="text" name="fri_to" placeholder="to" value="20" onkeypress="return isNumber(event)" maxlength="2" minlength="2" min="8" max="22">
                 </div>
             </div>
+            <div class="form-group row">
 
+                <label class="col-sm-2 col-form-label"
+                       for="color">Color</label>
 
+                <div class="col-sm-1">
+                    <input required type="color" class="form-control margin-bottom required" name="color">
+                </div>
+            </div>
             <div class="form-group row">
 
                 <label class="col-sm-2 col-form-label"></label>

@@ -227,8 +227,13 @@
                                 <input class="form-control" type="text" name="fri_to" placeholder="to" value="<?php echo $user['fri_to'] ?>" onkeypress="return isNumber(event)" maxlength="2" minlength="2" min="8" max="22">
                             </div>
                         </div>
-
-
+                        <div class="form-group row">
+                            <label class="col-sm-2 col-form-label"
+                                       for="color">Color</label>
+                            <div class="col-sm-2">
+                                <input class="form-control" type="color" name="color" value="<?php echo $user['color'] ?>">
+                            </div>
+                        </div>
                         <?php if ($this->aauth->get_user()->roleid >= 0) { ?>
                             <div class="form-group row">
 
