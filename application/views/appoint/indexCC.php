@@ -1,10 +1,8 @@
-<link rel="stylesheet" type="text/css"
-      href="<?= assets_url() ?>app-assets/vendors/css/calendars/fullcalendar.min.css?v=<?= APPVER ?>">
-<link href="<?php echo assets_url(); ?>assets/c_portcss/bootstrapValidator.min.css?v=<?= APPVER ?>" rel="stylesheet"/>
-<link href="<?php echo assets_url(); ?>assets/c_portcss/bootstrap-colorpicker.min.css?v=<?= APPVER ?>"
-      rel="stylesheet"/>
+<link rel="stylesheet" type="text/css" href="<?= assets_url() ?>app-assets/vendors/css/calendars/fullcalendar.min.css?v=<?= APPVER ?>">
+<link href="<?php echo assets_url(); ?>assets/c_portcss/bootstrapValidator.min.css?v=<?= APPVER ?>" rel="stylesheet" />
+<link href="<?php echo assets_url(); ?>assets/c_portcss/bootstrap-colorpicker.min.css?v=<?= APPVER ?>" rel="stylesheet" />
 <!-- Custom css  -->
-<link href="<?php echo assets_url(); ?>assets/c_portcss/custom.css?v=<?= APPVER ?>" rel="stylesheet"/>
+<link href="<?php echo assets_url(); ?>assets/c_portcss/custom.css?v=<?= APPVER ?>" rel="stylesheet" />
 
 <script src='<?php echo assets_url(); ?>assets/c_portjs/bootstrap-colorpicker.min.js?v=<?= APPVER ?>'></script>
 
@@ -38,8 +36,7 @@
             <div class="modal-header">
 
                 <h4 class="modal-title"></h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                            class="sr-only">Close</span></button>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
             </div>
             <div class="modal-body">
                 <div class="error"></div>
@@ -47,37 +44,18 @@
                     <input type="hidden" id="start">
                     <input type="hidden" id="end">
                     <div class="row form-group">
-                        <label class="col-md-4 control-label"
-                               for="title">Add Appointment</label>
+                        <label class="col-md-4 control-label" for="title">Add Appointment</label>
 
                     </div>
                     <div class="row form-group">
-                        <label class="col-md-4 control-label"
-                               for="title"><?php echo $this->lang->line('Title') ?></label>
+                        <label class="col-md-4 control-label" for="title"><?php echo $this->lang->line('Title') ?></label>
                         <div class="col-md-8">
-                            <input id="titleShow" name="titleShow" type="hidden" class="form-control input-md"/>
-                            <input id="title" name="title" type="text" class="form-control input-md"/>
+                            <input id="titleShow" name="titleShow" type="hidden" class="form-control input-md" />
+                            <input id="title" name="title" type="text" class="form-control input-md" />
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label class="col-md-4 control-label"
-                               for="userid">Service</label>
-                        <div class="col-md-8">
-                            <select name="service_id" id="service_id" class="form-control input-md">
-                                <?php
-                                foreach ($services as $row) {
-                                    $cid = $row['id'];
-                                    $acn = $row['name'];
-                                    $timeEst = $row['settime'];
-                                    echo "<option value='$cid' data-servicetime=$timeEst>$acn</option>";
-                                }
-                                ?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="row form-group">
-                        <label class="col-md-4 control-label"
-                               for="userid">User(employee)</label>
+                        <label class="col-md-4 control-label" for="userid">User(employee)</label>
                         <div class="col-md-8">
                             <select name="userid" id="userid" class="form-control input-md">
                                 <?php
@@ -92,25 +70,37 @@
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label class="col-md-4 control-label"
-                               for="datetime">Date Time start</label>
+                        <label class="col-md-4 control-label" for="userid">Service</label>
                         <div class="col-md-8">
-                            <input id="datetime" name="datetime" type="datetime-local" class="form-control input-md"/>
+                            <select name="service_id" id="service_id" class="form-control input-md">
+                                <?php
+                                foreach ($services as $row) {
+                                    $cid = $row['id'];
+                                    $acn = $row['name'];
+                                    $timeEst = $row['settime'];
+                                    echo "<option value='$cid' data-servicetime=$timeEst>$acn</option>";
+                                }
+                                ?>
+                            </select>
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label class="col-md-4 control-label"
-                               for="datetimeend">Date Time end</label>
+                        <label class="col-md-4 control-label" for="datetime">Date Time start</label>
                         <div class="col-md-8">
-                            <input id="datetimeend" name="datetimeend" type="datetime-local" class="form-control input-md"/>
+                            <input id="datetime" name="datetime" type="datetime-local" class="form-control input-md" />
                         </div>
                     </div>
                     <div class="row form-group">
-                        <label class="col-md-4 control-label"
-                               for="customerid">Customer</label>
+                        <label class="col-md-4 control-label" for="datetimeend">Date Time end</label>
+                        <div class="col-md-8">
+                            <input id="datetimeend" name="datetimeend" type="datetime-local" class="form-control input-md" />
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <label class="col-md-4 control-label" for="customerid">Customer</label>
                         <div class="col-md-8">
                             <select name="customerid" id="customerid" class="form-control select-box" style="width: 100%">
-                               <option value="">--انتخاب کنید--</option>
+                                <option value="">--انتخاب کنید--</option>
                                 <?php
                                 foreach ($customers as $row) {
                                     $cid = $row->id;
@@ -124,14 +114,13 @@
 
 
                     <div class="row form-group">
-                        <label class="col-md-4 control-label"
-                               for="description"><?php echo $this->lang->line('Description') ?></label>
+                        <label class="col-md-4 control-label" for="description"><?php echo $this->lang->line('Description') ?></label>
                         <div class="col-md-8">
                             <!-- <textarea class="form-control" id="descriptionShow" name="descriptionShow"></textarea> -->
                             <textarea class="form-control" id="description" name="description"></textarea>
                         </div>
                     </div>
-                    <div class="row form-group">
+                    <!-- <div class="row form-group">
                         <label class="col-md-4 control-label"
                                for="color"><?php echo $this->lang->line('Color') ?></label>
                         <div class="col-md-4">
@@ -139,12 +128,11 @@
                                    readonly="readonly"/>
                             <span class="help-block">Click to pick a color</span>
                         </div>
-                    </div>
+                    </div> -->
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-                        data-dismiss="modal"><?php echo $this->lang->line('Cancel') ?></button>
+                <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $this->lang->line('Cancel') ?></button>
             </div>
         </div>
     </div>
@@ -158,9 +146,9 @@
     $('.select-box').select2(
 
     );
-    $(function(){
+    $(function() {
 
-        var base_url=baseurl; // Here i define the base_url
+        var base_url = baseurl; // Here i define the base_url
         /*$.ajax({
 
             url: base_url+'<?php echo $getEventsURL ?>',
@@ -178,14 +166,14 @@
         var currentDate; // Holds the day clicked when adding a new event
         var currentEvent; // Holds the event object when editing an event
 
-        $('#color').colorpicker(); // Colopicker
+        // $('#color').colorpicker(); // Colopicker
 
 
 
 
         // Fullcalendar
         $('#calendar').fullCalendar({
-            lang:'en',
+            lang: 'en',
             header: {
                 left: 'prev, next, today',
                 center: 'title',
@@ -194,18 +182,19 @@
 
             // Get all events stored in database
             eventLimit: true, // allow "more" link when too many events
-            events: base_url+'<?php echo $getEventsURL ?>',
+            events: base_url + '<?php echo $getEventsURL ?>',
             selectable: true,
             selectHelper: true,
             editable: true, // Make the event resizable true
             eventRender: function(event, element, view) {
-                return $('<div style="background: '+event.color+';border-radius: 3px;padding: 0 3px 0 3px;margin-bottom: 1px;color: white;cursor: pointer">'
-                    + moment(event.start).format('HH:mm')+'/'+ event.cus_name + '</div>');
+                const online = event.status === 'accepted' ? '/online' : '';
+                return $('<div style="background: ' + event.employee_color + ';border-radius: 3px;padding: 0 3px 0 3px;margin-bottom: 1px;color: white;cursor: pointer">' +
+                    moment(event.start).format('HH:mm') + '/' + event.cus_name + online + '</div>');
             },
             select: function(start, end) {
-                var thisdate = new Date(start).getFullYear() + '-' + ('0'+(new Date(start).getMonth()+1)).slice(-2)  + '-' + ('0'+(new Date(start).getDate())).slice(-2)
-                console.log(thisdate);//2018-06-12T19:30
-                document.getElementById("datetime").value=thisdate+"T10:00";
+                var thisdate = new Date(start).getFullYear() + '-' + ('0' + (new Date(start).getMonth() + 1)).slice(-2) + '-' + ('0' + (new Date(start).getDate())).slice(-2)
+                console.log(thisdate); //2018-06-12T19:30
+                document.getElementById("datetime").value = thisdate + "T10:00";
                 $('#start').val(moment(start).format('YYYY-MM-DD HH:mm:ss'));
                 $('#end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
                 // Open modal to add event
@@ -238,17 +227,17 @@
                 });
             },
 
-            eventDrop: function(event, delta, revertFunc,start,end) {
+            eventDrop: function(event, delta, revertFunc, start, end) {
 
                 start = event.start.format('YYYY-MM-DD HH:mm:ss');
-                if(event.end){
+                if (event.end) {
                     end = event.end.format('YYYY-MM-DD HH:mm:ss');
-                }else{
+                } else {
                     end = start;
                 }
 
 
-                $.post(base_url+'events/dragUpdateEvent',  'id='+event.id+'&start='+start+'&end='+end+'&'+crsf_token+'='+crsf_hash, function(result){
+                $.post(base_url + 'events/dragUpdateEvent', 'id=' + event.id + '&start=' + start + '&end=' + end + '&' + crsf_token + '=' + crsf_hash, function(result) {
                     $('.alert').addClass('alert-success').text('Event updated successful');
                     $('.modal').modal('hide');
                     $('#calendar').fullCalendar("refetchEvents");
@@ -259,16 +248,16 @@
 
 
             },
-            eventResize: function(event,dayDelta,minuteDelta,revertFunc) {
+            eventResize: function(event, dayDelta, minuteDelta, revertFunc) {
 
                 start = event.start.format('YYYY-MM-DD HH:mm:ss');
-                if(event.end){
+                if (event.end) {
                     end = event.end.format('YYYY-MM-DD HH:mm:ss');
-                }else{
+                } else {
                     end = start;
                 }
 
-                $.post(base_url+'events/dragUpdateEvent',  'id='+event.id+'&start='+start+'&end='+end+'&'+crsf_token+'='+crsf_hash, function(result){
+                $.post(base_url + 'events/dragUpdateEvent', 'id=' + event.id + '&start=' + start + '&end=' + end + '&' + crsf_token + '=' + crsf_hash, function(result) {
                     $('.alert').addClass('alert-success').text('Event updated successful');
                     $('.modal').modal('hide');
                     $('#calendar').fullCalendar("refetchEvents");
@@ -280,7 +269,7 @@
             },
 
             // Event Mouseover
-            eventMouseover: function(calEvent, jsEvent, view){
+            eventMouseover: function(calEvent, jsEvent, view) {
 
                 var tooltip = '<div class="event-tooltip">' + calEvent.service_name + '</div>';
                 $("body").append(tooltip);
@@ -335,80 +324,69 @@
             $('#titleShow').val(data.event?.cus_name ? data.event.cus_name : '');
             $('#description').val(data.event?.description ? data.event.description : '');
             $('#descriptionShow').val(data.event?.service_name ? data.event.service_name : '');
-            $('#color').val(data.event?.color ? data.event.color : '#3a87ad');
-            $('#datetime').val(data.event?.start ? data.event.start["_i"].replace(" ", "T").slice(0,-3) : '');
-            $('#datetimeend').val(data.event?.end ? data.event.end["_i"].replace(" ", "T").slice(0,-3) : '');
+            // $('#color').val(data.event?.color ? data.event.color : '#3a87ad');
+            $('#datetime').val(data.event?.start ? data.event.start["_i"].replace(" ", "T").slice(0, -3) : '');
+            $('#datetimeend').val(data.event?.end ? data.event.end["_i"].replace(" ", "T").slice(0, -3) : '');
 
             //customerid
-            if(data.event && data.event?.type !== 'mock'){
+            if (data.event && data.event?.type !== 'mock') {
                 $('#userid').val(data.event.userid);
                 $("#customerid").val(data.event.customerid);
-                $("#select2-customerid-container").attr("title",data.event.cus_name);
+                $("#select2-customerid-container").attr("title", data.event.cus_name);
                 $("#select2-customerid-container").text(data.event.cus_name);
                 $("#service_id").val(data.event.service_id);
                 // $("#customerid").select2().select2('val',data.event.customerid);
                 // $('#customerid').val(data.event.customerid);
                 // $('#customerid option[value='data.event.customerid']').prop('selected', true);
-          }
+            }
             //
             // Create Butttons
-            $.each(data.buttons, function(index, button){
-                $('.modal-footer').prepend('<button type="button" id="' + button.id  + '" class="btn ' + button.css + '">' + button.label + '</button>')
+            $.each(data.buttons, function(index, button) {
+                $('.modal-footer').prepend('<button type="button" id="' + button.id + '" class="btn ' + button.css + '">' + button.label + '</button>')
             })
             //Show Modal
             $('.modal').modal('show');
         }
 
         // Handle Click on Add Button
-        $('.modal').on('click', '#add-event',  function(e){
+        $('.modal').on('click', '#add-event', function(e) {
 
-            var str =$('#datetime').val();
-            var res = str.replace("T", " ")+":00";
-            var str2 =$('#datetimeend').val();
-            var res2 = str2.replace("T", " ")+":00";
-            var customerId =$('#customerid').val();
-            if (!str)
-            {
-                alert ('Start date is required.');
-            }
-            else if (!str2)
-            {
-                alert ('End date is required.');
-            }
-            else if (res2 <= res)
-            {
-                alert ('End date must be bigger than start date.');
-            }
-            else if (!customerId)
-            {
-                alert ('Customer is required.');
-            }
-            else
-            {
-                var service_id =$('#service_id').val();
-                
+            var str = $('#datetime').val();
+            var res = str.replace("T", " ") + ":00";
+            var str2 = $('#datetimeend').val();
+            var res2 = str2.replace("T", " ") + ":00";
+            var customerId = $('#customerid').val();
+            if (!str) {
+                alert('Start date is required.');
+            } else if (!str2) {
+                alert('End date is required.');
+            } else if (res2 <= res) {
+                alert('End date must be bigger than start date.');
+            } else if (!customerId) {
+                alert('Customer is required.');
+            } else {
+                var service_id = $('#service_id').val();
+
                 $.ajax({
-                    url: base_url+'events/checkEventExists',
+                    url: base_url + 'events/checkEventExists',
                     type: 'POST',
-                    data: '&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+crsf_token+'='+crsf_hash,
+                    data: '&userid=' + $('#userid').val() + '&datetime=' + res + '&datetimeend=' + res2 + crsf_token + '=' + crsf_hash,
                     async: false,
-                    fail: function(){
+                    fail: function() {
                         alert('fail');
                     },
-                    success: function(data,status){
+                    success: function(data, status) {
                         eventExists = data;
                     },
                 });
 
-                if (eventExists == '1')
-                {
-                    alert ('The selected employee is busy in the selected hours.');
-                }
-                else
-                {
-                    if(validator(['title', 'description'])) {
-                        $.post(base_url+'events/addAppointment',
-                            'title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&start='+$('#start').val()+'&end='+$('#end').val()+'&customerid='+ $('#customerid').val()+'&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+'&service_id='+ service_id+'&'+crsf_token+'='+crsf_hash , function(result){
+                if (eventExists == '1') {
+                    alert('The selected employee is busy in the selected hours.');
+                } else {
+                    if (validator(['title', 'description'])) {
+                        $.post(base_url + 'events/addAppointment',
+                            'title=' + $('#title').val() + '&description=' + $('#description').val() + /* '&color='+$('#color').val()+ */ '&start=' + $('#start').val() + '&end=' + $('#end').val() + '&customerid=' + $('#customerid').val() + '&userid=' + $('#userid').val() + '&datetime=' + res + '&datetimeend=' + res2 + '&service_id=' + service_id + '&' + crsf_token + '=' + crsf_hash,
+                            function(result) {
                                 $('.alert').addClass('alert-success').text('Event added successful');
                                 $('.modal').modal('hide');
                                 $('#calendar').fullCalendar("refetchEvents");
@@ -416,56 +394,47 @@
                             });
                     }
                 }
-                
+
             }
-            
+
         });
 
         // Handle Click on Add Button
-        $('.modal').on('click', '#add-service',  function(e){
-            var str =$('#datetime').val();
-            var res = str.replace("T", " ")+":00";
-            var str2 =$('#datetimeend').val();
-            var res2 = str2.replace("T", " ")+":00";
+        $('.modal').on('click', '#add-service', function(e) {
+            var str = $('#datetime').val();
+            var res = str.replace("T", " ") + ":00";
+            var str2 = $('#datetimeend').val();
+            var res2 = str2.replace("T", " ") + ":00";
             var eventExists;
-            if (!str)
-            {
-                alert ('Start date is required.');
-            }
-            else if (!str2)
-            {
-                alert ('End date is required.');
-            }
-            else if (res2 <= res)
-            {
-                alert ('End date must be bigger than start date.');
-            }
-            else
-            {
-                var service_id =$('#service_id').val();
-                
+            if (!str) {
+                alert('Start date is required.');
+            } else if (!str2) {
+                alert('End date is required.');
+            } else if (res2 <= res) {
+                alert('End date must be bigger than start date.');
+            } else {
+                var service_id = $('#service_id').val();
+
                 $.ajax({
-                    url: base_url+'events/checkEventExists',
+                    url: base_url + 'events/checkEventExists',
                     type: 'POST',
-                    data: '&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+crsf_token+'='+crsf_hash,
+                    data: '&userid=' + $('#userid').val() + '&datetime=' + res + '&datetimeend=' + res2 + crsf_token + '=' + crsf_hash,
                     async: false,
-                    fail: function(){
+                    fail: function() {
                         alert('fail');
                     },
-                    success: function(data,status){
+                    success: function(data, status) {
                         eventExists = data;
                     },
                 });
-                
-                if (eventExists == '1')
-                {
-                    alert ('The selected employee is busy in the selected hours.');
-                }
-                else
-                {
-                    if(validator(['title', 'description'])) {
-                        $.post(base_url+'events/addAppointment',
-                            'title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&start='+$('#start').val()+'&end='+$('#end').val()+'&customerid='+ $('#customerid').val()+'&userid='+ $('#userid').val()+'&datetime='+ res+'&datetimeend='+ res2+'&service_id='+ service_id+'&'+crsf_token+'='+crsf_hash , function(result){
+
+                if (eventExists == '1') {
+                    alert('The selected employee is busy in the selected hours.');
+                } else {
+                    if (validator(['title', 'description'])) {
+                        $.post(base_url + 'events/addAppointment',
+                            'title=' + $('#title').val() + '&description=' + $('#description').val() + /* '&color='+$('#color').val()+ */ '&start=' + $('#start').val() + '&end=' + $('#end').val() + '&customerid=' + $('#customerid').val() + '&userid=' + $('#userid').val() + '&datetime=' + res + '&datetimeend=' + res2 + '&service_id=' + service_id + '&' + crsf_token + '=' + crsf_hash,
+                            function(result) {
                                 $('.alert').addClass('alert-success').text('Event added successful');
                                 // $('.modal').modal('hide');
                                 $('#calendar').fullCalendar("refetchEvents");
@@ -475,18 +444,18 @@
                             });
                     }
                 }
-                
+
             }
         });
 
         // Handle click on Update Button
-        $('.modal').on('click', '#update-event',  function(e){
-            if(validator(['title', 'description'])) {
-                var str =$('#datetime').val();
-                var res = str.replace("T", " ")+":00";
-                var str2 =$('#datetimeend').val();
-                var res2 = str2.replace("T", " ")+":00";
-                $.post(base_url+'events/updateEvent',  'id='+currentEvent.id+'&title='+$('#title').val()+'&description='+$('#description').val()+'&color='+$('#color').val()+'&employeeid='+$('#userid').val()+'&serviceid='+$('#service_id').val()+'&datetime='+res+'&datetimeend='+res2+'&customerid='+$('#customerid').val()+'&'+crsf_token+'='+crsf_hash, function(result){
+        $('.modal').on('click', '#update-event', function(e) {
+            if (validator(['title', 'description'])) {
+                var str = $('#datetime').val();
+                var res = str.replace("T", " ") + ":00";
+                var str2 = $('#datetimeend').val();
+                var res2 = str2.replace("T", " ") + ":00";
+                $.post(base_url + 'events/updateEvent', 'id=' + currentEvent.id + '&title=' + $('#title').val() + '&description=' + $('#description').val() + /* '&color='+$('#color').val()+ */ '&employeeid=' + $('#userid').val() + '&serviceid=' + $('#service_id').val() + '&datetime=' + res + '&datetimeend=' + res2 + '&customerid=' + $('#customerid').val() + '&' + crsf_token + '=' + crsf_hash, function(result) {
                     if (result === 'employee is busy') {
                         alert('employee is busy on selected time, please select a different time or employee')
                     } else {
@@ -498,9 +467,8 @@
                 });
             }
         });
-//hide color
-        $("#link_to_cal").change(function ()
-        {
+        //hide color
+        $("#link_to_cal").change(function() {
 
             $('#hidden_div').show();
 
@@ -510,8 +478,8 @@
 
         // Handle Click on Delete Button
 
-        $('.modal').on('click', '#delete-event',  function(e){
-            $.get(base_url+'events/deleteEvent?id=' + currentEvent.id, function(result){
+        $('.modal').on('click', '#delete-event', function(e) {
+            $.get(base_url + 'events/deleteEvent?id=' + currentEvent.id, function(result) {
                 $('.alert').addClass('alert-success').text('Event deleted successful !');
                 $('.modal').modal('hide');
                 $('#calendar').fullCalendar("refetchEvents");
@@ -519,8 +487,7 @@
             });
         });
 
-        function hide_notify()
-        {
+        function hide_notify() {
             setTimeout(function() {
                 $('.alert').removeClass('alert-success').text('');
             }, 2000);
@@ -530,18 +497,18 @@
         // Dead Basic Validation For Inputs
         function validator(elements) {
             var errors = 0;
-          /*  $.each(elements, function(index, element){
-                if($.trim($('#' + element).val()) == '') errors++;
-            });
-            if(errors) {
-                $('.error').html('Please insert title and description');
-                return false;
-            }*/
+            /*  $.each(elements, function(index, element){
+                  if($.trim($('#' + element).val()) == '') errors++;
+              });
+              if(errors) {
+                  $('.error').html('Please insert title and description');
+                  return false;
+              }*/
             return true;
         }
 
         $('#adate').fullCalendar({
-            lang:'en',
+            lang: 'en',
             header: {
                 left: 'prev, next, today',
                 center: 'title',
@@ -549,14 +516,14 @@
             },
             // Get all events stored in database
             eventLimit: true, // allow "more" link when too many events
-            events: base_url+'user/getAttendance',
+            events: base_url + 'user/getAttendance',
             selectable: false,
             selectHelper: false,
             editable: false, // Make the event resizable true
-            select: function(start,end) {
+            select: function(start, end) {
 
-                $('#start').val(moment(start+' 00:00:00').format('YYYY-MM-DD HH:mm:ss'));
-                $('#end').val(moment(end+' 00:00:00').format('YYYY-MM-DD HH:mm:ss'));
+                $('#start').val(moment(start + ' 00:00:00').format('YYYY-MM-DD HH:mm:ss'));
+                $('#end').val(moment(end + ' 00:00:00').format('YYYY-MM-DD HH:mm:ss'));
 
             }
 
@@ -567,7 +534,7 @@
         });
 
         $('#holidays').fullCalendar({
-            lang:'en',
+            lang: 'en',
             header: {
                 left: 'prev, next, today',
                 center: 'title',
@@ -575,14 +542,14 @@
             },
             // Get all events stored in database
             eventLimit: true, // allow "more" link when too many events
-            events: base_url+'user/getHolidays',
+            events: base_url + 'user/getHolidays',
             selectable: false,
             selectHelper: false,
             editable: false, // Make the event resizable true
-            select: function(start,end) {
+            select: function(start, end) {
 
-                $('#start').val(moment(start+' 00:00:00').format('YYYY-MM-DD HH:mm:ss'));
-                $('#end').val(moment(end+' 00:00:00').format('YYYY-MM-DD HH:mm:ss'));
+                $('#start').val(moment(start + ' 00:00:00').format('YYYY-MM-DD HH:mm:ss'));
+                $('#end').val(moment(end + ' 00:00:00').format('YYYY-MM-DD HH:mm:ss'));
 
             }
 
@@ -614,6 +581,22 @@
             employeeDropDown.value = firstOption;
         }
 
+        function filterService(availabeServices) {
+            const servicesDropDown = $("#service_id")[0]
+            let firstOption = undefined;
+            $.each(servicesDropDown.options, function(index, option) {
+                const optionValue = parseInt(option.value)
+                option = $(option);
+                if (availabeServices.includes(optionValue)) {
+                    option.removeAttr('disabled')
+                    if (firstOption === undefined) firstOption = optionValue
+                } else {
+                    option.attr('disabled', 'true')
+                }
+            })
+            servicesDropDown.value = firstOption;
+        }
+
         function setEndTime(estimation) {
             const start = $('#datetime').val();
             const dateObj = new Date(start);
@@ -621,33 +604,41 @@
             $('#datetimeend').val(moment(dateObj).format('YYYY-MM-DD[T]HH:mm:ss'))
         }
 
-        $("#datetime").on("change", function (event) {
+        $("#datetime").on("change", function(event) {
             const value = event.target.value
             const end = calculateMockEndTime(value)
             $("#datetimeend").val(end);
         })
 
-        $("#service_id").on("change", function (event) {
+        $("#service_id").on("change", function(event) {
             let target = event.target;
-            selectedService = parseInt(target.value);
-            filterEmployee(selectedService);
+            // selectedService = parseInt(target.value);
+            // filterEmployee(selectedService);
             selected = $(target)[0].selectedOptions[0];
             const estimation = parseInt($(selected).data('servicetime'));
             setEndTime(estimation);
         })
 
-        if (parseInt($("#service_id").val()) != NaN) {
-            const service = $("#service_id");
-            filterEmployee(parseInt(service.val()));
-            // setEndTime(parseInt(service.data('servicetime')));
+        $("#userid").on("change", function(event) {
+            const selectedUser = $(event.target.selectedOptions[0])
+            const availableServices = selectedUser.data('serviceid');
+            filterService(availableServices);
+        })
+
+        // if (parseInt($("#service_id").val()) != NaN) {
+        //     const service = $("#service_id");
+        //     filterEmployee(parseInt(service.val()));
+        //     // setEndTime(parseInt(service.data('servicetime')));
+        // }
+
+        if (parseInt($("#userid").val()) != NaN) {
+            const availableServices = $("#userid :selected").data('serviceid');
+            filterService(availableServices);
         }
 
     });
-
-
 </script>
 <?php /*
  Code for localization
 <script src="<?= assets_url() ?>app-assets/vendors/js/fullcalendar/locale/es.js?v=<?= APPVER ?>"></script>
  */
-
