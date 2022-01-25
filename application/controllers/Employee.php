@@ -181,7 +181,7 @@ class Employee extends CI_Controller
         $department = $this->input->post('department', true);
         $profession = $this->input->post('profession', true);
         $service = implode(",",$this->input->post('service'));
-
+        $color = $this->input->post('color', true);
         $daysTime=array(
             'sat_from'=>$this->input->post('sat_from', true),
             'sat_to'=>$this->input->post('sat_to', true),
@@ -207,7 +207,7 @@ class Employee extends CI_Controller
             if ($nuid > 0) {
 
 
-                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $salary, $commission, $department, $profession, $service,$daysTime);
+                $this->employee->add_employee($nuid, (string)$this->aauth->get_user($a)->username, $name, $roleid, $phone, $address, $city, $region, $country, $postbox, $location, $color, $salary, $commission, $department, $profession, $service,$daysTime);
 
             }
 
@@ -441,6 +441,7 @@ class Employee extends CI_Controller
             $country = $this->input->post('country', true);
             $postbox = $this->input->post('postbox', true);
             $location = $this->input->post('location', true);
+            $color = $this->input->post('color', true);
             $salary = numberClean($this->input->post('salary', true));
             $department = $this->input->post('department', true);
             $commission = $this->input->post('commission', true);
@@ -466,7 +467,7 @@ class Employee extends CI_Controller
             );
 
 
-            $this->employee->update_employee($eid, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $salary, $department, $commission, $roleid, $profession, $service,$daysTime);
+            $this->employee->update_employee($eid, $name, $phone, $phonealt, $address, $city, $region, $country, $postbox, $location, $color, $salary, $department, $commission, $roleid, $profession, $service,$daysTime);
 
         } else {
             $head['usernm'] = $this->aauth->get_user($id)->username;
@@ -1090,11 +1091,12 @@ class Employee extends CI_Controller
     public function createEmployeeSelectOption()
     {
         $employees= $this->employee->list_employee();
-        $html = "<select name='employeeId[]' class='form-control input-md'>";
+        $html = "<select name='employeeId[]' class='form-control input-md employee-dropdown'>";
         foreach ($employees as $row) {
+            $serviceIds = $row['service'];
             $cid = $row['id'];
             $acn = $row['name'];
-            $html .= "<option value='$cid'>$acn</option>";
+            $html .= "<option value='$cid' data-serviceid = '[$serviceIds]'>$acn</option>";
         }
         $html .= "</select>";
         echo $html;
