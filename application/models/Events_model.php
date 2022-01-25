@@ -59,7 +59,7 @@ class Events_model extends CI_Model
     {
 
 
-        $this->db->select('geopos_events.*, geopos_employees.id, geopos_factors.status, geopos_employees.color AS employee_color');
+        $this->db->select('geopos_events.*, geopos_employees.id AS employee_id, geopos_factors.status, geopos_employees.color AS employee_color');
         $this->db->from('geopos_events');
         //$this->db->group_by('description');
         $this->db->join('geopos_employees', 'geopos_events.userid = geopos_employees.id', 'left');
@@ -87,18 +87,22 @@ class Events_model extends CI_Model
         return $this->db->query($sql, array($e2))->result();*/
     }
     /*Read the customer or user(employee) from DB */
-    public function getEventsCusUser($id,$cusUser)
+    public function getEventsCusUser($id, $cusUser)
     {
-        if($cusUser==0){
-            $data = $this->db->get_where('geopos_events', array('customerid' => $id))->result();
+        $this->db->select('geopos_events.*, geopos_employees.id, geopos_factors.status, geopos_employees.color AS employee_color');
+        $this->db->from('geopos_events');
+        if ($cusUser == 0) {
+            $this->db->where('geopos_events.customerid', $id);
+        } else {
+            $this->db->where('geopos_events.userid', $id);
         }
-        else{
-            $data = $this->db->get_where('geopos_events', array('userid' => $id))->result();
-        }
+        $this->db->group_by('description');
+        $this->db->join('geopos_employees', 'geopos_events.userid = geopos_employees.id', 'left');
+        $this->db->join('geopos_factors', 'geopos_events.factor_code = geopos_factors.code', 'left');
+        $this->db->order_by('geopos_events.id', 'desc');  # or desc
 
-
-        return $data;
-
+        $query = $this->db->get();
+        return $query->result();
     }
     /*Create new events */
 
