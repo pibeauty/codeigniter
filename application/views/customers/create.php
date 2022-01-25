@@ -144,9 +144,9 @@
 
                                         <div class="col-sm-8">
                                             <input type="hidden" id="tavalodX" name="tavalodX">
-                                            <input type="text" placeholder="Birthdate"
+                                            <input type="text" placeholder="If you are using keyboard, numbers must be in english and as exmaple: 1400-10-20"
                                                    class="setdate form-control margin-bottom b_input" name="tavalod" id="tavalod" 
-                                                   style="background-color: white;" autocomplete="off" readonly>
+                                                   style="background-color: white;" autocomplete="off">
                                         </div>
                                     </div>
                                     <div class="form-group row">
@@ -438,4 +438,31 @@
             document.getElementById("tavalodX").value=date.getTime();
         }
     });
+    $("#tavalod").on('input', function (e) {
+        const value = e.target.value;
+        console.log(value)
+        console.log(parseInt(value))
+        const unixInput = $("#tavalodX")
+        if (value !== '') {
+            var failed = true;
+            const nowUnix = new persianDate(new Date()).unix();
+            const pattern = /^(\d{4})-(\d{2})-(\d{2})$/;
+            const found = value.match(pattern);
+            if (found !== null) {
+                const birthDateUnix = new persianDate(found.slice(1,3)).unix();
+                if (birthDateUnix < nowUnix) {
+                    failed = false
+                }
+            }
+            if (failed) {
+                unixInput.addClass('required');
+                unixInput[0].value='';
+            } else {
+                unixInput.removeClass("required");
+                unixInput[0].value=birthDateUnix;
+            }
+        } else {
+            unixInput.removeClass("required");
+        }
+    })
 </script>
