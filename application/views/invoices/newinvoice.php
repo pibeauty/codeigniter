@@ -576,7 +576,6 @@
                 }
             })
             servicesDropdown.empty();
-            servicesDropdown.select2('destroy')
             servicesDropdown.select2({
                 data: servicesData
             })
