@@ -104,11 +104,11 @@ class Events extends CI_Controller
         $datetime = $this->input->post('datetime', true);
         $datetimeend = $this->input->post('datetimeend', true);
         $description = $this->input->post('description', true);
-        $color = $this->input->post('color');
+        // $color = $this->input->post('color');
         $userid = $this->input->post('userid');
         $customerid = $this->input->post('customerid');
         $service_id = $this->input->post('service_id');
-        $result = $this->events_model->addAppointment($title, $start, $end, $description, $color,$userid,$customerid,$datetime,$datetimeend,$service_id);
+        $result = $this->events_model->addAppointment($title, $start, $end, $description/* , $color */,$userid,$customerid,$datetime,$datetimeend,$service_id);
 
     }
     /*Update Event */
@@ -117,7 +117,7 @@ class Events extends CI_Controller
         $title = $this->input->post('title', true);
         $id = $this->input->post('id');
         $description = $this->input->post('description', true);
-        $color = $this->input->post('color');
+        // $color = $this->input->post('color');
         $customerid = $this->input->post('customerid');
         $employeeid = $this->input->post('employeeid');
         $serviceid = $this->input->post('serviceid');
@@ -125,7 +125,7 @@ class Events extends CI_Controller
         $end = $this->input->post('datetimeend', true);
         $employeeHasEvent = $this->events_model->employeeHasEvent($start, $end, $employeeid);
         if (empty($employeeHasEvent) || $employeeHasEvent[0]->id === $id) {
-            $result = $this->events_model->updateEvent($id, $title, $description, $color, $customerid, $employeeid, $serviceid, $start, $end);
+            $result = $this->events_model->updateEvent($id, $title, $description/* , $color */, $customerid, $employeeid, $serviceid, $start, $end);
             echo $result;
         } else {
             echo 'employee is busy';
