@@ -199,7 +199,7 @@
                 $('#end').val(moment(end).format('YYYY-MM-DD HH:mm:ss'));
                 // Open modal to add event
                 const eventStart = thisdate + " 10:00:00"
-                const eventEnd = calculateMockEndTime(eventStart)
+                const eventEnd = calculateMockEndTime(thisdate + "T10:00:00")
                 modal({
                     // Available buttons when adding
                     buttons: {
