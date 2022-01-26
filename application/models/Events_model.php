@@ -174,7 +174,8 @@ class Events_model extends CI_Model
         $this->db->where('id', $serviceid);
         $result = $this->db->get();
         ['name' => $serviceName] = $result->row_array();
-        $sql = "UPDATE geopos_events SET title = ?, description = ?, /* color = ?, */ customerid = ?, cus_name = ?, userid = ?, service_id = ?, service_name = ?, start = ?, end = ? WHERE id = ?";
+        $sql = "UPDATE geopos_events SET title = ?, description = ?, customerid = ?, cus_name = ?, userid = ?, service_id = ?, service_name = ?, start = ?, end = ? WHERE id = ?";
+        // $sql = "UPDATE geopos_events SET title = ?, description = ?, color = ?, customerid = ?, cus_name = ?, userid = ?, service_id = ?, service_name = ?, start = ?, end = ? WHERE id = ?";
         $this->db->query($sql, array($title, $description, /* $color, */ $customerid, $cus['name'], $employeeid, $serviceid, $serviceName, $start, $end, $id));
         return ($this->db->affected_rows() != 1) ? false : true;
     }
