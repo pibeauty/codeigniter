@@ -89,17 +89,17 @@ class Events_model extends CI_Model
     /*Read the customer or user(employee) from DB */
     public function getEventsCusUser($id, $cusUser)
     {
-        $this->db->select('geopos_events.*, geopos_employees.id, geopos_factors.status, geopos_employees.color AS employee_color');
+        $this->db->select('geopos_events.*, geopos_employees.id As employee_id, geopos_factors.status, geopos_employees.color AS employee_color');
         $this->db->from('geopos_events');
         if ($cusUser == 0) {
             $this->db->where('geopos_events.customerid', $id);
         } else {
             $this->db->where('geopos_events.userid', $id);
         }
-        $this->db->group_by('description');
+        // $this->db->group_by('description');
         $this->db->join('geopos_employees', 'geopos_events.userid = geopos_employees.id', 'left');
         $this->db->join('geopos_factors', 'geopos_events.factor_code = geopos_factors.code', 'left');
-        $this->db->order_by('geopos_events.id', 'desc');  # or desc
+        // $this->db->order_by('geopos_events.id', 'desc');  # or desc
 
         $query = $this->db->get();
         return $query->result();
@@ -209,7 +209,7 @@ class Events_model extends CI_Model
 
     }
 
-    public function addReserve($data,$name,$mobile,$referrerCode){
+    public function addReserve($data,$name,$mobile,$referrerCode,$factor_code){
         log_message('error',"referrerCode = ".$referrerCode);
         $this->db->select('*');
         $this->db->from($this->table_customers);
@@ -259,10 +259,10 @@ class Events_model extends CI_Model
       /*  $data = array(
             'title' => $data $item->date_fromSET  $item->date_toSET
         );*/
-        $factor_code=$this->generateRandomString();
+        // $factor_code=$this->generateRandomString();
         $price=0;
         foreach (json_decode($data) as $item){
-            $price=$price+50000;
+            $price=50000;
 			// $price+=1000;
             $data = array(
                 'start' => $item->date_fromSET,
@@ -306,7 +306,7 @@ class Events_model extends CI_Model
         } else {
             return false;
         }*/
-        return [$factor_code, $price];
+        return $this->eventDetails($factor_code);
     }
     function generateRandomString($length = 8) {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';

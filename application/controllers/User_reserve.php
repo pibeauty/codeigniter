@@ -40,6 +40,7 @@ class User_reserve extends CI_Controller
         $this->load->model('Events_model', 'events');
         $this->load->model('Factor_model', 'factors');
         $this->load->model('Manager_model', 'manager');
+        $this->load->model('OnlineReserveTemp_model', 'reserveTemp');
         $this->config->load('pep');
         // Session
         $this->load->library('session');
@@ -569,21 +570,22 @@ class User_reserve extends CI_Controller
         $data['mobile']=$mobile;
         $data['referrerCode']=$referrerCode;
         // var_dump($dataX);die;
-        [$factorCode, $amount] = $this->events->addReserve($dataX,$name,$mobile,$referrerCode);
-        [$decodedData] = json_decode($dataX);
-        // echo "<pre>" . var_export($decodedData->date_fromSET, true) . "</pre>";
-        // die();
-        $this->manager->addtask(
-            /* name:  */'New Online Reserve',
-            /* status:  */'Due',
-            /* priority:  */'Low',
-            /* stdate:  */$decodedData->date_fromSET,
-            /* tdate:  */$decodedData->date_toSET,
-            // employee: $decodedData->id,
-            // we set employee to 14, because its the id of the current admin on geopos_users.
-            /* employee:  */14,
-            /* content:  */'a new online reserve has been submitted, please check customer appointments'
-        );
+        // [$factorCode, $amount] = $this->events->addReserve($dataX,$name,$mobile,$referrerCode);
+        [$factorCode, $amount] = $this->reserveTemp->add($dataX,$name,$mobile,$referrerCode);
+        // [$decodedData] = json_decode($dataX);
+        // // echo "<pre>" . var_export($decodedData->date_fromSET, true) . "</pre>";
+        // // die();
+        // $this->manager->addtask(
+        //     /* name:  */'New Online Reserve',
+        //     /* status:  */'Due',
+        //     /* priority:  */'Low',
+        //     /* stdate:  */$decodedData->date_fromSET,
+        //     /* tdate:  */$decodedData->date_toSET,
+        //     // employee: $decodedData->id,
+        //     // we set employee to 14, because its the id of the current admin on geopos_users.
+        //     /* employee:  */14,
+        //     /* content:  */'a new online reserve has been submitted, please check customer appointments'
+        // );
         //log_message('error',"------------------------------------ghjghacascsascj3:".json_encode($res));
         $date = date('Y/m/d H:i:s');
         $this->factors->add($factorCode, $amount, $date);
@@ -633,11 +635,10 @@ class User_reserve extends CI_Controller
         $pasargad->setInvoiceNumber($factorCode);
         $pasargad->setInvoiceDate($date);
         $result = $pasargad->checkTransaction();
-        $events = $this->events->eventDetails($factorCode);
+        [$tempRecord] = $this->reserveTemp->get($factorCode);
         $data = [];
-        $data['name'] = $events[0]['cus_name'];
-        $data['mobile'] = $events[0]['cus_mobile'];
-        $data['data'] = $events;
+        $data['name'] = $tempRecord['name'];
+        $data['mobile'] = $tempRecord['mobile'];
         if ($result['IsSuccess'] === true) {
             $amount = $this->factors->getAmount($factorCode);
             $pasargad->setAmount($amount * 10);
@@ -648,6 +649,19 @@ class User_reserve extends CI_Controller
                     'transaction_ref' => $TransactionReferenceID
                 ]);
                 $data['paymentStatus'] = 'accepted';
+                $data['data'] = $this->events->addReserve($tempRecord['data'], $tempRecord['name'], $tempRecord['mobile'], $tempRecord['referrer_code'], $tempRecord['factor_code']);
+                [$decodedData] = json_decode($tempRecord['data']);
+                $this->manager->addtask(
+                    /* name:  */'New Online Reserve',
+                    /* status:  */'Due',
+                    /* priority:  */'Low',
+                    /* stdate:  */$decodedData->date_fromSET,
+                    /* tdate:  */$decodedData->date_toSET,
+                    // employee: $decodedData->id,
+                    // we set employee to 14, because its the id of the current admin on geopos_users.
+                    /* employee:  */14,
+                    /* content:  */'a new online reserve has been submitted, please check customer appointments'
+                );
             } else {
                 $this->factors->update($factorCode, [
                     'status' => 'unkonwn',
@@ -662,6 +676,7 @@ class User_reserve extends CI_Controller
                 ]);
             $data['paymentStatus'] = 'rejected';
         }
+        $this->reserveTemp->delete($factorCode);
         $this->load->view('user_reserve/responsebank',$data);
     }
 
