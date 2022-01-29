@@ -57,7 +57,7 @@
                         <?php
                         $timeend = strtotime($item['end'].'+ 0 minutes');
                         echo 'پایان:'.$this->jdf->jdate('l, j F',$timeend).'|'.date('H:i', strtotime($item['end']))."<br/>"; ?>
-
+                        <?= "مبلغ پرداخت شده: " . $item['pay_price'] . " تومان"?>
                     </div>
 <?php } ?>
             </form>
