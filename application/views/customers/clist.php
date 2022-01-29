@@ -86,7 +86,8 @@ if ($this->input->get('due')) {
     $(document).ready(function () {
         $('#clientstable').DataTable({
             'processing': true,
-            'serverSide': true,
+            'serverSide': false,
+            // 'serverSide': true,
             'stateSave': true,
             responsive: true,
             'order': [],
