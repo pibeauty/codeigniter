@@ -1,3 +1,9 @@
+<style>
+    option:disabled,
+    .select2-results__option[aria-disabled=true] {
+        display: none
+    }
+</style>
 <div class="content-body">
     <div class="card">
         <div class="card-content">

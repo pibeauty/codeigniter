@@ -6,6 +6,11 @@
 
 <script src='<?php echo assets_url(); ?>assets/c_portjs/bootstrap-colorpicker.min.js?v=<?= APPVER ?>'></script>
 
+<style>
+option:disabled {
+    display: none
+}
+</style>
 
 <div class="content-body">
     <div class="card">
