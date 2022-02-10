@@ -38,8 +38,8 @@
                 <input type="button" name="search" id="search" value="Search" class="btn btn-info btn-sm"/>
             </div>
             <div class="col-md-2">
-                <input type="checkbox" id="onlinePayedFilter" name="onlinePayed" value="online payed" />
-                <lable for="onlinePayed">only show online payed appointments</lable>
+                <input type="checkbox" id="onlinePaidFilter" name="onlinePaid" value="online paid" />
+                <lable for="onlinePaid">only show online paid appointments</lable>
             </div>
         </div>
 
@@ -70,9 +70,9 @@
                 $timeEnd = strtotime($row['end'].'+ 210 minutes');
                 $start= $this->jdf->jdate('l, j F',$time);
                 $end= $this->jdf->jdate('l, j F',$timeEnd);
-                $onlinePayed = $row['onlinePayed'] ? 1 : 0;
-                echo "<tr data-onlinepayed = $onlinePayed>
-                    <td>$i<i style='display: none' data-onlinepayed=$onlinePayed></i></td>
+                $onlinePaid = $row['onlinePaid'] ? 1 : 0;
+                echo "<tr data-onlinepaid = $onlinePaid>
+                    <td>$i<i style='display: none' data-onlinepaid=$onlinePaid></i></td>
                     <td><b>$cus_name</b></td>
                   <td>$cus_mobile</td>
                   <td>$start</td>
@@ -104,9 +104,9 @@
         /* Custom filtering function which will search data in column four between two values */
         $.fn.dataTable.ext.search.push(
             function( settings, data, dataIndex, rawData ) {
-                const pattern = /data-onlinepayed="(\d{1})"/
+                const pattern = /data-onlinepaid="(\d{1})"/
                 result = rawData[0].match(pattern);
-                const isFilterChecked = $('#onlinePayedFilter').is(':checked')
+                const isFilterChecked = $('#onlinePaidFilter').is(':checked')
                 if (isFilterChecked) return result[1] == 1;
                 else return true;
             }
@@ -138,7 +138,7 @@
         });
 
         // Event listener to filtering inputs to redraw on input
-        $('#onlinePayedFilter').click( function() {
+        $('#onlinePaidFilter').click( function() {
             table.draw();
         } );
 

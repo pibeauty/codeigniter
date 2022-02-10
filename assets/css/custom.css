@@ -4,6 +4,6 @@
     position: absolute;
 }
 
-tr[data-onlinepayed="1"] {
+tr[data-onlinepaid="1"] {
     background-color: aqua !important;
 }

@@ -82,7 +82,7 @@ class Appoint extends CI_Controller
         foreach ($data['events'] as $key => $event) {
             if (!$event['factor_code']) continue;
             $status = $this->factors->getStatus($event['factor_code']);
-            if ($status === 'accepted') $data['events'][$key]['onlinePayed'] = true;
+            if ($status === 'accepted') $data['events'][$key]['onlinePaid'] = true;
         }
 
 
