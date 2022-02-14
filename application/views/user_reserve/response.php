@@ -203,6 +203,59 @@
                                                 }
                                             } $i++; 
                                         }
+                                        if ($j === 0 && count($result) > 0) {
+                                            foreach ($result as $itemx)
+                                            {
+                                                $condition = true;
+                                                foreach ($itemx as $item) {
+                                                    $time = strtotime($item['date_fromSET']);
+                                                    $now = time();
+                                                    if ($now > $time) {
+                                                        $condition = false;
+                                                        break;
+                                                    }
+                                                }
+                                                if ($condition) {
+                                                ?>
+                                                <div class="form-group col-md-4 boxed">
+                                                    <input required 
+                                                    oninvalid="noEventSelectedError()"
+                                                    type="radio" id="data<?php echo $i; ?>" 
+                                                    name="data"
+                                                    value="<?php echo htmlspecialchars(json_encode($itemx)); ?>">
+                                                    <label for="data<?php echo $i; ?>">
+                                                        <?php
+
+                                                            foreach ($itemx as $item) {
+                                                                //print_r($item['service_name']);
+                                                                $time = strtotime($item['date_fromSET']);
+                                                                $date_fromSET = date('H:i', $time);
+                                                                //echo $newformat;
+                                                                $time2 = strtotime($item['date_toSET']);
+                                                                $date_toSET = date('H:i', $time2);
+
+                                                                $time3 = strtotime($item['date_toSET']);
+                                                                $dat = date('d', $time3);
+                                                                if ($i == 0) {
+                                                                    // echo " رزرو در روز: ".$dat." ماه <br/>";
+                                                                    //$i++;
+                                                                }
+                                                                print_r($item['service_name'] . " از: " . $date_fromSET . " تا: " . $date_toSET);
+                                                                echo "<br/>";
+                                                                $j++;
+                                                            }
+
+                                                        ?>
+                                                    </label>
+                                                </div>
+                                                <?php
+                                                }
+                                                $i++; 
+                                            }
+                                            if ($j > 0) {
+                                                echo "<div class='text-center w-100'><p><b>زمان‌های مورد نظر یافت نشد.</b> از گزینه‌های بالا می‌توانید انتخاب کنید</p></div>";
+                                            }
+                                        }
                                         ?>
 
                                         <div class="form-group col-md-12 align-self-center" align="center">
