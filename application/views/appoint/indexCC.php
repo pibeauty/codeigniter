@@ -361,6 +361,7 @@ option:disabled {
             var str2 = $('#datetimeend').val();
             var res2 = str2.replace("T", " ") + ":00";
             var customerId = $('#customerid').val();
+            var service_id = $('#service_id').val();
             if (!str) {
                 alert('Start date is required.');
             } else if (!str2) {
@@ -369,8 +370,9 @@ option:disabled {
                 alert('End date must be bigger than start date.');
             } else if (!customerId) {
                 alert('Customer is required.');
+            } else if (!service_id) {
+                alert('A service must be selected')
             } else {
-                var service_id = $('#service_id').val();
 
                 $.ajax({
                     url: base_url + 'events/checkEventExists',
@@ -410,6 +412,7 @@ option:disabled {
             var res = str.replace("T", " ") + ":00";
             var str2 = $('#datetimeend').val();
             var res2 = str2.replace("T", " ") + ":00";
+            var service_id = $('#service_id').val();
             var eventExists;
             if (!str) {
                 alert('Start date is required.');
@@ -417,9 +420,9 @@ option:disabled {
                 alert('End date is required.');
             } else if (res2 <= res) {
                 alert('End date must be bigger than start date.');
+            } else if (!service_id) {
+                alert('A service must be selected')
             } else {
-                var service_id = $('#service_id').val();
-
                 $.ajax({
                     url: base_url + 'events/checkEventExists',
                     type: 'POST',
