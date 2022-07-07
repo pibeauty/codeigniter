@@ -31,6 +31,8 @@ class Employee_model extends CI_Model
     {
         $this->db->select('geopos_employees.*');
         $this->db->from('geopos_employees');
+        $this->db->join('geopos_users', 'geopos_employees.id = geopos_users.id', 'left');
+        $this->db->where('geopos_users.banned != 1');
         $this->db->like('service', $id, 'both');
         $query = $this->db->get();
         $selectedEmployees = [];
@@ -662,6 +664,18 @@ class Employee_model extends CI_Model
 
         $query = $this->db->get();
         return $query->row_array();
+    }
+
+    public function hdaysAfterCurrentDate() {
+        $this->db->select('*, val1 As start, val2 As end');
+        $this->db->from('geopos_hrm');
+        $this->db->where('typ', 2);
+        $this->db->group_start();
+        $this->db->where('val1 >= CURDATE()');
+        $this->db->or_where('val2 > CURDATE()');
+        $this->db->group_end();
+        $query = $this->db->get();
+        return $query->result_array();
     }
 
     public function edithday($id, $loc, $from, $todate, $note)

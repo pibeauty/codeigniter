@@ -152,9 +152,12 @@
                             <a href="<?php echo base_url(); ?>user/attendance"
                                class="dropdown-item"><i
                                         class="fa fa-list-ol"></i><?php echo $this->lang->line('Attendance') ?></a>
-                            <a href="<?php echo base_url(); ?>user/holidays"
+                            <a href="<?php echo base_url(); ?>employee/holidays"
                                class="dropdown-item"><i
                                         class="fa fa-hotel"></i><?php echo $this->lang->line('Holidays') ?></a>
+                            <!-- <a href="<?php echo base_url(); ?>user/holidays"
+                               class="dropdown-item"><i
+                                        class="fa fa-hotel"></i><?php echo $this->lang->line('Holidays') ?></a> -->
 
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="<?php echo base_url('user/logout'); ?>"><i

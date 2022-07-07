@@ -8,7 +8,7 @@
         <div class="card card-block">
 
 
-            <form method="post" id="data_form" class="form-horizontal">
+            <form method="post" id="data_form" class="form-horizontal p-2">
 
                 <h5><?php echo $this->lang->line('Add') . ' ' . $this->lang->line('Holiday') ?></h5>
                 <hr>

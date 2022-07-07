@@ -180,7 +180,7 @@ class Employee extends CI_Controller
         $commission = $this->input->post('commission', true);
         $department = $this->input->post('department', true);
         $profession = $this->input->post('profession', true);
-        $service = implode(",",$this->input->post('service'));
+        $service = implode(",",$this->input->post('service', true));
         $color = $this->input->post('color', true);
         $daysTime=array(
             'sat_from'=>$this->input->post('sat_from', true),

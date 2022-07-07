@@ -423,9 +423,27 @@
         }
         $servicesObj = json_encode($servicesObj);
         $subServicesObj = json_encode($subServicesObj);
+        $holidaysObj = json_encode($holidays);
         ?>
         var mainServices = JSON.parse('<?= $servicesObj ?>')
         var subServices = JSON.parse('<?= $subServicesObj ?>')
+        var holidays = JSON.parse('<?= $holidaysObj ?>')
+        function notHoliday(date) {
+            const isHoliday = window.holidays.some((holiday) => {
+                    const holidayStart = new Date(holiday.start)
+                    const holidayEnd = new Date(holiday.end)
+                    return ((holidayStart <= date) && (holidayEnd > date))
+                })
+            return !isHoliday;
+        }
+        function minDate() {
+            minimum = new Date();
+            while (!notHoliday(minimum)) {
+                minimum.setDate(minimum.getDate() + 1)
+                console.log(minimum)
+            }
+            return minimum;
+        }
         $(document).ready(function() {
             // $('.select-box').select2({
             //     placeholder: "خدمات"
@@ -478,10 +496,15 @@
         })
         $('.setdate').persianDatepicker({
             // minDate: new persianDate().unix(),
-            minDate: Date.now(),
+            minDate: minDate().getTime(),
             format: 'dddd, DD MMMM ',
             autoClose: true,
-            initialValue: Date.now(),
+            initialValue: minDate().getTime(),
+            checkDate: function (unix) {
+                var date = new Date(unix);
+                date.setHours(0, 0, 0, 0);
+                return notHoliday(date);
+            },
             onSelect: function(unix) {
                 var date = new Date(unix);
                 //date.setHours(0);date.setMinutes(0);date.setSeconds(0);

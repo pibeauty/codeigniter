@@ -52,7 +52,7 @@ class User_reserve extends CI_Controller
     {
        /// $data['services'] = $this->services->serviceslist();
         $data['services'] = $this->services->getServices();
-
+        $data['holidays'] = $this->employee->hdaysAfterCurrentDate();
         $this->load->view('user_reserve/index',$data);
 
     }
