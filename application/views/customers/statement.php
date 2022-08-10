@@ -71,6 +71,10 @@
                                             class="icon-folder"></i> <?php echo $this->lang->line('Documents') ?>
                                 </a>
 
+                                <a href="<?php echo base_url('customers/reports?id=' . $details['id']) ?>"
+                                   class="btn btn-red btn-md mr-1 mb-1 btn-block btn-lighten-1"><i
+                                            class="icon-eyeglasses"></i> <?php echo $this->lang->line('Report') ?>
+                                </a>
                             </div>
                         </div>
 

@@ -214,6 +214,56 @@ class Chart_model extends CI_Model
         return $result;
     }
 
+    public function singlecustomerchart($custid, $type, $c1 = '', $c2 = '')
+    {
+        switch ($type) {
+            case 'week':
+                $day1 = date("Y-m-d", strtotime(' - 7 days'));
+                $day2 = date('Y-m-d');
+                break;
+            case 'month':
+                $day1 = date("Y-m-d", strtotime(' - 30 days'));
+                $day2 = date('Y-m-d');
+                break;
+            case 'year':
+                $day1 = date("Y-m-d", strtotime(' - 1 years'));
+                $day2 = date('Y-m-d');
+                break;
+
+            case 'custom':
+                $day1 = datefordatabase($c1);
+                $day2 = datefordatabase($c2);
+                break;
+
+            default :
+				$day1 = false;
+				$day2 = false;
+                break;
+        }
+		$this->db->select('geopos_invoice_items.product');
+		$this->db->select_sum('geopos_invoice_items.subtotal');
+        $this->db->from('geopos_invoices');
+		$this->db->where('geopos_invoices.csd', $custid);
+        $this->db->group_by('geopos_invoice_items.product');
+        $this->db->join('geopos_invoice_items', 'geopos_invoices.id = geopos_invoice_items.tid', 'left');
+		if ($day1 && $day2) {
+			$this->db->where('DATE(geopos_invoices.invoicedate) >=', $day1);
+			$this->db->where('DATE(geopos_invoices.invoicedate) <=', $day2);			
+		}
+		if ($this->aauth->get_user()->loc) {
+            $this->db->group_start();
+            $this->db->where('geopos_invoices.loc', $this->aauth->get_user()->loc);
+            if (BDATA) $this->db->or_where('geopos_invoices.loc', 0);
+            $this->db->group_end();
+        } elseif (!BDATA) {
+            $this->db->where('geopos_invoices.loc', 0);
+        }
+        $this->db->order_by('geopos_invoice_items.subtotal', 'DESC');
+        $query = $this->db->get();
+        $result = $query->result_array();
+        return $result;
+    }
+
 
     public function incomechart($type, $c1 = '', $c2 = '')
     {

@@ -1088,6 +1088,35 @@ class Customers_model extends CI_Model
         return array('subject' => $subject, 'message' => $message);
     }
 
+	public function totalRefrences($cutomerName, $c1 = '', $c2 = '')
+	{
+		$this->db->from('geopos_customers');
+		$this->db->where('moaaref', $cutomerName);
+		if ($c1) {
+			$day1 = datefordatabase($c1);
+			$this->db->where('DATE(geopos_customers.reg_date) >=', $day1);
+		}
+		if ($c2) {
+			$day2 = datefordatabase($c2);
+			$this->db->where('DATE(geopos_customers.reg_date) <=', $day2);
+		}
+		return $this->db->count_all_results();
+	}
+
+	public function totalVisits($cid, $c1 = '', $c2 = '')
+	{
+		$this->db->from('geopos_events');
+		$this->db->where('customerId', $cid);
+		if ($c1) {
+			$day1 = datefordatabase($c1);
+			$this->db->where('DATE(geopos_events.start) >=', $day1);
+		}
+		if ($c2) {
+			$day2 = datefordatabase($c2);
+			$this->db->where('DATE(geopos_events.start) <=', $day2);
+		}
+		return $this->db->count_all_results();
+	}
 
     ///////////////////////////////////import
     /*

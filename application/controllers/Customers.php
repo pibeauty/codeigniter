@@ -782,4 +782,56 @@ class Customers extends CI_Controller
         }
     }
 
+	public function reports()
+	{
+        if (!$this->aauth->premission(8)) {
+            exit('<h3>Sorry! You have insufficient permissions to access this section</h3>');
+        }
+		$this->load->model('chart_model', 'chart');
+		$type = $this->input->get('p');
+        $custid = $this->input->get('id');
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $data['details'] = $this->customers->details($custid);
+		$chart = $this->chart->singlecustomerchart($custid, $type);
+		$totalExpences = 0;
+		foreach ($chart as $item) {
+			$totalExpences += $item['subtotal'];
+		}
+		$data['chart'] = [
+			'chart' => $chart,
+			'total_expences' => $totalExpences,
+			'total_refrences' => $this->customers->totalRefrences($data['details']['name']),
+			'total_visits' => $this->customers->totalVisits($custid),
+		];
+        $this->session->set_userdata("cid", $custid);
+        $head['title'] = 'Reports';
+        $this->load->view('fixed/header', $head);
+        $this->load->view('customers/reports', $data);
+        $this->load->view('fixed/footer');
+	}
+
+	public function reports_update()
+    {
+		$this->load->model('chart_model', 'chart');
+		$custid = $this->input->post('id');
+        $type = $this->input->post('p');
+        $d1 = $this->input->post('sdate');
+        $d2 = $this->input->post('edate');
+		$customerDetails = $this->customers->details($custid);
+        $out = $this->chart->singlecustomerchart($custid, $type, $d1, $d2);
+        $chart_array = array();
+		$totalExpences = 0;
+        foreach ($out as $item) {
+            $chart_array[] = array('y' => $item['product'], 'a' => $item['subtotal']);
+			$totalExpences += $item['subtotal'];
+        }
+		$chart = [
+			'chart' => $chart_array,
+			'total_expences' => $totalExpences,
+			'total_refrences' => $this->customers->totalRefrences($customerDetails['name'], $d1, $d2),
+			'total_visits' => $this->customers->totalVisits($custid, $d1, $d2)
+		];
+        echo json_encode($chart);
+
+    }
 }
