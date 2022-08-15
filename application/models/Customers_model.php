@@ -44,12 +44,130 @@ class Customers_model extends CI_Model
         $this->load->helper('kavenegar_helper');
     }
 
+	private function getPointsSelectStatement()
+	{
+		return "
+			(
+				SELECT 
+				COUNT(geopos_events.id) * 0.1
+				FROM 
+				geopos_events 
+				WHERE 
+				customerid = geopos_customers.id 
+				AND service_id in (
+					SELECT 
+					id 
+					FROM 
+					services 
+					WHERE 
+					parent_id = 2
+				)
+			) nail_points, 
+			(
+				SELECT 
+				COUNT(geopos_events.id) * 0.2
+				FROM 
+				geopos_events 
+				WHERE 
+				customerid = geopos_customers.id 
+				AND service_id in (
+					SELECT 
+					id 
+					FROM 
+					services 
+					WHERE 
+					parent_id = 3
+				)
+			) hair_points, 
+			(
+				SELECT 
+				COUNT(geopos_events.id) * 0.1
+				FROM 
+				geopos_events 
+				WHERE 
+				customerid = geopos_customers.id 
+				AND service_id in (
+					SELECT 
+					id 
+					FROM 
+					services 
+					WHERE 
+					parent_id = 36
+				)
+			) eyebrow_points, 
+			(
+				SELECT 
+				COUNT(geopos_events.id) * 0.2
+				FROM 
+				geopos_events 
+				WHERE 
+				customerid = geopos_customers.id 
+				AND service_id in (
+					SELECT 
+					id 
+					FROM 
+					services 
+					WHERE 
+					parent_id = 40
+				)
+			) skin_points, 
+			(
+				SELECT 
+				COUNT(geopos_events.id) * 0.3
+				FROM 
+				geopos_events 
+				WHERE 
+				customerid = geopos_customers.id 
+				AND service_id in (
+					SELECT 
+					id 
+					FROM 
+					services 
+					WHERE 
+					parent_id = 55
+				)
+			) makeup_points, 
+			(
+				SELECT 
+				COUNT(geopos_events.id) * 0.1
+				FROM 
+				geopos_events 
+				WHERE 
+				customerid = geopos_customers.id 
+				AND service_id in (
+					SELECT 
+					id 
+					FROM 
+					services 
+					WHERE 
+					parent_id = 105
+				)
+			) eyelash_points, 
+			(
+				SELECT 
+				(COUNT(geopos_customers.id) + 1) * 5
+				FROM 
+				geopos_customers 
+				WHERE 
+				moaaref = geopos_customers.name
+			) reference_points, 
+			(
+				SELECT 
+				SUM(geopos_invoices.subtotal) / 1000000 
+				FROM 
+				geopos_invoices 
+				WHERE 
+				geopos_invoices.csd = geopos_customers.id
+			) expense_points
+		";
+	}
+
     private function _get_datatables_query($id = '')
     {
         $due = $this->input->post('due');
         if ($due) {
-
-            $this->db->select('geopos_customers.*,SUM(geopos_invoices.total) AS total,SUM(geopos_invoices.pamnt) AS pamnt');
+			$selectPoints = $this->getPointsSelectStatement();
+            $this->db->select('geopos_customers.*,SUM(geopos_invoices.total) AS total,SUM(geopos_invoices.pamnt) AS pamnt' . ",$selectPoints");
             $this->db->from('geopos_invoices');
             $this->db->where('geopos_invoices.status!=', 'paid');
             $this->db->join('geopos_customers', 'geopos_customers.id = geopos_invoices.csd', 'left');
@@ -65,6 +183,8 @@ class Customers_model extends CI_Model
             $this->db->order_by('total', 'desc');
 
         } else {
+			$selectPoints = $this->getPointsSelectStatement();
+			$this->db->select('*' . ",$selectPoints");
             $this->db->from($this->table);
             if ($this->aauth->get_user()->loc) {
                 $this->db->where('loc', $this->aauth->get_user()->loc);
@@ -116,7 +236,7 @@ class Customers_model extends CI_Model
         }
         if ($this->input->post('length') != -1)
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
-        $query = $this->db->get();
+		$query = $this->db->get();
         return $query->result();
     }
 
@@ -1144,4 +1264,13 @@ class Customers_model extends CI_Model
         }
         return false;
     }
+
+	public function getCustomerPoints($id)
+	{
+		$this->db->select($this->getPointsSelectStatement());
+		$this->db->from('geopos_customers');
+		$this->db->where('id', $id);
+		$query = $this->db->get();
+		return $query->row_array();
+	}
 }

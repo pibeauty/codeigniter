@@ -97,6 +97,16 @@ class Customers extends CI_Controller
         if ($this->input->post('due')) {
             foreach ($list as $customers) {
                 $no++;
+				$points = $customers->reference_points *
+					$customers->expense_points *
+					(
+						$customers->nail_points +
+						$customers->hair_points +
+						$customers->eyebrow_points +
+						$customers->skin_points +
+						$customers->makeup_points +
+						$customers->eyelash_points
+					);
                 $row = array();
                 $row[] = $no;
                 $row[] = '<span class="avatar-sm align-baseline"><img class="rounded-circle" src="' . base_url() . 'userfiles/customers/thumbnail/' . $customers->picture . '" ></span> &nbsp;<a href="customers/view?id=' . $customers->id . '">' . $customers->name . '</a>';
@@ -105,6 +115,7 @@ class Customers extends CI_Controller
                 $row[] = $age;
                 $row[] = $customers->email;
                 $row[] = $customers->phone;
+                $row[] = $points;
                 $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="fa fa-eye"></span>  ' . $this->lang->line('View') . '</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span>  ' . $this->lang->line('Edit') . '</a> <a href="appoint/?id=' . $customers->id . '&cusUser=0" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span>  Appoint</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="fa fa-trash"></span></a>';
                 $data[] = $row;
             }
@@ -113,7 +124,16 @@ class Customers extends CI_Controller
                 $from = new DateTime($customers->tavalod);
                 $to   = new DateTime('today');
                 $age = $from->diff($to)->y;
-                
+				$points = $customers->reference_points *
+					$customers->expense_points *
+					(
+						$customers->nail_points +
+						$customers->hair_points +
+						$customers->eyebrow_points +
+						$customers->skin_points +
+						$customers->makeup_points +
+						$customers->eyelash_points
+					);
                 $no++;
                 $row = array();
                 $row[] = $no;
@@ -122,6 +142,7 @@ class Customers extends CI_Controller
                 $row[] = (int)$age;
                 $row[] = $customers->email;
                 $row[] = $customers->phone;
+				$row[] = $points;
                 $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="fa fa-eye"></span>  ' . $this->lang->line('View') . '</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span>  ' . $this->lang->line('Edit') . '<a href="appoint/?id=' . $customers->id . '&cusUser=0" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span>  Appoint</a>'. '</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="fa fa-trash"></span></a>';
                 $data[] = $row;
             }
@@ -803,6 +824,18 @@ class Customers extends CI_Controller
 			'total_refrences' => $this->customers->totalRefrences($data['details']['name']),
 			'total_visits' => $this->customers->totalVisits($custid),
 		];
+		$data['points'] = $this->customers->getCustomerPoints($custid);
+		$data['points']['total_points'] =
+			$data['points']['reference_points'] *
+			$data['points']['expense_points'] *
+			(
+				$data['points']['nail_points'] +
+				$data['points']['hair_points'] +
+				$data['points']['eyebrow_points'] +
+				$data['points']['skin_points'] +
+				$data['points']['makeup_points'] +
+				$data['points']['eyelash_points']
+			);
         $this->session->set_userdata("cid", $custid);
         $head['title'] = 'Reports';
         $this->load->view('fixed/header', $head);

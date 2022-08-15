@@ -155,6 +155,11 @@
             } ?>">
                 <a href="<?php echo base_url(); ?>user/profile"> <i class="icon-user1"></i><span class="menu-title"> <?php echo $this->lang->line('Profile') ?> </span></a>
             </li>
+            <li class="nav-item <?php if ($this->uri->segment(2) == "profile") {
+                echo 'active';
+            } ?>">
+                <a href="<?php echo base_url('points'); ?>"> <i class="icon-star1"></i><span class="menu-title"> <?php echo $this->lang->line('Points') ?> </span></a>
+            </li>
             <!-- <li class="nav-item <?php //if ($this->uri->segment(1) == "address") {
                 //echo 'active';
             //} ?>">

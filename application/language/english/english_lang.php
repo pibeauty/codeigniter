@@ -828,3 +828,14 @@ $lang['Used Balance'] = "Used Balance";
 $lang['Send SMS'] = "Send SMS";
 $lang['Age'] = "Age";
 $lang['Service'] = "Service";
+
+$lang['Points'] = "Points";
+$lang['Nail Points'] = "Nail Points";
+$lang['Hair Points'] = "Hair Points";
+$lang['Eyebrow Points'] = "Eyebrow Points";
+$lang['Skin Points'] = "Skin Points";
+$lang['MakeUp Points'] = "MakeUp Points";
+$lang['Eyelash Points'] = "Eyelash Points";
+$lang['Expense Points'] = "Expense Points";
+$lang['Reference Points'] = "Reference Points";
+$lang['Total Points'] = "Total Points";

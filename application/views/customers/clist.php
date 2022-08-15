@@ -52,6 +52,7 @@ if ($this->input->get('due')) {
                         <th><?php echo $this->lang->line('Age') ?></th>
                         <th><?php echo $this->lang->line('Email') ?></th>
                         <th><?php echo $this->lang->line('Phone') ?></th>
+						<th><?php echo $this->lang->line('Points') ?></th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 
@@ -69,8 +70,9 @@ if ($this->input->get('due')) {
                         } ?>
                         <!-- <th><?php //echo $this->lang->line('Address') ?></th> -->
                         <th><?php echo $this->lang->line('Age') ?></th>
-                        <th>Email</th>
-                        <th><?php echo $this->lang->line('Mobile') ?></th>
+                        <th><?php echo $this->lang->line('Email') ?></th>
+						<th><?php echo $this->lang->line('Phone') ?></th>
+                        <th><?php echo $this->lang->line('Points') ?></th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
 
 
