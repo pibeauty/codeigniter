@@ -286,6 +286,40 @@
 
                     </ul>
                 </li>
+                <li class="dropdown nav-item" data-menu="dropdown"><a class="dropdown-toggle nav-link" href="#"
+                                                                      data-toggle="dropdown"><i
+                                class="ft-users"></i><span><?php echo $this->lang->line('KYC') ?></span></a>
+                    <ul class="dropdown-menu">
+                        <li data-menu="">
+                            <a class="dropdown-item" href="<?php echo base_url(); ?>customers/points"><i
+                                        class="ft-star"></i><?php echo $this->lang->line('Clients Points'); ?></a>
+                        </li>
+                        <li class="dropdown dropdown-submenu" data-menu="dropdown-submenu"><a
+                                    class="dropdown-item dropdown-toggle" href="#" data-toggle="dropdown"><i
+                                        class="ft-users"></i><?php echo $this->lang->line('Clients Expectancy') ?></a>
+                            <ul class="dropdown-menu">
+                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>customers/expectancy/nail"
+                                                    data-toggle="dropdown"><?php echo $this->lang->line('Nail Services') ?></a>
+                                </li>
+                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>customers/expectancy/eyelash"
+                                                    data-toggle="dropdown"><?= $this->lang->line('Eyelash Services'); ?></a>
+                                </li>
+                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>customers/expectancy/eyebrow"
+                                                    data-toggle="dropdown"><?= $this->lang->line('Eyebrow Services'); ?></a>
+                                </li>
+                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>customers/expectancy/hair"
+                                                    data-toggle="dropdown"><?= $this->lang->line('Hair Services'); ?></a>
+                                </li>
+                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>customers/expectancy/make-up"
+                                                    data-toggle="dropdown"><?= $this->lang->line('Make-up Services'); ?></a>
+                                </li>
+                                <li data-menu=""><a class="dropdown-item" href="<?php echo base_url(); ?>customers/expectancy/skin"
+                                                    data-toggle="dropdown"><?= $this->lang->line('Skin Services'); ?></a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </li>
             <?php }
             if ($this->aauth->premission(4)) {
                 ?>

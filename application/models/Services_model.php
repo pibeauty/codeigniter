@@ -125,13 +125,14 @@ class Services_model extends CI_Model
 
     }
 
-    public function edit($acid, $name,$settime,$price)
+    public function edit($acid, $name,$settime,$price,$revisit)
     {
 
-               $data = array(
+        $data = array(
             'name' => $name,
-                   'settime' => $settime,
-                   'price'=>$price
+            'settime' => $settime,
+            'price'=>$price,
+            'revisit' => $revisit
         );
 
         $this->db->set($data);

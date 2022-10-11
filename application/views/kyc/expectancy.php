@@ -7,14 +7,9 @@ if ($this->input->get('due')) {
     <div class="card">
         <div class="card-header">
             <h4 class="card-title">
-                <a href="<?php echo base_url('customers') ?>" class="mr-5">
-                    <?php echo $this->lang->line('Clients') ?>
+                <a href="#" class="mr-5">
+                    <?php echo $this->lang->line('Expected Clients For') . " ". $this->lang->line(ucfirst($service)) . " " . $this->lang->line('Service')?>
                 </a>
-                <a href="<?php echo base_url('customers/create') ?>" class="btn btn-primary btn-sm rounded">
-                    <?php echo $this->lang->line('Add new') ?>
-                </a>
-                <a href="<?php echo base_url('customers?due=true') ?>" class="btn btn-danger btn-sm rounded">
-                    <?php echo $this->lang->line('Due') ?><?php echo $this->lang->line('Clients') ?>
                 </a>
                 <a href="#sendMail" data-toggle="modal" data-remote="false" class="btn btn-primary btn-sm" data-type="reminder">
                     <i class="fa fa-envelope"></i>
@@ -44,18 +39,10 @@ if ($this->input->get('due')) {
                     <tr>
                         <th>#</th>
                         <th><?php echo $this->lang->line('Name') ?></th>
-                        <?php if ($due) {
-                            echo '  <th>' . $this->lang->line('Due') . '</th>';
-                        } ?>
-
-                        <!-- <th><?php //echo $this->lang->line('Address') ?></th> -->
-                        <th><?php echo $this->lang->line('Age') ?></th>
-                        <th><?php echo $this->lang->line('Email') ?></th>
                         <th><?php echo $this->lang->line('Phone') ?></th>
-						<!-- <th><?php echo $this->lang->line('Points') ?></th> -->
+                        <th><?php echo $this->lang->line('Visited At') ?></th>
+                        <th><?php echo $this->lang->line('Visited For') ?></th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
-
-
                     </tr>
                     </thead>
                     <tbody>
@@ -65,17 +52,10 @@ if ($this->input->get('due')) {
                     <tr>
                         <th>#</th>
                         <th><?php echo $this->lang->line('Name') ?></th>
-                        <?php if ($due) {
-                            echo '  <th>' . $this->lang->line('Due') . '</th>';
-                        } ?>
-                        <!-- <th><?php //echo $this->lang->line('Address') ?></th> -->
-                        <th><?php echo $this->lang->line('Age') ?></th>
-                        <th><?php echo $this->lang->line('Email') ?></th>
-						<th><?php echo $this->lang->line('Phone') ?></th>
-                        <!-- <th><?php echo $this->lang->line('Points') ?></th> -->
+                        <th><?php echo $this->lang->line('Phone') ?></th>
+                        <th><?php echo $this->lang->line('Visited At') ?></th>
+                        <th><?php echo $this->lang->line('Visited For') ?></th>
                         <th><?php echo $this->lang->line('Settings') ?></th>
-
-
                     </tr>
                     </tfoot>
                 </table>
@@ -85,8 +65,9 @@ if ($this->input->get('due')) {
     </div>
 </div>
 <script type="text/javascript">
+    let dataTable = null;
     $(document).ready(function () {
-        $('#clientstable').DataTable({
+        dataTable = $('#clientstable').DataTable({
             'processing': true,
             'serverSide': false,
             // 'serverSide': true,
@@ -94,7 +75,7 @@ if ($this->input->get('due')) {
             responsive: true,
             'order': [],
             'ajax': {
-                'url': "<?php echo site_url('customers/load_list')?>",
+                'url': "<?php echo site_url('customers/load_expectancy_list/'.$service)?>",
                 'type': 'POST',
                 'data': {'<?=$this->security->get_csrf_token_name()?>': crsf_hash <?php if ($due) echo ",'due':true" ?> }
             },
@@ -115,29 +96,17 @@ if ($this->input->get('due')) {
             ],
         });
     });
+
+    function markAsChecked(invoiceItemId) {
+        $.get("<?= site_url('/customers/checkExpectancy/') ?>" + invoiceItemId)
+        dataTable.ajax.reload();
+    }
+
+    function markAsUnchecked(invoiceItemId) {
+        $.get("<?= site_url('/customers/uncheckExpectancy/') ?>" + invoiceItemId)
+        dataTable.ajax.reload();
+    }
 </script>
-<div id="delete_model" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-
-                <h4 class="modal-title">Delete Customer</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-            </div>
-            <div class="modal-body">
-                <p>Are you sure you want to delete this customer?</p>
-            </div>
-            <div class="modal-footer">
-                <input type="hidden" id="object-id" value="">
-                <input type="hidden" id="action-url" value="customers/delete_i">
-                <button type="button" data-dismiss="modal" class="btn btn-primary" id="delete-confirm">Delete</button>
-                <button type="button" data-dismiss="modal" class="btn">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 
 <div id="sendMail" class="modal fade">
     <div class="modal-dialog">

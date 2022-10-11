@@ -49,107 +49,149 @@ class Customers_model extends CI_Model
 		return "
 			(
 				SELECT 
-				COUNT(geopos_events.id) * 0.1
+				COUNT(geopos_invoice_items.id) * 0.1
 				FROM 
-				geopos_events 
+				geopos_invoice_items 
 				WHERE 
-				customerid = geopos_customers.id 
-				AND service_id in (
+                tid in (
+                    SELECT
+                    id
+                    FROM
+                    geopos_invoices
+                    WHERE
+                    geopos_invoices.csd = geopos_customers.id
+                )
+				AND product in (
 					SELECT 
-					id 
+					name
 					FROM 
 					services 
 					WHERE 
-					parent_id = 2
+					services.parent_id = 218
 				)
 			) nail_points, 
 			(
 				SELECT 
-				COUNT(geopos_events.id) * 0.2
+				COUNT(geopos_invoice_items.id) * 0.2
 				FROM 
-				geopos_events 
+				geopos_invoice_items 
 				WHERE 
-				customerid = geopos_customers.id 
-				AND service_id in (
+                tid in (
+                    SELECT
+                    id
+                    FROM
+                    geopos_invoices
+                    WHERE
+                    geopos_invoices.csd = geopos_customers.id
+                )
+				AND product in (
 					SELECT 
-					id 
+					name
 					FROM 
 					services 
 					WHERE 
-					parent_id = 3
+					services.parent_id = 3
 				)
 			) hair_points, 
 			(
 				SELECT 
-				COUNT(geopos_events.id) * 0.1
+				COUNT(geopos_invoice_items.id) * 0.1
 				FROM 
-				geopos_events 
+				geopos_invoice_items 
 				WHERE 
-				customerid = geopos_customers.id 
-				AND service_id in (
+                tid in (
+                    SELECT
+                    id
+                    FROM
+                    geopos_invoices
+                    WHERE
+                    geopos_invoices.csd = geopos_customers.id
+                )
+				AND product in (
 					SELECT 
-					id 
+					name
 					FROM 
 					services 
 					WHERE 
-					parent_id = 36
+					services.parent_id = 36
 				)
 			) eyebrow_points, 
 			(
 				SELECT 
-				COUNT(geopos_events.id) * 0.2
+				COUNT(geopos_invoice_items.id) * 0.2
 				FROM 
-				geopos_events 
+				geopos_invoice_items 
 				WHERE 
-				customerid = geopos_customers.id 
-				AND service_id in (
+                tid in (
+                    SELECT
+                    id
+                    FROM
+                    geopos_invoices
+                    WHERE
+                    geopos_invoices.csd = geopos_customers.id
+                )
+				AND product in (
 					SELECT 
-					id 
+					name
 					FROM 
 					services 
 					WHERE 
-					parent_id = 40
+					services.parent_id = 40
 				)
 			) skin_points, 
 			(
 				SELECT 
-				COUNT(geopos_events.id) * 0.3
+				COUNT(geopos_invoice_items.id) * 0.3
 				FROM 
-				geopos_events 
+				geopos_invoice_items 
 				WHERE 
-				customerid = geopos_customers.id 
-				AND service_id in (
+                tid in (
+                    SELECT
+                    id
+                    FROM
+                    geopos_invoices
+                    WHERE
+                    geopos_invoices.csd = geopos_customers.id
+                )
+				AND product in (
 					SELECT 
-					id 
+					name
 					FROM 
 					services 
 					WHERE 
-					parent_id = 55
+					services.parent_id = 55
 				)
 			) makeup_points, 
 			(
 				SELECT 
-				COUNT(geopos_events.id) * 0.1
+				COUNT(geopos_invoice_items.id) * 0.1
 				FROM 
-				geopos_events 
+				geopos_invoice_items 
 				WHERE 
-				customerid = geopos_customers.id 
-				AND service_id in (
+                tid in (
+                    SELECT
+                    id
+                    FROM
+                    geopos_invoices
+                    WHERE
+                    geopos_invoices.csd = geopos_customers.id
+                )
+				AND product in (
 					SELECT 
-					id 
+					name
 					FROM 
 					services 
 					WHERE 
-					parent_id = 105
+					services.parent_id = 105
 				)
 			) eyelash_points, 
 			(
 				SELECT 
-				(COUNT(geopos_customers.id) + 1) * 5
+				(COUNT(geopos_customers.id) + 1)
 				FROM 
 				geopos_customers 
 				WHERE 
-				moaaref = geopos_customers.name
+				moaaref = geopos_customers.id
 			) reference_points, 
 			(
 				SELECT 
@@ -166,10 +208,87 @@ class Customers_model extends CI_Model
     {
         $due = $this->input->post('due');
         if ($due) {
-			$selectPoints = $this->getPointsSelectStatement();
-            $this->db->select('geopos_customers.*,SUM(geopos_invoices.total) AS total,SUM(geopos_invoices.pamnt) AS pamnt' . ",$selectPoints");
+			// $selectPoints = $this->getPointsSelectStatement();
+            $this->db->select('geopos_customers.*,SUM(geopos_invoices.total) AS total,SUM(geopos_invoices.pamnt) AS pamnt' /* . ",$selectPoints" */);
             $this->db->from('geopos_invoices');
             $this->db->where('geopos_invoices.status!=', 'paid');
+            $this->db->join('geopos_customers', 'geopos_customers.id = geopos_invoices.csd', 'left');
+            if ($this->aauth->get_user()->loc) {
+                $this->db->where('geopos_customers.loc', $this->aauth->get_user()->loc);
+            } elseif (!BDATA) {
+                $this->db->where('geopos_customers.loc', 0);
+            }
+            if ($id != '') {
+                $this->db->where('geopos_customers.gid', $id);
+            }
+            $this->db->group_by('geopos_invoices.csd');
+            $this->db->order_by('total', 'desc');
+
+        } else {
+			// $selectPoints = $this->getPointsSelectStatement();
+			$this->db->select('*' /* . ",$selectPoints" */);
+            $this->db->from($this->table);
+            if ($this->aauth->get_user()->loc) {
+                $this->db->where('loc', $this->aauth->get_user()->loc);
+            } elseif (!BDATA) {
+                $this->db->where('loc', 0);
+            }
+            if ($id != '') {
+                $this->db->where('gid', $id);
+            }
+
+        }
+        $i = 0;
+
+        foreach ($this->column_search as $item) // loop column
+        {
+            $search = $this->input->post('search');
+            $value = @$search['value'];
+            if ($value) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $value);
+                } else {
+                    $this->db->or_like($item, $value);
+                }
+
+                if (count($this->column_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+        $search = $this->input->post('order');
+        if ($search) // here order processing
+        {
+            $this->db->order_by($this->column_order[$search['0']['column']], $search['0']['dir']);
+        } else if (isset($this->order)) {
+            $order = $this->order;
+            $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+
+    function get_datatables($id = '')
+    {
+        $this->_get_datatables_query($id);
+        if ($this->aauth->get_user()->loc) {
+            $this->db->where('loc', $this->aauth->get_user()->loc);
+        }
+        if ($this->input->post('length') != -1)
+            $this->db->limit($this->input->post('length'), $this->input->post('start'));
+		$query = $this->db->get();
+        return $query->result();
+    }
+
+    function _get_points_datatables_query($id = '')
+    {
+        $due = $this->input->post('due');
+        if ($due) {
+			$selectPoints = $this->getPointsSelectStatement();
+            $this->db->select('geopos_customers.*'. ",$selectPoints");
+            $this->db->from('geopos_invoices');
             $this->db->join('geopos_customers', 'geopos_customers.id = geopos_invoices.csd', 'left');
             if ($this->aauth->get_user()->loc) {
                 $this->db->where('geopos_customers.loc', $this->aauth->get_user()->loc);
@@ -228,15 +347,99 @@ class Customers_model extends CI_Model
         }
     }
 
-    function get_datatables($id = '')
+    function get_points_datatables($id = '')
     {
-        $this->_get_datatables_query($id);
+        $this->_get_points_datatables_query($id);
         if ($this->aauth->get_user()->loc) {
             $this->db->where('loc', $this->aauth->get_user()->loc);
         }
         if ($this->input->post('length') != -1)
             $this->db->limit($this->input->post('length'), $this->input->post('start'));
 		$query = $this->db->get();
+        return $query->result();
+    }
+
+    function _get_expectancy_datatables_query($service, $id = '')
+    {
+        switch ($service)
+        {
+            case 'nail':
+                $parentId = 218;
+                break;
+            case 'eyelash':
+                $parentId = 105;
+                break;
+            case 'hair':
+                $parentId = 3;
+                break;
+            case 'eyebrow':
+                $parentId = 36;
+                break;
+            case 'make-up':
+                $parentId = 55;
+                break;
+            case 'skin':
+                $parentId = 40;
+                break;
+            // default:
+            //     $parentId = [218, 3];
+        }
+        [ 'revisit' => $revisitDuration ] = $this->db->get_where('services', ['id' => $parentId])->row_array();
+        $this->db->select('geopos_invoice_items.product, geopos_invoice_items.id as invoice_item_id, geopos_invoice_items.last_expectancy_checked, services.name, services.parent_id, geopos_invoices.tid, geopos_invoices.id as invoice_id, geopos_invoices.csd, geopos_invoices.invoicedate, geopos_customers.id as customer_id, geopos_customers.name, geopos_customers.phone, geopos_customers.picture');
+        $this->db->from('geopos_invoice_items');
+        $this->db->join('services', 'geopos_invoice_items.product = services.name');
+        $this->db->join('geopos_invoices', 'geopos_invoice_items.tid = geopos_invoices.id');
+        $this->db->join('geopos_customers', 'geopos_invoices.csd = geopos_customers.id');
+        $this->db->order_by('geopos_invoices.invoicedate', 'DESC');
+        $this->db->group_by(['geopos_customers.id', 'services.parent_id']);
+        // if (is_array($parentId)) $this->db->where_in('service.parent_id', $parentId);
+        // else $this->db->where('services.parent_id', $parentId);
+        $this->db->where('services.parent_id', $parentId);
+        $this->db->where("DATE_ADD(geopos_invoices.invoicedate, INTERVAL $revisitDuration DAY) < NOW()");
+        // $this->db->where("geopos_invoices.invoicedate > DATE_SUB(NOW(), INTERVAL 60 DAY)"); // UNCOMMENT THIS LINE IF YOU WANT TO LIMIT WHERE THE LIST ENDS
+        $i = 0;
+
+        foreach ($this->column_search as $item) // loop column
+        {
+            $search = $this->input->post('search');
+            $value = $search['value'];
+            if ($value) // if datatable send POST for search
+            {
+
+                if ($i === 0) // first loop
+                {
+                    $this->db->group_start(); // open bracket. query Where with OR clause better with bracket. because maybe can combine with other WHERE with AND.
+                    $this->db->like($item, $value);
+                } else {
+                    $this->db->or_like($item, $value);
+                }
+
+                if (count($this->column_search) - 1 == $i) //last loop
+                    $this->db->group_end(); //close bracket
+            }
+            $i++;
+        }
+        $search = $this->input->post('order');
+        if ($search) // here order processing
+        {
+            $this->db->order_by($this->column_order[$search['0']['column']], $search['0']['dir']);
+        } else if (isset($this->order)) {
+            $order = $this->order;
+            // $this->db->order_by(key($order), $order[key($order)]);
+        }
+    }
+
+    function get_expectancy_datatables($service, $id = '')
+    {
+        $this->_get_expectancy_datatables_query($service, $id);
+        if ($this->aauth->get_user()->loc) {
+            $this->db->where('loc', $this->aauth->get_user()->loc);
+        }
+        if ($this->input->post('length') != -1)
+            $this->db->limit($this->input->post('length'), $this->input->post('start'));
+		$query = $this->db->get();
+        // var_dump($this->db->last_query());die;
+        // var_dump($query->result()); die;
         return $query->result();
     }
 
@@ -256,6 +459,58 @@ class Customers_model extends CI_Model
     public function count_all($id = '')
     {
         $this->_get_datatables_query();
+        if ($this->aauth->get_user()->loc) {
+            $this->db->where('loc', $this->aauth->get_user()->loc);
+        }
+        if ($id != '') {
+            $this->db->where('gid', $id);
+        }
+        $query = $this->db->get();
+        return $query->num_rows($id = '');
+    }
+
+    function count_filtered_for_points($id = '')
+    {
+        $this->_get_points_datatables_query();
+        $query = $this->db->get();
+        if ($id != '') {
+            $this->db->where('gid', $id);
+        }
+        if ($this->aauth->get_user()->loc) {
+            $this->db->where('loc', $this->aauth->get_user()->loc);
+        }
+        return $query->num_rows($id = '');
+    }
+
+    public function count_all_for_points($id = '')
+    {
+        $this->_get_points_datatables_query();
+        if ($this->aauth->get_user()->loc) {
+            $this->db->where('loc', $this->aauth->get_user()->loc);
+        }
+        if ($id != '') {
+            $this->db->where('gid', $id);
+        }
+        $query = $this->db->get();
+        return $query->num_rows($id = '');
+    }
+
+    function count_filtered_for_expectancy($service, $id = '')
+    {
+        $this->_get_expectancy_datatables_query($service);
+        $query = $this->db->get();
+        if ($id != '') {
+            $this->db->where('gid', $id);
+        }
+        if ($this->aauth->get_user()->loc) {
+            $this->db->where('loc', $this->aauth->get_user()->loc);
+        }
+        return $query->num_rows($id = '');
+    }
+
+    public function count_all_for_expectancy($service, $id = '')
+    {
+        $this->_get_expectancy_datatables_query($service);
         if ($this->aauth->get_user()->loc) {
             $this->db->where('loc', $this->aauth->get_user()->loc);
         }
@@ -1271,6 +1526,8 @@ class Customers_model extends CI_Model
 		$this->db->from('geopos_customers');
 		$this->db->where('id', $id);
 		$query = $this->db->get();
-		return $query->row_array();
+        $result = $query->row_array();
+        $result['expense_points'] = $result['expense_points'] ?? 0;
+		return $result;
 	}
 }

@@ -30,107 +30,149 @@ class Points_model extends CI_Model
 		return "
 			(
 				SELECT 
-				COUNT(geopos_events.id) * 0.1
+				COUNT(geopos_invoice_items.id) * 0.1
 				FROM 
-				geopos_events 
+				geopos_invoice_items 
 				WHERE 
-				customerid = geopos_customers.id 
-				AND service_id in (
+                tid in (
+                    SELECT
+                    id
+                    FROM
+                    geopos_invoices
+                    WHERE
+                    geopos_invoices.csd = geopos_customers.id
+                )
+				AND product in (
 					SELECT 
-					id 
+					name
 					FROM 
 					services 
 					WHERE 
-					parent_id = 2
+					services.parent_id = 218
 				)
 			) nail_points, 
 			(
 				SELECT 
-				COUNT(geopos_events.id) * 0.2
+				COUNT(geopos_invoice_items.id) * 0.2
 				FROM 
-				geopos_events 
+				geopos_invoice_items 
 				WHERE 
-				customerid = geopos_customers.id 
-				AND service_id in (
+                tid in (
+                    SELECT
+                    id
+                    FROM
+                    geopos_invoices
+                    WHERE
+                    geopos_invoices.csd = geopos_customers.id
+                )
+				AND product in (
 					SELECT 
-					id 
+					name
 					FROM 
 					services 
 					WHERE 
-					parent_id = 3
+					services.parent_id = 3
 				)
 			) hair_points, 
 			(
 				SELECT 
-				COUNT(geopos_events.id) * 0.1
+				COUNT(geopos_invoice_items.id) * 0.1
 				FROM 
-				geopos_events 
+				geopos_invoice_items 
 				WHERE 
-				customerid = geopos_customers.id 
-				AND service_id in (
+                tid in (
+                    SELECT
+                    id
+                    FROM
+                    geopos_invoices
+                    WHERE
+                    geopos_invoices.csd = geopos_customers.id
+                )
+				AND product in (
 					SELECT 
-					id 
+					name
 					FROM 
 					services 
 					WHERE 
-					parent_id = 36
+					services.parent_id = 36
 				)
 			) eyebrow_points, 
 			(
 				SELECT 
-				COUNT(geopos_events.id) * 0.2
+				COUNT(geopos_invoice_items.id) * 0.2
 				FROM 
-				geopos_events 
+				geopos_invoice_items 
 				WHERE 
-				customerid = geopos_customers.id 
-				AND service_id in (
+                tid in (
+                    SELECT
+                    id
+                    FROM
+                    geopos_invoices
+                    WHERE
+                    geopos_invoices.csd = geopos_customers.id
+                )
+				AND product in (
 					SELECT 
-					id 
+					name
 					FROM 
 					services 
 					WHERE 
-					parent_id = 40
+					services.parent_id = 40
 				)
 			) skin_points, 
 			(
 				SELECT 
-				COUNT(geopos_events.id) * 0.3
+				COUNT(geopos_invoice_items.id) * 0.3
 				FROM 
-				geopos_events 
+				geopos_invoice_items 
 				WHERE 
-				customerid = geopos_customers.id 
-				AND service_id in (
+                tid in (
+                    SELECT
+                    id
+                    FROM
+                    geopos_invoices
+                    WHERE
+                    geopos_invoices.csd = geopos_customers.id
+                )
+				AND product in (
 					SELECT 
-					id 
+					name
 					FROM 
 					services 
 					WHERE 
-					parent_id = 55
+					services.parent_id = 55
 				)
 			) makeup_points, 
 			(
 				SELECT 
-				COUNT(geopos_events.id) * 0.1
+				COUNT(geopos_invoice_items.id) * 0.1
 				FROM 
-				geopos_events 
+				geopos_invoice_items 
 				WHERE 
-				customerid = geopos_customers.id 
-				AND service_id in (
+                tid in (
+                    SELECT
+                    id
+                    FROM
+                    geopos_invoices
+                    WHERE
+                    geopos_invoices.csd = geopos_customers.id
+                )
+				AND product in (
 					SELECT 
-					id 
+					name
 					FROM 
 					services 
 					WHERE 
-					parent_id = 105
+					services.parent_id = 105
 				)
 			) eyelash_points, 
 			(
 				SELECT 
-				(COUNT(geopos_customers.id) + 1) * 5
+				(COUNT(geopos_customers.id) + 1)
 				FROM 
 				geopos_customers 
 				WHERE 
-				moaaref = geopos_customers.name
+				moaaref = geopos_customers.id
 			) reference_points, 
 			(
 				SELECT 

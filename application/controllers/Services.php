@@ -90,7 +90,8 @@ class Services extends CI_Controller
         $settime = $this->input->post('settime');
         $id = $this->input->post('id');
         $price = $this->input->post('price');
-        echo   $this->services->edit($id,$name,$settime,$price);
+        $revisit = $this->input->post('revisit');
+        echo   $this->services->edit($id,$name,$settime,$price,$revisit);
     }
 
     public function delete(){
@@ -124,9 +125,3 @@ class Services extends CI_Controller
         echo $html;
     }
 }
-?>
-<script>
-    $('.select-box').select2(
-
-    );
-</script>

@@ -97,16 +97,16 @@ class Customers extends CI_Controller
         if ($this->input->post('due')) {
             foreach ($list as $customers) {
                 $no++;
-				$points = $customers->reference_points *
-					$customers->expense_points *
-					(
-						$customers->nail_points +
-						$customers->hair_points +
-						$customers->eyebrow_points +
-						$customers->skin_points +
-						$customers->makeup_points +
-						$customers->eyelash_points
-					);
+				// $points = $customers->reference_points *
+				// 	$customers->expense_points *
+				// 	(
+				// 		$customers->nail_points +
+				// 		$customers->hair_points +
+				// 		$customers->eyebrow_points +
+				// 		$customers->skin_points +
+				// 		$customers->makeup_points +
+				// 		$customers->eyelash_points
+				// 	);
                 $row = array();
                 $row[] = $no;
                 $row[] = '<span class="avatar-sm align-baseline"><img class="rounded-circle" src="' . base_url() . 'userfiles/customers/thumbnail/' . $customers->picture . '" ></span> &nbsp;<a href="customers/view?id=' . $customers->id . '">' . $customers->name . '</a>';
@@ -115,7 +115,7 @@ class Customers extends CI_Controller
                 $row[] = $age;
                 $row[] = $customers->email;
                 $row[] = $customers->phone;
-                $row[] = $points;
+                // $row[] = $points;
                 $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="fa fa-eye"></span>  ' . $this->lang->line('View') . '</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span>  ' . $this->lang->line('Edit') . '</a> <a href="appoint/?id=' . $customers->id . '&cusUser=0" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span>  Appoint</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="fa fa-trash"></span></a>';
                 $data[] = $row;
             }
@@ -124,16 +124,16 @@ class Customers extends CI_Controller
                 $from = new DateTime($customers->tavalod);
                 $to   = new DateTime('today');
                 $age = $from->diff($to)->y;
-				$points = $customers->reference_points *
-					$customers->expense_points *
-					(
-						$customers->nail_points +
-						$customers->hair_points +
-						$customers->eyebrow_points +
-						$customers->skin_points +
-						$customers->makeup_points +
-						$customers->eyelash_points
-					);
+				// $points = $customers->reference_points *
+				// 	$customers->expense_points *
+				// 	(
+				// 		$customers->nail_points +
+				// 		$customers->hair_points +
+				// 		$customers->eyebrow_points +
+				// 		$customers->skin_points +
+				// 		$customers->makeup_points +
+				// 		$customers->eyelash_points
+				// 	);
                 $no++;
                 $row = array();
                 $row[] = $no;
@@ -142,7 +142,7 @@ class Customers extends CI_Controller
                 $row[] = (int)$age;
                 $row[] = $customers->email;
                 $row[] = $customers->phone;
-				$row[] = $points;
+				// $row[] = $points;
                 $row[] = '<a href="customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="fa fa-eye"></span>  ' . $this->lang->line('View') . '</a> <a href="customers/edit?id=' . $customers->id . '" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span>  ' . $this->lang->line('Edit') . '<a href="appoint/?id=' . $customers->id . '&cusUser=0" class="btn btn-primary btn-sm"><span class="fa fa-pencil"></span>  Appoint</a>'. '</a> <a href="#" data-object-id="' . $customers->id . '" class="btn btn-danger btn-sm delete-object"><span class="fa fa-trash"></span></a>';
                 $data[] = $row;
             }
@@ -159,6 +159,89 @@ class Customers extends CI_Controller
         echo json_encode($output);
     }
 
+    public function load_points_list()
+    {
+        $no = $this->input->post('start');
+
+        $list = $this->customers->get_points_datatables();
+        $data = array();
+        foreach ($list as $customers) {
+            $no++;
+            $nail_points = $customers->nail_points ?? 0;
+            $hair_points = $customers->hair_points ?? 0;
+            $eyebrow_points = $customers->eyebrow_points ?? 0;
+            $eyelash_points = $customers->eyelash_points ?? 0;
+            $skin_points = $customers->skin_points ?? 0;
+            $makeup_points = $customers->makeup_points ?? 0;
+            $reference_points = $customers->reference_points ?? 0;
+            $reference_points_for_total = $reference_points == 0 ? 1 : $reference_points;
+            $expense_points = $customers->expense_points ?? 0;
+            $expense_points_for_total = $expense_points == 0 ? 1 : $expense_points;
+            $totalPoints = $reference_points_for_total *
+            	$expense_points_for_total *
+            	(
+            		$nail_points +
+            		$hair_points +
+            		$eyebrow_points +
+            		$skin_points +
+            		$makeup_points +
+            		$eyelash_points
+            	);
+            $row = array();
+            $row[] = $no;
+            $row[] = '<span class="avatar-sm align-baseline"><img class="rounded-circle" src="' . base_url() . 'userfiles/customers/thumbnail/' . $customers->picture . '" ></span> &nbsp;<a href="/customers/view?id=' . $customers->id . '">' . $customers->name . '</a>';
+            $row[] = $customers->phone;
+            $row[] = $nail_points;
+            $row[] = $hair_points;
+            $row[] = $eyebrow_points;
+            $row[] = $eyelash_points;
+            $row[] = $skin_points;
+            $row[] = $makeup_points;
+            $row[] = $reference_points;
+            $row[] = $expense_points;
+            $row[] = $totalPoints;
+            $row[] = '<a href="/customers/view?id=' . $customers->id . '" class="btn btn-info btn-sm"><span class="fa fa-eye"></span>  ' . $this->lang->line('View') . '</a>';
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $this->input->post('draw'),
+            "recordsTotal" => $this->customers->count_all_for_points(),
+            "recordsFiltered" => $this->customers->count_filtered_for_points(),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+
+    }
+
+    public function load_expectancy_list($service)
+    {
+        $no = $this->input->post('start');
+
+        $list = $this->customers->get_expectancy_datatables($service);
+        $data = array();
+        foreach ($list as $customer) {
+            $no++;
+            $row = array();
+            $row[] = $no;
+            $row[] = '<span class="avatar-sm align-baseline"><img class="rounded-circle" src="' . base_url() . 'userfiles/customers/thumbnail/' . $customer->picture . '" ></span> &nbsp;<a href="customers/view?id=' . $customer->customer_id . '">' . $customer->name . '</a>';
+            $row[] = $customer->phone;
+            $row[] = $customer->invoicedate;
+            $row[] = $customer->product;
+            $settingsCell = '<a href="/invoices/view?id=' . $customer->invoice_id . '" class="btn btn-info btn-sm"><span class="fa fa-eye"></span>  ' . $this->lang->line('View Invoice') . '</a>';
+            $settingsCell .= $customer->last_expectancy_checked == 0 ? '<a href="javascript:markAsChecked(' . $customer->invoice_item_id .')" class="btn btn-danger btn-sm"><span class="fa fa-check"></span>' . $this->lang->line('Mark as Checked') . '</a>' : '<a href="javascript:markAsUnchecked(' . $customer->invoice_item_id .')" class="btn btn-success btn-sm"><span class="fa fa-check"></span>' . $this->lang->line('Checked') . '</a>';
+            $row[] = $settingsCell;
+            $data[] = $row;
+        }
+        $output = array(
+            "draw" => $this->input->post('draw'),
+            "recordsTotal" => $this->customers->count_all_for_expectancy($service),
+            "recordsFiltered" => $this->customers->count_filtered_for_expectancy($service),
+            "data" => $data,
+        );
+        //output to json format
+        echo json_encode($output);
+    }
 
     //edit section
     public function edit()
@@ -827,7 +910,7 @@ class Customers extends CI_Controller
 		$data['points'] = $this->customers->getCustomerPoints($custid);
 		$data['points']['total_points'] =
 			$data['points']['reference_points'] *
-			$data['points']['expense_points'] *
+			($data['points']['expense_points'] != 0 ? $data['points']['expense_points'] : 1) *
 			(
 				$data['points']['nail_points'] +
 				$data['points']['hair_points'] +
@@ -866,5 +949,43 @@ class Customers extends CI_Controller
 		];
         echo json_encode($chart);
 
+    }
+
+    public function points()
+    {
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'Customers Points';
+        $this->load->view('fixed/header', $head);
+        $this->load->view('kyc/points');
+        $this->load->view('fixed/footer');
+    }
+
+    public function expectancy($service)
+    {
+        $head['usernm'] = $this->aauth->get_user()->username;
+        $head['title'] = 'Customers Expectancy - ' . $service;
+        $data = [
+            'service' => $service,
+            'customers' => $this->customers->get_datatables()
+        ];
+        $this->load->view('fixed/header', $head);
+        $this->load->view('kyc/expectancy', $data);
+        $this->load->view('fixed/footer');
+    }
+
+    public function checkExpectancy($invoiceItemId)
+    {
+        $this->db->where('id', $invoiceItemId);
+        $this->db->update('geopos_invoice_items', [
+            'last_expectancy_checked' => 1
+        ]);
+    }
+
+    public function uncheckExpectancy($invoiceItemId)
+    {
+        $this->db->where('id', $invoiceItemId);
+        $this->db->update('geopos_invoice_items', [
+            'last_expectancy_checked' => 0
+        ]);
     }
 }

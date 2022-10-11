@@ -162,7 +162,7 @@
 							<div class="col-md-4">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<label class="input-group-text" for="makeup_points"><?=$this->lang->line('MakeUp Points')?></label>
+										<label class="input-group-text" for="makeup_points"><?=$this->lang->line('Make-up Points')?></label>
 									</div>
 									<input class="form-control" type="text" name="makeup_points" id="makeup_points" readonly value="<?=$points['makeup_points']?>">
 								</div>
@@ -186,7 +186,7 @@
 							<div class="col-md-4">
 								<div class="input-group">
 									<div class="input-group-prepend">
-										<label class="input-group-text" for="reference_pointts"><?=$this->lang->line('Reference Points')?></label>
+										<label class="input-group-text" for="reference_points"><?=$this->lang->line('Reference Points')?></label>
 									</div>
 									<input class="form-control" type="text" name="reference_points" id="reference_points" readonly value="<?=$points['reference_points']?>">
 								</div>

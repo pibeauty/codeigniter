@@ -36,6 +36,19 @@
                         <input type="text" placeholder="Time(Min)" value="<?php echo $service['settime'] ?>"
                                class="form-control margin-bottom required" name="settime">
                     </div>
+                    <?php
+                        if ($service['parent_id'] == 0) {
+                    ?>
+                        <div class="col-sm-6"><label class="col-form-label"
+                                                    for="revisit">
+                                Time interval for client to revisit
+                                </label>
+                            <input id="revisit" type="text" placeholder="Time(Days)" value="<?php echo $service['revisit'] ?>"
+                                class="form-control margin-bottom required" name="revisit">
+                        </div>
+                    <?php
+                        }
+                    ?>
                     <div class="col-sm-6"><label class="col-form-label"
                                                  for="price">
                             Price(Toman)
