@@ -50,6 +50,8 @@ class User_reserve extends CI_Controller
 
     public function index()
     {
+        // echo "This Feature is under construction";
+        // return;
        /// $data['services'] = $this->services->serviceslist();
         $data['services'] = $this->services->getServices();
         $data['holidays'] = $this->employee->hdaysAfterCurrentDate();
